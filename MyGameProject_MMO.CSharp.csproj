@@ -395,6 +395,36 @@
     <Compile Include="Assets\Scripts\Net\Protocols\RoleProtocols.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerC.cs" />
     <Compile Include="Assets\Scripts\TestNetWork.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\DataCenter.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameGoodsItem.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameTriggerData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ImportAnimationAddClipData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ImportAnimationAddEventData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\MonsterData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneLevelData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\StoryData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\TriggerData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\WaveData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\WeaponData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\SingleTon.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Event\EventDispatcher.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Event\EventException.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Event\GlobalEvents.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\LoggerHelper.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\MS\KeyedPriorityQueue.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\MS\KeyedPriorityQueueHeadChangedEventArgs.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\SoundManager.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\FrameTimerHeap.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerBehaviour.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerHeap.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />
@@ -406,7 +436,11 @@
     <None Include="Assets\EasyTouchBundle\Readme.txt" />
     <None Include="Assets\LuaFramework\ToLua\readme.txt" />
     <None Include="Assets\StreamingAssets\files.txt" />
+    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\BaseConfig.txt" />
+    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\UserConfig.txt" />
+    <None Include="Assets\VRRPG\Resources\Localize\ch.txt" />
     <None Include="Assets\readme.txt" />
+    <None Include="Assets\readme1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

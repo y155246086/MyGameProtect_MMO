@@ -151,6 +151,9 @@
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaExport.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaMenu.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaTree.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\Editor\CreateClassFromCSV.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\Editor\CreateConfigConstFromFile.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\Editor\CreateSysConstFromFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />
@@ -162,7 +165,11 @@
     <None Include="Assets\EasyTouchBundle\Readme.txt" />
     <None Include="Assets\LuaFramework\ToLua\readme.txt" />
     <None Include="Assets\StreamingAssets\files.txt" />
+    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\BaseConfig.txt" />
+    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\UserConfig.txt" />
+    <None Include="Assets\VRRPG\Resources\Localize\ch.txt" />
     <None Include="Assets\readme.txt" />
+    <None Include="Assets\readme1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

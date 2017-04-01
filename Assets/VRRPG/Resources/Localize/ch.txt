@@ -1,0 +1,21 @@
+FactoryShip_title = 造船厂
+FactoryShip_yuanliaobuzu = 原料不足
+FactoryShip_nokongyuline = 没有空余生产线
+FactoryShip_notuzhi = 没有图纸
+FactoryShip_productProblem = 生产出现问题
+FactoryShip_speedUpproblem = 加速出问题
+FactoryShip_finishProductproblem = 下水出问题了
+FactoryShip_productTipOne = 缺少图纸无法生产战舰
+FactoryShip_productTipTwo = 生产材料不足无法生产战舰
+FactoryShip_productlineStateIdle = 空闲
+FactoryShip_productlineStateClose = 关闭
+FactoryShip_productlineStateSpeedUp = 加速
+FactoryShip_productlineStateFinish = 已完成
+FactoryShip_productlineStateGoBag = 下水
+FactoryShip_productlineNameOne = 号生产线
+
+PrepareBattle_yishangzhen = 以上阵
+
+GMCommandLine_Success = 操作成功
+GMCommandLine_Fail = 操作失败
+GMCommandline_CommandNotExist = 命令不存在

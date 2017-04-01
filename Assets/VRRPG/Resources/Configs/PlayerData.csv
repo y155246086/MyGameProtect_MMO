@@ -1,0 +1,10 @@
+数据ID|姓名|部门|照片资源路径
+id_int|name_string|department_string|image_string
+0|0|0|0
+0|0|0|0
+0|0|0|0
+1|张三|vr部门|img0.png
+2|李四|商务部|img1.png
+0|0|0|0
+0|0|0|0
+0|0|0|0

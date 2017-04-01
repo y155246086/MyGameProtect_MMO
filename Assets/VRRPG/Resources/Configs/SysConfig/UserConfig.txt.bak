@@ -1,0 +1,76 @@
+﻿//外网认证ip 118.26.205.200
+//高原ip 192.168.21.231
+//测试服ip 192.168.21.235
+AUTH_SERVER_IP=192.168.21.231
+AUTH_SERVER_PORT=27001
+CHANNELID=1;
+VERSION = 1;
+
+bulletSpeed=100;//炮弹速度
+DestroyerTowerSpeed=100;//驱逐舰炮弹速度
+BattleTowerSpeed=25;//战列舰炮弹速度
+CruiserTowerSpeed=75;//巡洋舰炮弹速度
+DestroyerTowerProjectileFactor=0.4;//驱逐舰炮弹的曲线高度，越大曲线约明显
+BattleTowerProjectileFactor=1.2;//战列舰炮弹的曲线高度，越大曲线约明显
+CruiserTowerProjectileFactor=0.4;//巡洋舰炮弹的曲线高度，越大曲线约明显
+bulletProjectileFactor=0.4;//炮弹的曲线高度，越大曲线约明显
+planeBulletSpeed=400;//战斗机子弹移动速度
+planeBombSpeed=20;//轰炸机炸弹移动速度
+antiBulletSpeed=150;//防空炮子弹移动速度
+antiInterval = 0.4;//防空炮发射间隔
+torpedoSpeed=20;//鱼雷速度
+planeSpeed=50;//飞机速度
+shipSpeed=5;//舰船速度
+shipRandomSpeed=2;
+maxCameraRotate=20;
+minCameraRoate=-60;
+maxCameraDistance=300;
+minCameraDistance=0;
+defaultCameraDistance = 220;
+cameraZoomSpeed=1000;
+cameraRotateSpeed=1;
+cameraMinTilt = 15;
+cameraMaxTilt = 18;
+
+defaultTowerHitEffect=Effects/xinchongbaozha;
+defaultTowerUnHitEffect=Effects/WaterSplash;
+defaultTorpedoHitEffect=Effects/xinchongbaozha;
+defaultTorpedoUnHitEffect=Effects/WaterSplash;
+
+bigProjectileEffect=ShootObjects/SO_Projectile_Bolt_Big;
+defaultProjectileEffect=ShootObjects/SO_Projectile_Bolt;
+antiFirePulse=ShootObjects/SO_AntiFire_Pulse;
+planeBombEffect=ShootObjects/SO_AirCraftBomb;
+planeBulletEffect=ShootObjects/SO_AntiFire_Pulse;
+torpedoEffect=ShootObjects/TorpedoTrail;
+
+planeFlameEffect=Effects/ShipDamageEffect;
+planeExplosionEffect=Effects/ShipHitEffect;
+
+startFighterPlaneFlyDuring=5;//航空战飞机飞行的时间，时间到后消失
+startBombPlaneDelay=7;
+startPlaneSpeed=80;
+startBomberAttackCount=1;//开场轰炸机丢弹数量
+startBomberAttackInterval=0.5;//开场轰炸机丢弹间隔
+
+//索敌开始相机停止时间
+searchEnemyTime = 4;
+//切换飞机轰炸前相机停留的时间
+viewPlaneBeforeTime = 5;
+//飞机轰炸相机停留时间
+viewPlaneCamera = 1.9;
+
+bomberCameraTilt = 45;
+bomberCameraDistance=45;
+bomberCameraRoate=-45
+searchEnemyBeforeTime=1.5;
+
+shipForwardDistance = 15;
+shipRightDistance0 = 20;
+shipRightDistance1 = 32;
+
+hunZhanTime = 40;//混战时间
+yeZhanTime = 30;//夜战时间-从战斗开始
+
+shipMoveIntervalTime = 4;//船开始转向的时间间隔
+
