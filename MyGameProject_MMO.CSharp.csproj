@@ -75,14 +75,14 @@
     <Reference Include="Pathfinding.ClipperLib">
       <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Clipper\Pathfinding.ClipperLib.dll</HintPath>
     </Reference>
-    <Reference Include="Pathfinding.Poly2Tri">
-      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Pathfinding.JsonFx">
       <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
     </Reference>
-    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
-      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+    <Reference Include="Pathfinding.Poly2Tri">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -471,6 +471,8 @@
     <Compile Include="Assets\Scripts\Net\Protocols\Protocols.cs" />
     <Compile Include="Assets\Scripts\Net\Protocols\RoleProtocols.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerC.cs" />
+    <Compile Include="Assets\Scripts\Player\ICanAttacked.cs" />
+    <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\SingleTon.cs" />
     <Compile Include="Assets\Scripts\TestNetWork.cs" />

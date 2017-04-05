@@ -172,7 +172,11 @@ public class SkillManager : MonoBehaviour
             else
             {
                 Debuger.Log("产生伤害");
-                //owner.AttackTarget.GetComponent<GameRole>().SetAttacked(-Random.Range(curSkillData.minAttackValue, curSkillData.maxAttackValue));
+                ICanAttacked att = owner.AttackTarget.GetComponent<ICanAttacked>();
+                if(att != null)
+                {
+                    att.SetHurt(curSkillData.maxAttackValue);
+                }
             }
         }
         isCanSkill = true;

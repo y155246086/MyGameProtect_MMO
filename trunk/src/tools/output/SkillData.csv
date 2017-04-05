@@ -1,6 +1,6 @@
-数据ID|名字|类型|弹道资源|最小攻击力|最大攻击力|弹道速度|弹道角度|击中特效|击中声音|技能CD|动画触发名称|动画状态机状态名称|动画触发时间|召唤关卡ID|技能声音
+数据ID|名字|类型|弹道资源|最小攻击力|最大攻击力|弹道速度|弹道角度|攻击特效|击中声音|技能CD|动画触发名称|动画状态机状态名称|动画触发时间|召唤关卡ID|技能声音
 id_int|name_string|type_int|shootPrefabs_string|minAttackValue_int|maxAttackValue_int|speed_float|angle_float|attackedEffect_string|attackedSound_string|cd_float|triggerName_string|stateName_string|triggerTime_float|zhaohuanId_int|skillSound_string
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
-5|普通狼攻击|0|0|5|10|0|0|Effect/Prefabs/eff_008_gushi_attack_1|0|5|TriggerAttack01|attack_1|0.89|0|sound/langAttack01
+5|普通狼攻击|0|0|5|10|0|0|fx/skill_102_fan_attack_1|0|5|TriggerAttack01|attack_1|0.55|0|se/se_mark
