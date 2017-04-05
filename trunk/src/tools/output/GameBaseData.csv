@@ -1,0 +1,10 @@
+数据ID|人物前移速度|后移速度|两边移动速度|人物初始化血量|白准星的最小值|白准星的最大值|白准星的移动步长|心跳声音|罗盘探测红色距离|罗盘探测黄色距离|罗盘探测绿色距离
+id_int|forwardSpeed_float|backwardsSpeed_float|sidewaysSpeed_float|hp_int|zhunxingMinValue_float|zhunxingMaxValue_float|zhunxingStepValue_float|heartSound_string|luopanMaxDis_float|luopanMidDis_float|luopanMinDis_float
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0
+1|2|1.4|2|500|15|30|3|sound/3004|40|20|2
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0

@@ -1,0 +1,40 @@
+package ice_cProtol; 
+ 
+message MSG_C2L_LOGINSERVER
+{
+	 required string account = 1;  //账号
+	 required string password = 2; //密码
+}
+
+message MSG_L2C_LOGINSERVER
+{
+	required int32 ret = 1;	//0成功，否则为错误号
+}
+
+message Person //message具体类
+{  
+	required string name = 1; 
+	required int32 id = 2; 
+	optional string email = 3; 
+	enum PhoneType 
+	{ 
+		MOBILE = 0; 
+		HOME = 1;
+		WORK = 2; 
+	} 
+
+	message PhoneNumber //电话号码   //这个主要是采用 PhoneType
+	{  
+		required string number = 1; 
+		optional PhoneType type = 2 [default = HOME]; 
+	} 
+
+	repeated PhoneNumber phone = 4; 
+} 
+
+message AddressBook  //地址薄  类
+{ 
+	repeated Person person = 1; 
+}
+
+

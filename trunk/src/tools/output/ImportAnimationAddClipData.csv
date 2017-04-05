@@ -1,0 +1,22 @@
+数据ID|文件名称|描述|动作名称|起始帧|结束帧|是否循环播放|事件数据ID|是否激活
+id_int|name_string|desc_string|clipName|firstFrame_int| lastFrame_int|isLoop_int|eventDataId_string|enable_int
+0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0
+101|npc_001_wolf|出生|born|187|234|0|0|1
+102|npc_001_wolf|行走|walk_01|465|495|1|0|1
+103|npc_001_wolf|待机1|idle_01|239|420|1|0|1
+104|npc_001_wolf|奔跑|run|1537|1556|1|0|1
+105|npc_001_wolf|寻找机会|findChance|556|676|1|0|1
+106|npc_001_wolf|躲避1|duobi_01|706|731|0|0|1
+107|npc_001_wolf|躲避2|duobi_02|736|763|0|0|1
+108|npc_001_wolf|飞扑啃咬|attack_01|771|818|0|0|1
+109|npc_001_wolf|怒视|nushi|823|853|1|0|1
+110|npc_001_wolf|逃跑|taopao|858|948|1|0|1
+111|npc_001_wolf|对峙|duizhi|953|983|1|0|1
+112|npc_001_wolf|后退|houtui|988|1037|0|0|1
+113|npc_001_wolf|陷入（泥沼）|xianru|1110|1165|0|0|1
+114|npc_001_wolf|挣扎（泥沼）|zhengzha|1667|1784|1|0|1
+115|npc_001_wolf|挣脱（泥沼）|zhengtuo|1297|1407|0|0|1
+116|npc_001_wolf|死亡|die|1415|1518|0|0|1
+117|npc_001_wolf|转身|turn_180|1567|1639|0|0|1

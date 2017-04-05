@@ -1,0 +1,15 @@
+Changelog:2015.07.24 InitVersion zhangjia
+
+1./ <summary>
+/// 加载AssetBundle
+/// </summary>
+/// <param name="assetBundleName">AssetBundle名称</param>
+/// <param name="assetName">资源名称</param>
+public void LoadAsset(string assetBundleName, string assetName)
+
+
+2./ <summary>
+/// 实例化资源
+/// </summary>
+/// <param name="assetName">资源名称</param>
+public void InstantiateAsset(string assetName)

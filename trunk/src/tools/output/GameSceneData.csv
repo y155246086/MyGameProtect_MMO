@@ -1,0 +1,7 @@
+数据ID|场景名称|用于加载的场景名称|刷新点预设路径|背景音乐|随机播放音效|状态名称
+id_int|sceneName_string|levelName_string|ResRefreshPointsPath_string|bgsound_string|randomSound_string|stateName_string
+0|0|0|0|0|0|0
+0|0|0|0|0|0|0
+0|0|0|0|0|0|0
+1|新手村|guichuideng_csd|Prefabs/MainCityPoint|sound/bgCity|0|CityState
+2|野外场景|guichuideng_demo|Prefabs/YewaiPoint|sound/bgYewai|sound/langYangtianchangxiao01|FieldState

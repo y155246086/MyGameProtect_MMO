@@ -1,0 +1,35 @@
+2015-02-23 
+完成了CSV数据的结构规划：
+
+知识要点：
+1、D:\SLG\Assets\Scripts\BattleFramework\Data\Editor\CreateClassFromCSV.cs
+自动把CSV文件转化为数据类
+
+2、然后通过静态DataCenter 静态类的SingleTon ()方法获取到所有CSV文件的list数据
+
+3、通过CSV类中GetByID (int id,List<CastleBuildDesign> data) 可以查询指定的那条数据
+
+
+知识要点2：City里面的 面板属性
+1、PreBattle.cs  战前准备，初始化所有英雄的list 属性   
+
+2、初始化heroInfoList 这个类  然后根据表自动填充数据 
+
+3、其中涉及到 button事件，_CityController控制所有的2DUI面板属性  ，在面板里面填写button事件
+拖动到对应的位置中去。
+
+4、Init 总的界面初始化  都继承于 BasePanel 中的属性  所以子面板中不可以有start 启动方法。
+
+5、在herolist 拖动过程中  发现层级关系   没有 panel 和wegit 属性   ，他们widget 属性设置为-1  cells 
+
+6、放置之后初始化重新渲染，移动的ITEM仍然在GRID的SCROVIEW 中  那么 初始化  SET ACTIVE TRUE FALUSE 
+
+
+知识要点3：buildingItem 属性  设置是否检测射线 如果2D面板打开 则射线不再检测3D场景
+1、RAY事件  检测对应的层级
+
+2、CityController  里面控制在3D场景中是否检测所需要检测的事件
+
+3、City.isBuildingPanel = false;
+子面板都可以获取City 这样我们这是没有在3D场景中建造建筑物   ，关闭面板后我们设定可以建筑哈
+ 

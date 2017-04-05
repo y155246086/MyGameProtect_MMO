@@ -1,0 +1,13 @@
+package ice_sProtol;
+
+enum MSGID
+{ 
+	
+	CSID_C2L_LOGINSERVER 		= 1020; //请求登陆
+	CSID_L2C_LOGINSERVER		= 1021; //返回登陆结果  
+		
+	
+	CSID_C2S_PUB_BEAT	= 30100;	//心跳请求
+	CSID_S2C_PUB_BEAT	= 30101;	//心跳应答
+	
+}
