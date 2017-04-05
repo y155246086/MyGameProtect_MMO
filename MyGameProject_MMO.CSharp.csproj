@@ -72,6 +72,24 @@
     <Reference Include="Protocols">
       <HintPath>Assets\Plugins\Protocols.dll</HintPath>
     </Reference>
+    <Reference Include="Pathfinding.ClipperLib">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Clipper\Pathfinding.ClipperLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.Poly2Tri">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.JsonFx">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="MyGameProject_MMO.CSharp.Plugins.csproj">
+      <Project>{5B3E0232-47E7-AA07-EB2B-C9AC31445664}</Project>
+      <Name>MyGameProject_MMO.CSharp.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\AutoSelect\MultiLayerTouch.cs" />
@@ -360,6 +378,24 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ViewWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\LuaConst.cs" />
     <Compile Include="Assets\MessageText.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\DataCenter.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\GameGoodsItem.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\GameTriggerData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\ImportAnimationAddClipData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\ImportAnimationAddEventData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\MonsterData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SceneLevelData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\StoryData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\TriggerData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\WaveData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\WeaponData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\SingleTon.cs" />
     <Compile Include="Assets\Scripts\Net\Common\BigEndianTransfer.cs" />
     <Compile Include="Assets\Scripts\Net\Common\ILogger.cs" />
     <Compile Include="Assets\Scripts\Net\Common\Logger.cs" />
@@ -396,38 +432,21 @@
     <Compile Include="Assets\Scripts\NetworkManagerC.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\TestNetWork.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\DataCenter.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameGoodsItem.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameTriggerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ImportAnimationAddClipData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ImportAnimationAddEventData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\MonsterData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneLevelData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\StoryData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\TriggerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\WaveData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\WeaponData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\SingleTon.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Event\EventDispatcher.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Event\EventException.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Event\GlobalEvents.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\LoggerHelper.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\MS\KeyedPriorityQueue.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\MS\KeyedPriorityQueueHeadChangedEventArgs.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\SoundManager.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\FrameTimerHeap.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerBehaviour.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerHeap.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\mogo\Timer\TimerManager.cs" />
+    <Compile Include="Assets\Scripts\mogo\Event\EventDispatcher.cs" />
+    <Compile Include="Assets\Scripts\mogo\Event\EventException.cs" />
+    <Compile Include="Assets\Scripts\mogo\Event\GlobalEvents.cs" />
+    <Compile Include="Assets\Scripts\mogo\LoggerHelper.cs" />
+    <Compile Include="Assets\Scripts\mogo\MS\KeyedPriorityQueue.cs" />
+    <Compile Include="Assets\Scripts\mogo\MS\KeyedPriorityQueueHeadChangedEventArgs.cs" />
+    <Compile Include="Assets\Scripts\mogo\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\mogo\Timer\FrameTimerHeap.cs" />
+    <Compile Include="Assets\Scripts\mogo\Timer\TimerBehaviour.cs" />
+    <Compile Include="Assets\Scripts\mogo\Timer\TimerData.cs" />
+    <Compile Include="Assets\Scripts\mogo\Timer\TimerHeap.cs" />
+    <Compile Include="Assets\Scripts\mogo\Timer\TimerManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\RealseNotes.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\_Documentation\How to migrate from EasyTouch 4.X.txt" />
@@ -436,6 +455,20 @@
     <None Include="Assets\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />
     <None Include="Assets\EasyTouchBundle\Readme.txt" />
     <None Include="Assets\LuaFramework\ToLua\readme.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Example8_PathTypes\SquareShader.shader" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Light.shader" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Multiply.shader" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\_Example Scenes.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\Clipper\ClipperLicense.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\DotNetZipLicense.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\JsonFxLicense.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Poly2TriLicense.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Plugins\dependencies.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Readme.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\Readme_upgrading.txt" />
+    <None Include="Assets\Plugins\AstarPathfindingProject\link.xml" />
     <None Include="Assets\Resources\Shader\MogoFakeLight.shader" />
     <None Include="Assets\Resources\Shader\MogoParticleAdd.shader" />
     <None Include="Assets\Resources\Shader\MogoParticleAlphaBlended.shader" />
