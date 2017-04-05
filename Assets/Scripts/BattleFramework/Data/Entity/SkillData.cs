@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class SkillData {
         public static string csvFilePath = "Configs/SkillData";
-        public static string[] columnNameArray = new string[14];
+        public static string[] columnNameArray = new string[16];
         public static List<SkillData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
@@ -14,7 +14,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[14];
+            columnNameArray = new string[16];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 SkillData data = new SkillData();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -41,10 +41,14 @@ namespace BattleFramework.Data{
                 columnNameArray [10] = "cd";
                 data.triggerName = csvFile.mapData[i].data[11];
                 columnNameArray [11] = "triggerName";
-                int.TryParse(csvFile.mapData[i].data[12],out data.zhaohuanId);
-                columnNameArray [12] = "zhaohuanId";
-                data.skillSound = csvFile.mapData[i].data[13];
-                columnNameArray [13] = "skillSound";
+                data.stateName = csvFile.mapData[i].data[12];
+                columnNameArray [12] = "stateName";
+                float.TryParse(csvFile.mapData[i].data[13],out data.triggerTime);
+                columnNameArray [13] = "triggerTime";
+                int.TryParse(csvFile.mapData[i].data[14],out data.zhaohuanId);
+                columnNameArray [14] = "zhaohuanId";
+                data.skillSound = csvFile.mapData[i].data[15];
+                columnNameArray [15] = "skillSound";
                 dataList.Add(data);
             }
             return dataList;
@@ -72,6 +76,8 @@ namespace BattleFramework.Data{
         public string attackedSound;//击中声音
         public float cd;//技能CD
         public string triggerName;//动画触发名称
+        public string stateName;//动画状态机状态名称
+        public float triggerTime;//动画触发时间
         public int zhaohuanId;//召唤关卡ID
         public string skillSound;//技能声音
     }

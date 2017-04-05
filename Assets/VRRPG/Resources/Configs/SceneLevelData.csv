@@ -1,0 +1,9 @@
+数据ID|刷怪间隔|第几批怪|到第几批怪|角色是否可以移动|刷怪开始触发剧情ID|战斗结束触发剧情ID
+id_int|timeInterval_float|fromWave_int|toWave_int|isMove_int|StartTriggerStoryId_int|EndTriggerStoryId_int
+0|0|0|0|0|0|0
+0|0|0|0|0|0|0
+0|0|0|0|0|0|0
+1|3|12|21|0|104|107
+2|10|3|3|0|0|0
+3|5|7|10|0|0|122
+4|0|11|11|0|109|110

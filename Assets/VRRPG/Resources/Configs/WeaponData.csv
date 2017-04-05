@@ -1,0 +1,6 @@
+数据ID|名字|攻击距离|攻击力|攻击声音
+id_int|name_string|attackDis_float|attackValue_int|attackSound_string
+0|0|0|0|0
+0|0|0|0|0
+0|0|0|0|0
+1|工兵铲|3|50|sound/gongbingchan
