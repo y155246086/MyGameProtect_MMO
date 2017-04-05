@@ -3,4 +3,4 @@ id_int|name_string|type_int|shootPrefabs_string|minAttackValue_int|maxAttackValu
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
-5|普通狼攻击|0|0|5|10|0|0|fx/skill_102_fan_attack_1|0|5|TriggerAttack01|attack_1|0.55|0|se/se_mark
+5|普通狼攻击|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|5|TriggerAttack01|attack_1|0.55|0|se/se_mark
