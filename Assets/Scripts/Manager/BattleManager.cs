@@ -15,6 +15,7 @@ public class BattleManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        Mogo.Util.TimerHeap.Tick();
+        Mogo.Util.FrameTimerHeap.Tick();
 	}
 }

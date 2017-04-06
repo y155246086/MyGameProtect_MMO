@@ -10,17 +10,18 @@ public class SfxManager{
     public SfxManager(FSM.AIController owenr)
     {
         this.theOwner = owenr;
+        sfxTimerIDDic = new Dictionary<int, List<uint>>();
     }
     /// <summary>
     /// 技能触发特效，一个技能对应多个特效
     /// </summary>
-    /// <param name="actionID"></param>
-    public void PlaySfx(int actionID)
+    /// <param name="skillID"></param>
+    public void PlaySfx(int skillID)
     {
-        SkillData skillData = SkillData.GetByID(actionID, DataCenter.Instance().skillDataList);
+        SkillData skillData = SkillData.GetByID(skillID, DataCenter.Instance().skillDataList);
         if (skillData == null)
         {
-            LoggerHelper.Error("not exist spell data:" + actionID);
+            LoggerHelper.Error("not exist spell data:" + skillID);
             return;
         }
 
@@ -32,7 +33,7 @@ public class SfxManager{
         List<EffectData> effectList = DataCenter.Instance().effectDataList;
         for (int i = 0; i < effectList.Count; i++)
         {
-            if(effectList[i].skillId == actionID)
+            if(effectList[i].skillId == skillID)
             {
                 sfx.Add(effectList[i].id, effectList[i].delay);
             }
@@ -42,18 +43,19 @@ public class SfxManager{
 
         if (sfx != null && sfx.Count > 0)
         {
-            if (!sfxTimerIDDic.ContainsKey(actionID))
-                sfxTimerIDDic.Add(actionID, new List<uint>());
+            if (!sfxTimerIDDic.ContainsKey(skillID))
+                sfxTimerIDDic.Add(skillID, new List<uint>());
             foreach (var pair in sfx)
             {
-                if (pair.Key < 1000)
-                {
-                    sfxTimerIDDic[actionID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, PlayUIFx, pair.Key));
-                }
-                else
-                {
-                    sfxTimerIDDic[actionID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, TriggerCues, cueHandler, pair.Key));
-                }
+                sfxTimerIDDic[skillID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, TriggerCues, cueHandler, pair.Key));
+                //if (pair.Key < 1000)
+                //{
+                //    sfxTimerIDDic[skillID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, PlayUIFx, pair.Key));
+                //}
+                //else
+                //{
+                //    sfxTimerIDDic[skillID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, TriggerCues, cueHandler, pair.Key));
+                //}
             }
         }
         return;

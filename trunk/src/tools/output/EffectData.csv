@@ -1,6 +1,7 @@
-数据ID|技能ID|持续时间|是否有冲突|是否静态|坐标类型|坐标|玩家|资源路径|延迟时间|特效类型
-id_int|skillId_int|duration_float|isConflict_int|isStatic_int|locationType_int|location_vector3|player_string|resourcePath_string|delay_float|effectType_int
-0|0|0|0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0|0|0|0
-1|1|1|0|0|0|0,0,0|0|0|1|0
+数据ID|技能ID|持续时间|是否有冲突id|是否静态|坐标类型|位置名称|坐标|玩家|资源路径|延迟时间|特效类型|动画名称|声音延迟
+id_int|skillId_int|duration_float|isConflict_int|isStatic_int|locationType_int|slot_string|location_Vector3|player_string|resourcePath_string|delay_float|effectType_int|anim_string|soundDelay_float
+0|0|0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0|0|0
+1|1|1|0|0|2|slot_head|0,0,0|0|fx/fx_prefab/skill_102_fan_attack_1|0.3|0|0|0
+2|2|1|0|0|2|slot_head|0,0,0|0|fx/fx_prefab/skill_101_blade_powerattack_1|0.3|0|0|0

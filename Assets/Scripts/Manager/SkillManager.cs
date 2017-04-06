@@ -125,8 +125,9 @@ public class SkillManager : MonoBehaviour
         cdDict[data.id] = Time.time;
         //播放动作
         //owner.Play(data.triggerName);
-        owner.GetComponent<Animator>().SetInteger("Action", 1);
+        owner.GetComponent<Animator>().SetInteger("Action", data.action);
         isCanSkill = false;
+        AttackingFx(data.id);
         //Debuger.Log("等待攻击触发：AttackTrigger");
         GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger);
     }
