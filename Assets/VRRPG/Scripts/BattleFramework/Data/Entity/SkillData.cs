@@ -72,7 +72,7 @@ namespace BattleFramework.Data{
         public int maxAttackValue;//最大攻击力
         public float speed;//弹道速度
         public float angle;//弹道角度
-        public string attackedEffect;//击中特效
+        public string attackedEffect;//攻击特效
         public string attackedSound;//击中声音
         public float cd;//技能CD
         public string triggerName;//动画触发名称

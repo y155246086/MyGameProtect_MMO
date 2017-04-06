@@ -105,14 +105,14 @@
     <Reference Include="Pathfinding.ClipperLib">
       <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Clipper\Pathfinding.ClipperLib.dll</HintPath>
     </Reference>
-    <Reference Include="Pathfinding.Poly2Tri">
-      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Pathfinding.JsonFx">
       <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\JsonFx\Pathfinding.JsonFx.dll</HintPath>
     </Reference>
-    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
-      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\DotNetZip\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+    <Reference Include="Pathfinding.Poly2Tri">
+      <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +190,9 @@
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaExport.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaMenu.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaTree.cs" />
-    <Compile Include="Assets\Scripts\BattleFramework\Data\CSV\Editor\CreateClassFromCSV.cs" />
-    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\Editor\CreateConfigConstFromFile.cs" />
-    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\Editor\CreateSysConstFromFile.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\Editor\CreateClassFromCSV.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\Editor\CreateConfigConstFromFile.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\Editor\CreateSysConstFromFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />

@@ -1,0 +1,6 @@
+数据ID|技能ID|持续时间|是否有冲突|是否静态|坐标类型|坐标|玩家|资源路径|延迟时间|特效类型
+id_int|skillId_int|duration_float|isConflict_int|isStatic_int|locationType_int|location_vector3|player_string|resourcePath_string|delay_float|effectType_int
+0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0
+1|1|1|0|0|0|0,0,0|0|0|1|0

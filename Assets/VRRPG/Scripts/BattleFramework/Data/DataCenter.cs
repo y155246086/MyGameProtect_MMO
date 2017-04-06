@@ -30,6 +30,7 @@ public class DataCenter : SingleTon<DataCenter>
     public List<CameraEffectData> cameraEffectList;
     public List<WeaponData> weaponDataList;
     public List<GameSceneData> gameSceneDataList;
+    public List<EffectData> effectDataList;
     public void Init()
     {
         if (isInit == true)
@@ -57,6 +58,7 @@ public class DataCenter : SingleTon<DataCenter>
         cameraEffectList = CameraEffectData.LoadDatas();
         weaponDataList = WeaponData.LoadDatas();
         gameSceneDataList = GameSceneData.LoadDatas();
+        effectDataList = EffectData.LoadDatas();
         isInit = true;
         Debug.Log("DataCenter:初始化数据结束");
     }

@@ -19,6 +19,8 @@ namespace FSM
         protected float arriveDistance = 1f;//到达距离
         public SkillManager skillManager;
         public PropertyManager propertyManager;
+        protected SfxManager sfxManager;
+        public SfxHandler sfxHandler;
         public MonsterData data;
         public Vector3 BornPoint;//出生点
         /// <summary>
@@ -46,6 +48,8 @@ namespace FSM
         {
             base.Initialize();
             propertyManager = new PropertyManager();
+            sfxManager = new SfxManager(this);
+            sfxHandler = this.gameObject.AddComponent<SfxHandler>();
             health = 100;
             GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
             playerTransfrom = objPlayer.transform;
@@ -79,6 +83,17 @@ namespace FSM
                 return;
             }
             CurrentState.OnFiexedUpdate(playerTransfrom);
+        }
+        /// <summary>
+        /// 播放特效
+        /// </summary>
+        public void PlaySfx(int id)
+        {
+            if(sfxManager == null)
+            {
+                return;
+            }
+            sfxManager.PlaySfx(id);
         }
     }
 }

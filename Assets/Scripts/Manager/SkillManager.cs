@@ -16,9 +16,9 @@ public class SkillManager : MonoBehaviour
 
     }
 
-    public void SetOwenr(MonsterAI actorParent)
+    public void SetOwenr(MonsterAI owner)
     {
-        this.owner = actorParent;
+        this.owner = owner;
         if (owner.data.skillID1>0)
             AddSkill(owner.data.skillID1);
         if (owner.data.skillID2 > 0)
@@ -180,5 +180,12 @@ public class SkillManager : MonoBehaviour
             }
         }
         isCanSkill = true;
+    }
+    /// <summary>
+    /// 播放特效
+    /// </summary>
+    private void AttackingFx(int id)
+    {
+        owner.PlaySfx(id);
     }
 }
