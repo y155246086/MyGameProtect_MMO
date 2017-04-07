@@ -2,6 +2,7 @@
 using System.Collections;
 using BattleFramework.Data;
 using System.Collections.Generic;
+using Mogo.Util;
 
 
 public class SkillManager : MonoBehaviour
@@ -9,8 +10,9 @@ public class SkillManager : MonoBehaviour
     private List<SkillData> skillList = new List<SkillData>();
     private MonsterAI owner;
     private Dictionary<int, float> cdDict = new Dictionary<int, float>();
-    public float CD = 4f;
     private SkillData curSkillData = null;
+    private bool isCanSkill = true;
+    private bool isSkillPlaying = false;
     public SkillManager()
     {
 
@@ -59,14 +61,6 @@ public class SkillManager : MonoBehaviour
             return 0;
         }
     }
-    /// <summary>
-    /// 获取可用的攻击技能
-    /// </summary>
-    /// <returns></returns>
-    public SkillData GetAttackSkill()
-    {
-        return null;
-    }
     private bool HasSkill(int skillId)
     {
         for (int i = 0; i < skillList.Count; i++)
@@ -88,9 +82,6 @@ public class SkillManager : MonoBehaviour
         {
             return;
         }
-        //GameCommonUtils.Instance.RotateToTarget(owner.transform, owner.AttackTarget.transform.position);
-        //owner.LookAt(owner.AttackTarget.transform);
-        owner.GetComponent<AIPath>().enabled = false;
         for (int i = 0; i < skillList.Count; i++)
         {
             SkillData data = skillList[i];
@@ -99,6 +90,7 @@ public class SkillManager : MonoBehaviour
                 if (Time.time - cdDict[data.id] >= data.cd && isCanSkill == true)//cd时间到
                 {
                     UseSkill(data);
+                    break;
                 }
                 else
                 {
@@ -108,10 +100,20 @@ public class SkillManager : MonoBehaviour
             else
             {
                 UseSkill(data);
+                break;
             }
         }
     }
-    private bool isCanSkill = true;
+    
+    /// <summary>
+    /// 技能是否在释放中
+    /// </summary>
+    public bool IsSkillPlaying
+    {
+        get {
+            return isSkillPlaying;
+        }
+    }
     /// <summary>
     /// 使用技能
     /// </summary>
@@ -127,7 +129,8 @@ public class SkillManager : MonoBehaviour
         //owner.Play(data.triggerName);
         owner.GetComponent<Animator>().SetInteger("Action", data.action);
         isCanSkill = false;
-        AttackingFx(data.id);
+        isSkillPlaying = true;
+        AttackingFx(data);
         //AnimatorClipInfo[] infoList = owner.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
         //for (int i = 0; i < infoList.Length; i++)
         //{
@@ -145,23 +148,16 @@ public class SkillManager : MonoBehaviour
     private void EndAttackAction()
     {
         isCanSkill = true;
+        isSkillPlaying = false;
+    }
+    private void DelayAttack()
+    {
+        AttackTrigger();
     }
     protected void AttackTrigger()
     {
         //Debuger.LogError(owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + "_______");
         owner.GetComponent<Animator>().SetInteger("Action", 0);
-        //Debuger.Log("攻击触发：AttackTrigger");
-        if (curSkillData!=null)
-        {
-            if (curSkillData.skillSound.Length > 1)
-            {
-                Mogo.SoundManager.GameObjectPlaySound(curSkillData.skillSound, this.gameObject, false, true);
-            }
-            //if (curSkillData.attackedEffect.Length > 1)
-            //{
-            //    BaofengCommon.PlayEffect(curSkillData.attackedEffect, null, 1.5f);
-            //}
-        }
         
         if (owner.AttackTarget != null && owner.TargetIsDead() == false)
         {
@@ -200,8 +196,18 @@ public class SkillManager : MonoBehaviour
     /// <summary>
     /// 播放特效
     /// </summary>
-    private void AttackingFx(int id)
+    private void AttackingFx(SkillData skillData)
     {
-        owner.PlaySfx(id);
+        owner.PlaySfx(skillData.id);
+        if(skillData.cameraTweenId>0)
+        {
+            ////有震屏,调用震屏接口
+            TimerHeap.AddTimer<int, float>((uint)(skillData.cameraTweenSL * 1000), 0, MogoMainCamera.Instance.Shake, skillData.cameraTweenId, skillData.cameraTweenST);
+        }
+        if (curSkillData.skillSound.Length > 1)
+        {
+            //播放声音
+            //Mogo.SoundManager.GameObjectPlaySound(curSkillData.skillSound, this.gameObject, false, true);
+        }
     }
 }

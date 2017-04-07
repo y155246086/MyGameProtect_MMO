@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class SkillData {
         public static string csvFilePath = "Configs/SkillData";
-        public static string[] columnNameArray = new string[17];
+        public static string[] columnNameArray = new string[20];
         public static List<SkillData> dataList;
         public static List<SkillData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
@@ -15,7 +15,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[17];
+            columnNameArray = new string[20];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 SkillData data = new SkillData();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -52,6 +52,12 @@ namespace BattleFramework.Data{
                 columnNameArray [15] = "zhaohuanId";
                 data.skillSound = csvFile.mapData[i].data[16];
                 columnNameArray [16] = "skillSound";
+                int.TryParse(csvFile.mapData[i].data[17],out data.cameraTweenId);
+                columnNameArray [17] = "cameraTweenId";
+                float.TryParse(csvFile.mapData[i].data[18],out data.cameraTweenSL);
+                columnNameArray [18] = "cameraTweenSL";
+                float.TryParse(csvFile.mapData[i].data[19],out data.cameraTweenST);
+                columnNameArray [19] = "cameraTweenST";
                 dataList.Add(data);
             }
             return dataList;
@@ -90,5 +96,8 @@ namespace BattleFramework.Data{
         public float triggerTime;//动画触发时间
         public int zhaohuanId;//召唤关卡ID
         public string skillSound;//技能声音
+        public int cameraTweenId;//相机特效数据ID
+        public float cameraTweenSL;//相机特效延时
+        public float cameraTweenST;//相机特效持续
     }
 }

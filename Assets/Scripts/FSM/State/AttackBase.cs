@@ -33,6 +33,11 @@ public class AttackBase : FSMState
     }
     protected override bool OnUpdateState(Transform target)
     {
+        FSM.AIController ai = owner.GetComponent<FSM.AIController>();
+        if (ai != null && ai.skillManager && ai.skillManager.IsSkillPlaying == true)
+        {
+            return false;
+        }
         float dist = GetDistanceXZ(owner.position, target.position);
         if (dist >= aiController.AttackDistance && dist < aiController.ChaseDistance)
         {

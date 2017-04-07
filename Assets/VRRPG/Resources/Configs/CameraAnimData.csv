@@ -1,0 +1,6 @@
+数据ID|特效名称|x旋转|x摆动|y旋转|y摆动|z旋转|z摆动
+id_int|name_string|xRate_int|xSwing_float|yRate_int|ySwing_float|zRate_int|zSwing_float
+0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0
+1|0|0|0|25|0.4|15|1

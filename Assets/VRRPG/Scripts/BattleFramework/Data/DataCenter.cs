@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
  
+//if you want to update this,please go to CreateClassFromCSV.cs
 namespace BattleFramework.Data
 {
     public class DataCenter : MonoBehaviour
@@ -9,6 +10,7 @@ namespace BattleFramework.Data
         static DataCenter instance;
   
         public List<AIData> list_AIData;
+        public List<CameraAnimData> list_CameraAnimData;
         public List<CameraEffectData> list_CameraEffectData;
         public List<CameraStateData> list_CameraStateData;
         public List<CreateAIData> list_CreateAIData;
@@ -50,6 +52,7 @@ namespace BattleFramework.Data
         public void LoadCSV ()
         {
             list_AIData = AIData.LoadDatas ();
+            list_CameraAnimData = CameraAnimData.LoadDatas ();
             list_CameraEffectData = CameraEffectData.LoadDatas ();
             list_CameraStateData = CameraStateData.LoadDatas ();
             list_CreateAIData = CreateAIData.LoadDatas ();

@@ -210,7 +210,7 @@ namespace BattleFramework.Data
 			file.WriteLine ("using System.Collections;");
 			file.WriteLine ("using System.Collections.Generic;");
 			file.WriteLine (" ");
-			
+            file.WriteLine("//if you want to update this,please go to CreateClassFromCSV.cs");
 			file.WriteLine ("namespace BattleFramework.Data");
 			file.WriteLine ("{");
             file.WriteLine("    public class DataCenter : MonoBehaviour");

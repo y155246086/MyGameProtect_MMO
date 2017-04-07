@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterAI : FSM.AIController {
-    
-    
+    /// <summary>
+    /// 动画的播放速率
+    /// </summary>
+    public float aiRate;
     
     public override float ChaseDistance
     {

@@ -398,6 +398,7 @@
     <Compile Include="Assets\Scripts\FSM\State\FSMState.cs" />
     <Compile Include="Assets\Scripts\FSM\State\PatrolBase.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\EffectType.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\SfxSystem\MogoCameraLighting.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\SfxHandler.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\SfxManager.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\SlotCueHandler.cs" />
@@ -411,6 +412,7 @@
     <Compile Include="Assets\Scripts\Manager\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\DownloadManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GUIManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\MogoMainCamera.cs" />
     <Compile Include="Assets\Scripts\Manager\MonsterManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PropertyManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
@@ -472,6 +474,7 @@
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\DataCenter.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\AIData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraAnimData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraEffectData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraStateData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CreateAIData.cs" />

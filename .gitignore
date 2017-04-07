@@ -1,3 +1,9 @@
 ﻿Temp
 Library
 StreamingAssets
+MyGameProject_MMO.CSharp.csproj
+MyGameProject_MMO.CSharp.Editor.csproj
+MyGameProject_MMO.CSharp.Plugins.csproj
+MyGameProject_MMO.sln
+MyGameProject_MMO.v12.suo
+.DS_Store
