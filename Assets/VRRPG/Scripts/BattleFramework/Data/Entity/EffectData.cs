@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class EffectData {
         public static string csvFilePath = "Configs/EffectData";
         public static string[] columnNameArray = new string[14];
+        public static List<EffectData> dataList;
         public static List<EffectData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<EffectData> dataList = new List<EffectData>();
+            dataList = new List<EffectData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -62,6 +63,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static EffectData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class ImportAnimationAddEventData {
         public static string csvFilePath = "Configs/ImportAnimationAddEventData";
         public static string[] columnNameArray = new string[8];
+        public static List<ImportAnimationAddEventData> dataList;
         public static List<ImportAnimationAddEventData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<ImportAnimationAddEventData> dataList = new List<ImportAnimationAddEventData>();
+            dataList = new List<ImportAnimationAddEventData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -46,6 +47,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static ImportAnimationAddEventData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

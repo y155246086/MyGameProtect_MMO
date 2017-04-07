@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class WaveData {
         public static string csvFilePath = "Configs/WaveData";
         public static string[] columnNameArray = new string[4];
+        public static List<WaveData> dataList;
         public static List<WaveData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<WaveData> dataList = new List<WaveData>();
+            dataList = new List<WaveData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -38,6 +39,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static WaveData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

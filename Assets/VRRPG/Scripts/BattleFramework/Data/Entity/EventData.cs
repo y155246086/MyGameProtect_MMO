@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class EventData {
         public static string csvFilePath = "Configs/EventData";
         public static string[] columnNameArray = new string[5];
+        public static List<EventData> dataList;
         public static List<EventData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<EventData> dataList = new List<EventData>();
+            dataList = new List<EventData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -40,6 +41,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static EventData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

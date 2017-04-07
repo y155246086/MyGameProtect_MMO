@@ -18,7 +18,7 @@ public class SfxManager{
     /// <param name="skillID"></param>
     public void PlaySfx(int skillID)
     {
-        SkillData skillData = SkillData.GetByID(skillID, DataCenter.Instance().skillDataList);
+        SkillData skillData = SkillData.GetByID(skillID);
         if (skillData == null)
         {
             LoggerHelper.Error("not exist spell data:" + skillID);
@@ -30,7 +30,7 @@ public class SfxManager{
         //key  特效id value 延时启动时间
         Dictionary<int, float> sfx = new Dictionary<int, float>(); ;
 
-        List<EffectData> effectList = DataCenter.Instance().effectDataList;
+        List<EffectData> effectList = EffectData.dataList;
         for (int i = 0; i < effectList.Count; i++)
         {
             if(effectList[i].skillId == skillID)

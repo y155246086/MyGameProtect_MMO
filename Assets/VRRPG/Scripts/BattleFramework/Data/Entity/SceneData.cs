@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class SceneData {
         public static string csvFilePath = "Configs/SceneData";
         public static string[] columnNameArray = new string[10];
+        public static List<SceneData> dataList;
         public static List<SceneData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<SceneData> dataList = new List<SceneData>();
+            dataList = new List<SceneData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -50,6 +51,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static SceneData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

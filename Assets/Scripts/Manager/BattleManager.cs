@@ -6,7 +6,7 @@ public class BattleManager : MonoBehaviour {
     void Awake()
     {
         this.gameObject.AddComponent<MonsterManager>();
-        DataCenter.Instance().Init();
+        BattleFramework.Data.DataCenter.Instance();
     }
 	// Use this for initialization
 	void Start () {

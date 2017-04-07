@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class CameraEffectData {
         public static string csvFilePath = "Configs/CameraEffectData";
         public static string[] columnNameArray = new string[4];
+        public static List<CameraEffectData> dataList;
         public static List<CameraEffectData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<CameraEffectData> dataList = new List<CameraEffectData>();
+            dataList = new List<CameraEffectData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -38,6 +39,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static CameraEffectData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

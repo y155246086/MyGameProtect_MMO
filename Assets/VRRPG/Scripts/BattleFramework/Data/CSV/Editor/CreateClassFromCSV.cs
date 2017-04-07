@@ -18,7 +18,7 @@ namespace BattleFramework.Data
 
         string csvDirection = @"Assets/VRRPG/Resources/Configs";
         string classFilePath = @"Assets/VRRPG/Scripts/BattleFramework/Data/Entity";
-		//string dataCenterFilePath = @"Assets/Scripts/BattleFramework/Data/DataCenter.cs";
+        string dataCenterFilePath = @"Assets/VRRPG/Scripts/BattleFramework/Data/DataCenter.cs";
 
 		int top;
 		int height;
@@ -51,7 +51,7 @@ namespace BattleFramework.Data
 					}
 
 					//格式化生成DataCenter
-					//CreateDataCenter (filePaths);
+					CreateDataCenter (filePaths);
 				}
 			}
 		}
@@ -86,11 +86,12 @@ namespace BattleFramework.Data
 			CSVFile csvFile = new CSVFile ();
 			csvFile.Open (resourcesPath);
 			file.WriteLine ("        public static string[] columnNameArray = new string[" + csvFile.listColumnName.Count + "];");
+            file.WriteLine ("        public static List<" + className+ "> dataList;");
 
 			file.WriteLine ("        public static List<" + className + "> LoadDatas(){");
 			file.WriteLine ("            CSVFile csvFile = new CSVFile();");
 			file.WriteLine ("            csvFile.Open (csvFilePath);");
-			file.WriteLine ("            List<" + className + "> dataList = new List<" + className + ">();");
+			file.WriteLine ("            dataList = new List<" + className + ">();");
 			file.WriteLine ("            string[] strs;");
 			file.WriteLine ("            string[] strsTwo;");
 			file.WriteLine ("            List<int> listChild;");
@@ -181,6 +182,13 @@ namespace BattleFramework.Data
 			file.WriteLine ("        }");
 			file.WriteLine ("  ");
 
+            //添加根据ID查询的方法  
+            file.WriteLine("  ");
+            file.WriteLine("        public static " + className + " GetByID (int id)");
+            file.WriteLine("        {");
+            file.WriteLine("            return GetByID(id,dataList);");
+            file.WriteLine("        }");
+            file.WriteLine("  ");
 
 			for (int i=0; i<fields.Count; i++) {
 				file.WriteLine (fields [i]);
@@ -194,7 +202,7 @@ namespace BattleFramework.Data
 			file.Close ();
 			Debug.Log ("Create " + fileName);
 		}
-		/*生成DataCenter 功能
+		//生成DataCenter 功能
 		void CreateDataCenter (FileInfo[] filePathsAll)
 		{
 			StreamWriter file = new StreamWriter (dataCenterFilePath, false);
@@ -205,9 +213,9 @@ namespace BattleFramework.Data
 			
 			file.WriteLine ("namespace BattleFramework.Data");
 			file.WriteLine ("{");
-			file.WriteLine ("    public class DataCenter : MonoBehaviour");
+            file.WriteLine("    public class DataCenter : MonoBehaviour");
 			file.WriteLine ("    {");
-			file.WriteLine ("        static DataCenter instance;");
+            file.WriteLine("        static DataCenter instance;");
 			file.WriteLine ("  ");
 
 			//list<CSV>
@@ -226,7 +234,7 @@ namespace BattleFramework.Data
 
 
 			//SingleTon ()
-			file.WriteLine ("        public static DataCenter SingleTon ()");
+			file.WriteLine ("        public static DataCenter Instance ()");
 			file.WriteLine ("        {");
 			file.WriteLine ("            if (instance == null) {");
 			file.WriteLine ("                Debug.Log (\"new _DataCenter\");");
@@ -258,7 +266,7 @@ namespace BattleFramework.Data
 			}
 			file.WriteLine ("        }");
 			Debug.Log ("//LoadCSV");
-
+            /*
 			//get id  ITEM
 			file.WriteLine ("  ");
 			file.WriteLine ("  ");
@@ -284,6 +292,7 @@ namespace BattleFramework.Data
 				file.WriteLine ("        }");
 				file.Flush ();
 			}
+             * */
 			file.WriteLine (" ");
 			file.WriteLine (" ");
 			file.WriteLine ("    }");
@@ -292,6 +301,6 @@ namespace BattleFramework.Data
 			file.Close ();
 			Debug.Log ("//get id  ITEM");
 		}
-		*/
+		
 	}
 }

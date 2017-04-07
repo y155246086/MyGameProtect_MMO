@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class MonsterData {
         public static string csvFilePath = "Configs/MonsterData";
         public static string[] columnNameArray = new string[34];
+        public static List<MonsterData> dataList;
         public static List<MonsterData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<MonsterData> dataList = new List<MonsterData>();
+            dataList = new List<MonsterData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -98,6 +99,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static MonsterData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

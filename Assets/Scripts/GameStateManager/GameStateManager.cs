@@ -56,7 +56,7 @@ public class GameStateManager : MonoBehaviour {
     /// <param name="sceneID"></param>
     public static void LoadScene(int sceneID)
     {
-        GameSceneData sceneData = GameSceneData.GetByID(sceneID, DataCenter.Instance().gameSceneDataList);
+        GameSceneData sceneData = GameSceneData.GetByID(sceneID);
         if (sceneData == null)
         {
             Debuger.LogError("场景ID错误-" + sceneID);

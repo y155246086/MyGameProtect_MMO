@@ -21,19 +21,18 @@ public class GameObjectUtils : MonoBehaviour {
             return _Instance;
         }
     }
-    public void CheckAttaceTrigger(string stateName, float triggerTime, Animator animator, System.Action actionTrigger)
+    public void CheckAttaceTrigger(string stateName, float triggerTime, Animator animator, System.Action actionTrigger, System.Action endTriggerAction = null)
     {
-        if (triggerTime > 0.9)
+        if (triggerTime >= 1)
         {
             Debuger.LogError("时间有问题：：：：：：：：");
             return;
         }
-        StartCoroutine(_CheckAttaceTrigger(stateName, triggerTime, animator, actionTrigger));
+        StartCoroutine(_CheckAttaceTrigger(stateName, triggerTime, animator, actionTrigger, endTriggerAction));
     }
-    IEnumerator _CheckAttaceTrigger(string stateName, float triggerTime, Animator animator, System.Action actionTrigger)
+    IEnumerator _CheckAttaceTrigger(string stateName, float triggerTime, Animator animator, System.Action actionTrigger,System.Action endTriggerAction = null)
     {
         int attackState = Animator.StringToHash(stateName);
-        bool triggerAttaced = false;
         float t = 0;
         while (true)
         {
@@ -46,18 +45,21 @@ public class GameObjectUtils : MonoBehaviour {
             AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
             if (info.fullPathHash == attackState)
             {
-                float normalizedTime = info.normalizedTime - (int)info.normalizedTime;
-                if (normalizedTime < triggerTime)
+
+                float du = triggerTime * info.length;
+                Mogo.Util.FrameTimerHeap.AddTimer((uint)du, 0, () =>
                 {
-                    triggerAttaced = false;
-                }
-                if (triggerAttaced == false && normalizedTime >= triggerTime)
-                {
-                    //Debuger.Log("状态名称：" + stateName + "-触发关键帧:" + triggerTime + "-真实时间:" + normalizedTime);
-                    triggerAttaced = true;
                     actionTrigger();
-                    break;
+                });
+                du = info.length * 1000;
+                if(endTriggerAction!=null)
+                {
+                    Mogo.Util.FrameTimerHeap.AddTimer((uint)du, 0, () =>
+                    {
+                        endTriggerAction();
+                    });
                 }
+                break;
             }
             t += Time.deltaTime;
             if (t > 60)

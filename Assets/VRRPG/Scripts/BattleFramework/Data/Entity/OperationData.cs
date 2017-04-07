@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class OperationData {
         public static string csvFilePath = "Configs/OperationData";
         public static string[] columnNameArray = new string[11];
+        public static List<OperationData> dataList;
         public static List<OperationData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<OperationData> dataList = new List<OperationData>();
+            dataList = new List<OperationData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -52,6 +53,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static OperationData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

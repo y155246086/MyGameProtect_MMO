@@ -43,7 +43,7 @@ public class MonsterAI : FSM.AIController {
     public void SetData(int monsterId)
     {
         
-        data = MonsterData.GetByID(monsterId, DataCenter.Instance().monsterDataList);
+        data = MonsterData.GetByID(monsterId);
     }
     protected override void Initialize()
     {

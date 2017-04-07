@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class NPCData {
         public static string csvFilePath = "Configs/NPCData";
         public static string[] columnNameArray = new string[6];
+        public static List<NPCData> dataList;
         public static List<NPCData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<NPCData> dataList = new List<NPCData>();
+            dataList = new List<NPCData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -42,6 +43,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static NPCData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

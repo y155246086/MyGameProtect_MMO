@@ -34,7 +34,7 @@ public class DownloadManager : MonoBehaviour {
     /// <returns></returns>
     public void LoadNormalScene(int sceneId,LoadCallBack loadHandler, int loadingType = 1,params object[] args)
     {
-        GameSceneData data = GameSceneData.GetByID(sceneId, DataCenter.Instance().gameSceneDataList);
+        GameSceneData data = GameSceneData.GetByID(sceneId);
         if (data == null)
         {
             Debuger.LogError("场景ID错误-" + sceneId);

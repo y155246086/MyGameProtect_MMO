@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class TriggerData {
         public static string csvFilePath = "Configs/TriggerData";
         public static string[] columnNameArray = new string[4];
+        public static List<TriggerData> dataList;
         public static List<TriggerData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<TriggerData> dataList = new List<TriggerData>();
+            dataList = new List<TriggerData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -38,6 +39,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static TriggerData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

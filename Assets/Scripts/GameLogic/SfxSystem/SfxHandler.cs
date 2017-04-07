@@ -95,7 +95,7 @@ public class SfxHandler : MonoBehaviour {
     /// <param name="action">加载对象回调</param>
     public void HandleFx(int id, Transform target = null, System.Action<GameObject, string> action = null, string bone_path = "")
     {
-        EffectData fxData = EffectData.GetByID(id, DataCenter.Instance().effectDataList);
+        EffectData fxData = EffectData.GetByID(id);
         if (fxData != null)
         {
             if (fxData.effectType == (int)EffectType.Flying)

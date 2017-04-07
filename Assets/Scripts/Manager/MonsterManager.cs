@@ -24,16 +24,17 @@ public class MonsterManager : MonoBehaviour {
     {
         for (int i = 0; i < list.Count; i++)
         {
-            CreateMonster(DataCenter.Instance().monsterDataList[Random.Range(0, DataCenter.Instance().monsterDataList.Count)], list[i].transform.position, 1);
+
+            CreateMonster(MonsterData.dataList[Random.Range(0, MonsterData.dataList.Count)], list[i].transform.position, 1);
         }
     }
     public void RandomRefresh(Vector3 v)
     {
-        CreateMonster(DataCenter.Instance().monsterDataList[Random.Range(0, DataCenter.Instance().monsterDataList.Count)], v, 1);
+        CreateMonster(MonsterData.dataList[Random.Range(0, MonsterData.dataList.Count)], v, 1);
     }
     public void CreateMonster(int id, Vector3 v, int groupId = 1)
     {
-        CreateMonster(MonsterData.GetByID(id, DataCenter.Instance().monsterDataList), v, groupId);
+        CreateMonster(MonsterData.GetByID(id), v, groupId);
     }
     public void CreateMonster(MonsterData data, Vector3 v, int groupId)
     {

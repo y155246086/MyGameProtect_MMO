@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class WeaponData {
         public static string csvFilePath = "Configs/WeaponData";
         public static string[] columnNameArray = new string[5];
+        public static List<WeaponData> dataList;
         public static List<WeaponData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<WeaponData> dataList = new List<WeaponData>();
+            dataList = new List<WeaponData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -40,6 +41,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static WeaponData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

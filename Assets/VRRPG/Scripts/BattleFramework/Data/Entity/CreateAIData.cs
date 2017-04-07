@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class CreateAIData {
         public static string csvFilePath = "Configs/CreateAIData";
         public static string[] columnNameArray = new string[3];
+        public static List<CreateAIData> dataList;
         public static List<CreateAIData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<CreateAIData> dataList = new List<CreateAIData>();
+            dataList = new List<CreateAIData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -36,6 +37,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static CreateAIData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID

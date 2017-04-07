@@ -36,7 +36,7 @@ public class SkillManager : MonoBehaviour
         {
             return;
         }
-        SkillData data = SkillData.GetByID(skillId,DataCenter.Instance().skillDataList);
+        SkillData data = SkillData.GetByID(skillId);
         if(data != null)
         {
             skillList.Add(data);
@@ -128,12 +128,27 @@ public class SkillManager : MonoBehaviour
         owner.GetComponent<Animator>().SetInteger("Action", data.action);
         isCanSkill = false;
         AttackingFx(data.id);
+        //AnimatorClipInfo[] infoList = owner.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
+        //for (int i = 0; i < infoList.Length; i++)
+        //{
+        //    Debug.LogError("******|"+infoList[i].clip.name + "_" + infoList[i].clip.length);
+        //}
+        //Debuger.LogError(owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Base Layer." + data.stateName));
+        //float du = owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length * 1000;
+        //Mogo.Util.FrameTimerHeap.AddTimer((uint)du, 0, () =>
+        //{
+        //    isCanSkill = true;
+        //});
         //Debuger.Log("等待攻击触发：AttackTrigger");
-        GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger);
+        GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
     }
-    
+    private void EndAttackAction()
+    {
+        isCanSkill = true;
+    }
     protected void AttackTrigger()
     {
+        //Debuger.LogError(owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + "_______");
         owner.GetComponent<Animator>().SetInteger("Action", 0);
         //Debuger.Log("攻击触发：AttackTrigger");
         if (curSkillData!=null)
@@ -180,7 +195,7 @@ public class SkillManager : MonoBehaviour
                 }
             }
         }
-        isCanSkill = true;
+        //isCanSkill = true;
     }
     /// <summary>
     /// 播放特效

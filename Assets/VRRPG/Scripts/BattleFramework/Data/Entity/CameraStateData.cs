@@ -7,10 +7,11 @@ namespace BattleFramework.Data{
     public class CameraStateData {
         public static string csvFilePath = "Configs/CameraStateData";
         public static string[] columnNameArray = new string[8];
+        public static List<CameraStateData> dataList;
         public static List<CameraStateData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
-            List<CameraStateData> dataList = new List<CameraStateData>();
+            dataList = new List<CameraStateData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -46,6 +47,12 @@ namespace BattleFramework.Data{
                 }
             }
             return null;
+        }
+  
+  
+        public static CameraStateData GetByID (int id)
+        {
+            return GetByID(id,dataList);
         }
   
         public int id;//数据ID
