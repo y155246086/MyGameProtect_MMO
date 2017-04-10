@@ -377,7 +377,6 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\UnityEngine_WrapModeWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ViewWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\LuaConst.cs" />
-    <Compile Include="Assets\MessageText.cs" />
     <Compile Include="Assets\Scripts\Common\GameCommon.cs" />
     <Compile Include="Assets\Scripts\Common\GameCommonUtils.cs" />
     <Compile Include="Assets\Scripts\Common\GameObjectUtils.cs" />
