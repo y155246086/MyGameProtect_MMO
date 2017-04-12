@@ -9,20 +9,19 @@ namespace FSM
     [RequireComponent(typeof(AIPath))]
     [RequireComponent(typeof(Pathfinding.RVO.RVOSimulator))]
     [RequireComponent(typeof(Pathfinding.FunnelModifier))]
-    public class AIController : AdvanceFSM
+    public class AIController : SpriteBase
     {
         [SerializeField]
         private int health;
+        
         //距离设定
         protected float chaseDistance = 20f;//追逐距离
         protected float attackDistance = 5f;//攻击距离
         protected float arriveDistance = 1f;//到达距离
         public SkillManager skillManager;
-        public PropertyManager propertyManager;
-        protected SfxManager sfxManager;
-        public SfxHandler sfxHandler;
         public MonsterData data;
         public Vector3 BornPoint;//出生点
+        protected AdvanceFSM fsm;
         /// <summary>
         /// 追逐距离
         /// </summary>
@@ -44,19 +43,28 @@ namespace FSM
         {
             get { return arriveDistance; }
         }
+        public Transform playerTransfrom
+        {
+            get
+            {
+                GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
+                if (objPlayer == null)
+                {
+                    Debug.LogError("找不到玩家");
+                }
+                return objPlayer.transform;
+            }
+        }
+      
+        // Use this for initialization
+
         protected override void Initialize()
         {
             base.Initialize();
-            propertyManager = new PropertyManager();
-            sfxManager = new SfxManager(this);
-            sfxHandler = this.gameObject.AddComponent<SfxHandler>();
+            spriteType = SpriteType.Monster;
+            fsm = new AdvanceFSM(this);
+            
             health = 100;
-            GameObject objPlayer = GameObject.FindGameObjectWithTag("Player");
-            playerTransfrom = objPlayer.transform;
-            if (playerTransfrom == null)
-            {
-                Debug.LogError("找不到玩家");
-            }
             ConstructFSM();
         }
         /// <summary>
@@ -64,36 +72,66 @@ namespace FSM
         /// </summary>
         private void ConstructFSM()
         {
-            AddFSMState(FSMStateType.Patroling, new PatrolBase(this.transform));
-            AddFSMState(FSMStateType.Chasing, new ChaseBase(this.transform));
-            AddFSMState(FSMStateType.Attacking, new AttackBase(this.transform));
-            AddFSMState(FSMStateType.Dead, new DeadBase(this.transform));
+            fsm.AddFSMState(FSMStateType.Patroling, new PatrolBase(this.transform));
+            fsm.AddFSMState(FSMStateType.Chasing, new ChaseBase(this.transform));
+            fsm.AddFSMState(FSMStateType.Attacking, new AttackBase(this.transform));
+            fsm.AddFSMState(FSMStateType.Dead, new DeadBase(this.transform));
         }
         protected override void FSMUpdate()
         {
             base.FSMUpdate();
-            CurrentState.OnUpdate(playerTransfrom);
+            fsm.FSMUpdate();
         }
         protected override void FSMFixedUpdate()
         {
             base.FSMFixedUpdate();
-            if (propertyManager.GetPropertyValue(PropertyType.HP)<= 0)
+            if (propertyManager.GetPropertyValue(PropertyType.HP) <= 0)
             {
-                ChangeState(FSMStateType.Dead);
+                fsm.ChangeState(FSMStateType.Dead);
                 return;
             }
-            CurrentState.OnFiexedUpdate(playerTransfrom);
+            fsm.FSMFixedUpdate();
         }
-        /// <summary>
-        /// 播放特效
-        /// </summary>
-        public void PlaySfx(int id)
+        
+        //public void Play(string parameterName, bool value)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    ar.SetBool(parameterName, value);
+
+        //}
+        //public void Play(string parameterName, float value)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    ar.SetFloat(parameterName, value);
+        //}
+        //public void Play(string parameterName, int value)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    ar.SetInteger(parameterName, value);
+        //}
+        //public void Play(string parameterName)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    ar.SetTrigger(parameterName);
+        //}
+        //public bool GetBool(string parameterName)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    return ar.GetBool(parameterName);
+        //}
+        //public int GetInt(string parameterName)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    return ar.GetInteger(parameterName);
+        //}
+        //public float GetFloat(string parameterName)
+        //{
+        //    var ar = this.GetComponent<UnityEngine.Animator>();
+        //    return ar.GetFloat(parameterName);
+        //}
+        public void ChangeState(FSMStateType fSMStateType)
         {
-            if(sfxManager == null)
-            {
-                return;
-            }
-            sfxManager.PlaySfx(id);
+            fsm.ChangeState(fSMStateType);
         }
     }
 }

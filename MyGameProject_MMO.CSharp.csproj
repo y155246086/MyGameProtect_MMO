@@ -455,6 +455,7 @@
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\SingleTon.cs" />
+    <Compile Include="Assets\Scripts\Sprite\SpriteBase.cs" />
     <Compile Include="Assets\Scripts\TestNetWork.cs" />
     <Compile Include="Assets\Scripts\UI\IViewBase.cs" />
     <Compile Include="Assets\Scripts\mogo\Event\EventDispatcher.cs" />

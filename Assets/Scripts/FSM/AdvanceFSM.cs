@@ -14,6 +14,9 @@ public enum FSMStateType
 public class AdvanceFSM : FSMBase {
     private Dictionary<FSMStateType, FSMState> map;
 
+    private FSM.AIController owner;
+    protected Vector3 destPos;
+
     private FSMState currentState;
     public FSMState CurrentState
     {
@@ -24,8 +27,9 @@ public class AdvanceFSM : FSMBase {
     {
         get { return currentType; }
     }
-    public AdvanceFSM()
+    public AdvanceFSM(FSM.AIController owner)
     {
+        this.owner = owner;
         map = new Dictionary<FSMStateType, FSMState>();
     }
     /// <summary>
@@ -91,40 +95,14 @@ public class AdvanceFSM : FSMBase {
         currentType = type;
         currentState.Enter();
     }
-    public void Play(string parameterName, bool value)
+    public override void FSMUpdate()
     {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        ar.SetBool(parameterName, value);
-
+        base.FSMUpdate();
+        CurrentState.OnUpdate(owner.playerTransfrom);
     }
-    public void Play(string parameterName, float value)
+    public override void FSMFixedUpdate()
     {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        ar.SetFloat(parameterName, value);
-    }
-    public void Play(string parameterName, int value)
-    {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        ar.SetInteger(parameterName, value);
-    }
-    public void Play(string parameterName)
-    {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        ar.SetTrigger(parameterName);
-    }
-    public bool GetBool(string parameterName)
-    {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        return ar.GetBool(parameterName);
-    }
-    public int GetInt(string parameterName)
-    {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        return ar.GetInteger(parameterName);
-    }
-    public float GetFloat(string parameterName)
-    {
-        var ar = this.GetComponent<UnityEngine.Animator>();
-        return ar.GetFloat(parameterName);
+        base.FSMFixedUpdate();
+        CurrentState.OnFiexedUpdate(owner.playerTransfrom);
     }
 }

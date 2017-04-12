@@ -22,11 +22,14 @@ public enum CharactorProperty
     TURN_SPEED  = 2,//转速
     MAX_HP      = 3//最大血量
 }
-
+/// <summary>
+/// 精灵类型
+/// </summary>
 public enum SpriteType
 {
-    Player = 0,
-    Monster
+    NONE = 0,//无
+    Player = 1,//玩家
+    Monster =  2,//怪
 }
 
 public class GameCommon
