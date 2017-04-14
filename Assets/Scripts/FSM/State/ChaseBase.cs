@@ -17,7 +17,7 @@ public class ChaseBase : FSMState {
         aiController = owner.GetComponent<FSM.AIController>();
         //FindNextPoint();
     }
-    public override void Enter()
+    public override void Enter(params Object[] args)
     {
         Debuger.Log("进入追逐状态");
         animator.applyRootMotion = false;

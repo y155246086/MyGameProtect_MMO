@@ -13,7 +13,7 @@ public class DeadBase : FSMState
         animator = owner.GetComponent<Animator>();
         aiController = owner.GetComponent<FSM.AIController>();
     }
-    public override void Enter()
+    public override void Enter(params Object[] args)
     {
         Debuger.Log("进入死亡状态");
         animator.SetTrigger("TriggerDead");

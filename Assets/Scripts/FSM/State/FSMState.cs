@@ -28,7 +28,7 @@ public abstract class FSMState {
     /// <summary>
     /// 进入状态
     /// </summary>
-    public abstract void Enter();
+    public abstract void Enter(params Object[] args);
     /// <summary>
     /// 离开状态
     /// </summary>

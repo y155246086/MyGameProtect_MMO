@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAI : FSM.AIController {
+public class MonsterAI : FSM.AIController,ICanAttacked {
     /// <summary>
     /// 动画的播放速率
     /// </summary>
@@ -30,6 +30,12 @@ public class MonsterAI : FSM.AIController {
             return base.ArriveDistance;
         }
     }
+    public void SetHurt(int value)
+    {
+        Debuger.Log("产生伤害：" + value);
+        Play("Action", 11);
+        AddCallbackInFrames<string,int>(Play, "Action", 0);
+    }
     /// <summary>
     /// 设置怪物数据
     /// </summary>
@@ -55,6 +61,16 @@ public class MonsterAI : FSM.AIController {
 
         skillManager = this.gameObject.AddComponent<SkillManager>();
         skillManager.SetOwenr(this);
+        SetOwenr(this);
+    }
+    public void SetOwenr(MonsterAI owner)
+    {
+        if (owner.data.skillID1 > 0)
+            skillManager.AddSkill(owner.data.skillID1);
+        if (owner.data.skillID2 > 0)
+            skillManager.AddSkill(owner.data.skillID2);
+        if (owner.data.skillID3 > 0)
+            skillManager.AddSkill(owner.data.skillID3);
     }
     public Transform AttackTarget
     {
@@ -72,10 +88,5 @@ public class MonsterAI : FSM.AIController {
     public bool IsDead()
     {
         return propertyManager.GetPropertyValue(PropertyType.HP)<=0;
-    }
-
-    internal void SetHurt(int p)
-    {
-        propertyManager.AddProperty(PropertyType.HP,propertyManager.GetPropertyValue(PropertyType.HP) - p);
     }
 }

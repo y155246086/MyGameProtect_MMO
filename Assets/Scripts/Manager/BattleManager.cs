@@ -3,19 +3,43 @@ using System.Collections;
 
 public class BattleManager : MonoBehaviour {
 
+    private Animator anim;
+    private PlayerSkillManager skillManager;
     void Awake()
     {
-        this.gameObject.AddComponent<MonsterManager>();
-        BattleFramework.Data.DataCenter.Instance();
+        anim = this.GetComponent<Animator>();
     }
-	// Use this for initialization
 	void Start () {
-        MonsterManager.Instance.CreateMonster(1, Vector3.zero);
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        Mogo.Util.TimerHeap.Tick();
-        Mogo.Util.FrameTimerHeap.Tick();
+        if (ETCInput.GetButtonDown("ButtonAttack"))
+        {
+            NormalAttack(3);
+        }
+        if (ETCInput.GetButtonDown("ButtonAttack1"))
+        {
+            NormalAttack(4);
+        }
+        if (ETCInput.GetButtonDown("ButtonAttack2"))
+        {
+            NormalAttack(3);
+        }
 	}
+    public void NormalAttack(int id)
+    {
+        Player ai = GameObject.FindObjectOfType<Player>();
+        if(ai != null && ai.skillManager != null)
+        {
+            ai.skillManager.UseSkill(id);
+        }
+    }
+    public void SpellOneAttack()
+    {
+
+    }
+    public void SpellTwoAttack()
+    {
+
+    }
 }

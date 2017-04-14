@@ -14,7 +14,7 @@ public class PatrolBase : FSMState {
         aiPath = owner.GetComponent<AIPath>();
         aiController = owner.GetComponent<FSM.AIController>();
     }
-    public override void Enter()
+    public override void Enter(params Object[] args)
     {
         Debuger.Log("进入巡逻状态");
         animator.applyRootMotion = false;

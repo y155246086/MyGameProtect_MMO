@@ -1,7 +1,9 @@
-数据ID|名字|类型|弹道资源|最小攻击力|最大攻击力|弹道速度|弹道角度|攻击特效|击中声音|技能CD|动画触发名称|动画状态机状态名称|动作值|动画触发时间|召唤关卡ID|技能声音|相机特效数据ID|相机特效延时|相机特效持续
-id_int|name_string|type_int|shootPrefabs_string|minAttackValue_int|maxAttackValue_int|speed_float|angle_float|attackedEffect_string|attackedSound_string|cd_float|triggerName_string|stateName_string|action_int|triggerTime_float|zhaohuanId_int|skillSound_string|cameraTweenId_int|cameraTweenSL_float|cameraTweenST_float
-0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
-1|普通狼攻击|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|5|TriggerAttack01|attack_1|1|0.55|0|se/se_mark|0|0|0
-2|普通狼攻击|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|5|TriggerAttack01|skill_1|3|0.55|0|se/se_mark|1|0.5|1
+数据ID|名字|类型|目标类型|攻击范围类型|范围类型参数|弹道资源|最小攻击力|最大攻击力|弹道速度|弹道角度|攻击特效|击中声音|技能CD|动作值|动画触发帧数|技能持续时间|技能声音|相机特效数据ID|相机特效延时|相机特效持续|击中特效|击中行为
+id_int|name_string|type_int|targetType_int|targetRangeType_int|targetRangeParam|shootPrefabs_string|minAttackValue_int|maxAttackValue_int|speed_float|angle_float|attackedEffect_string|attackedSound_string|cd_float|action_int|triggerTime_float|duration_float|skillSound_string|cameraTweenId_int|cameraTweenSL_float|cameraTweenST_float|hitFxID_int|hitAction_int
+0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+1|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|1.5|1|1|1.5|se/se_mark|0|0|0|0|0
+2|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|2|3|1|2|se/se_mark|0|0.5|1|0|0
+3|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|1.5|1|1|1.5|se/se_mark|0|0|0|0|0
+4|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|2|3|1|2|se/se_mark|1|1|0.1|0|0

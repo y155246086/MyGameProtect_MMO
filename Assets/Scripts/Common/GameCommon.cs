@@ -31,7 +31,27 @@ public enum SpriteType
     Player = 1,//玩家
     Monster =  2,//怪
 }
-
+/// <summary>
+/// 目标类型
+/// </summary>
+public enum TargetType
+{
+    Enemy = 0,          // 敌人
+    Myself = 1,         // 自己
+    TeamMember = 2,     // 队友
+    Ally = 3            // 友方
+}
+/// <summary>
+/// 选择范围类型  0  扇形范围 1  圆形范围， 2， 单体。 3  直线范围 4 前方范围
+/// </summary>
+public enum TargetRangeType
+{
+    SectorRange = 0,
+    CircleRange = 1,
+    SingeTarget = 2,
+    LineRange = 3,
+    WorldRange = 6
+}
 public class GameCommon
 {
     //npc活动范围的半径

@@ -27,14 +27,7 @@ public class PlayerMoveController : MonoBehaviour {
         if (cc.isGrounded && ETCInput.GetAxis("Vertical") == 0 && ETCInput.GetAxis("Horizontal") == 0)
         {
         }
-        if (ETCInput.GetButtonDown("ButtonAttack"))
-        {
-            anim.SetInteger("Action", 1);
-        }
-        if (ETCInput.GetButtonUp("ButtonAttack"))
-        {
-            anim.SetInteger("Action", 0);
-        }
+        
 
     }
 }

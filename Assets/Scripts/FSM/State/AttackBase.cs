@@ -13,7 +13,7 @@ public class AttackBase : FSMState
         animator = owner.GetComponent<Animator>();
         aiController = owner.GetComponent<FSM.AIController>();
     }
-    public override void Enter()
+    public override void Enter(params Object[] args)
     {
         Debuger.Log("进入攻击状态");
         //animator.SetTrigger("TriggerAttack01");

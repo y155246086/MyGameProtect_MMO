@@ -11,16 +11,12 @@ namespace FSM
     [RequireComponent(typeof(Pathfinding.FunnelModifier))]
     public class AIController : SpriteBase
     {
-        [SerializeField]
-        private int health;
-        
         //距离设定
         protected float chaseDistance = 20f;//追逐距离
         protected float attackDistance = 5f;//攻击距离
         protected float arriveDistance = 1f;//到达距离
         public SkillManager skillManager;
         public MonsterData data;
-        public Vector3 BornPoint;//出生点
         protected AdvanceFSM fsm;
         /// <summary>
         /// 追逐距离
@@ -64,7 +60,6 @@ namespace FSM
             spriteType = SpriteType.Monster;
             fsm = new AdvanceFSM(this);
             
-            health = 100;
             ConstructFSM();
         }
         /// <summary>
@@ -93,42 +88,7 @@ namespace FSM
             fsm.FSMFixedUpdate();
         }
         
-        //public void Play(string parameterName, bool value)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    ar.SetBool(parameterName, value);
-
-        //}
-        //public void Play(string parameterName, float value)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    ar.SetFloat(parameterName, value);
-        //}
-        //public void Play(string parameterName, int value)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    ar.SetInteger(parameterName, value);
-        //}
-        //public void Play(string parameterName)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    ar.SetTrigger(parameterName);
-        //}
-        //public bool GetBool(string parameterName)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    return ar.GetBool(parameterName);
-        //}
-        //public int GetInt(string parameterName)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    return ar.GetInteger(parameterName);
-        //}
-        //public float GetFloat(string parameterName)
-        //{
-        //    var ar = this.GetComponent<UnityEngine.Animator>();
-        //    return ar.GetFloat(parameterName);
-        //}
+        
         public void ChangeState(FSMStateType fSMStateType)
         {
             fsm.ChangeState(fSMStateType);

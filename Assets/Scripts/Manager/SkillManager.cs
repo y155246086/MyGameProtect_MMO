@@ -8,7 +8,7 @@ using Mogo.Util;
 public class SkillManager : MonoBehaviour
 {
     private List<SkillData> skillList = new List<SkillData>();
-    private MonsterAI owner;
+    private SpriteBase owner;
     private Dictionary<int, float> cdDict = new Dictionary<int, float>();
     private SkillData curSkillData = null;
     private bool isCanSkill = true;
@@ -18,18 +18,12 @@ public class SkillManager : MonoBehaviour
 
     }
 
-    public void SetOwenr(MonsterAI owner)
+    public void SetOwenr(SpriteBase owner)
     {
         this.owner = owner;
-        if (owner.data.skillID1>0)
-            AddSkill(owner.data.skillID1);
-        if (owner.data.skillID2 > 0)
-            AddSkill(owner.data.skillID2);
-        if (owner.data.skillID3 > 0)
-            AddSkill(owner.data.skillID3);
     }
     /// <summary>
-    /// 添加技能
+    /// 添加技能 将owner的所有技能都添加
     /// </summary>
     /// <param name="skillId"></param>
     public void AddSkill(int skillId)
@@ -78,7 +72,7 @@ public class SkillManager : MonoBehaviour
     public void Attack()
     {
         if (isCanSkill == false) return;
-        if(owner.AttackTarget == null || owner.IsDead())
+        if(owner.IsDead())
         {
             return;
         }
@@ -104,7 +98,26 @@ public class SkillManager : MonoBehaviour
             }
         }
     }
-    
+    /// <summary>
+    /// 技能是不是在cd 中
+    /// </summary>
+    /// <returns></returns>
+    private bool IsCding(int skillID)
+    {
+        SkillData data = SkillData.GetByID(skillID);
+        if (data!= null && cdDict.ContainsKey(data.id))
+        {
+            if (Time.time - cdDict[data.id] >= data.cd)//cd时间到
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     /// <summary>
     /// 技能是否在释放中
     /// </summary>
@@ -113,6 +126,12 @@ public class SkillManager : MonoBehaviour
         get {
             return isSkillPlaying;
         }
+    }
+    public void UseSkill(int skillid)
+    {
+        if (isSkillPlaying == true) return;
+        if (IsCding(skillid)) return;
+        UseSkill(SkillData.GetByID(skillid));
     }
     /// <summary>
     /// 使用技能
@@ -126,29 +145,19 @@ public class SkillManager : MonoBehaviour
         //设置cd
         cdDict[data.id] = Time.time;
         //播放动作
-        //owner.Play(data.triggerName);
         owner.GetComponent<Animator>().SetInteger("Action", data.action);
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(data);
-        //AnimatorClipInfo[] infoList = owner.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0);
-        //for (int i = 0; i < infoList.Length; i++)
-        //{
-        //    Debug.LogError("******|"+infoList[i].clip.name + "_" + infoList[i].clip.length);
-        //}
-        //Debuger.LogError(owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Base Layer." + data.stateName));
-        //float du = owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length * 1000;
-        //Mogo.Util.FrameTimerHeap.AddTimer((uint)du, 0, () =>
-        //{
-        //    isCanSkill = true;
-        //});
-        //Debuger.Log("等待攻击触发：AttackTrigger");
-        GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
+        TimerHeap.AddTimer((uint)(data.triggerTime * 1000f), 0, DelayAttack);
+        TimerHeap.AddTimer((uint)(data.duration * 1000f), 0, EndAttackAction);
+        //GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
     }
     private void EndAttackAction()
     {
         isCanSkill = true;
         isSkillPlaying = false;
+        owner.GetComponent<Animator>().SetInteger("Action", 0);
     }
     private void DelayAttack()
     {
@@ -156,42 +165,40 @@ public class SkillManager : MonoBehaviour
     }
     protected void AttackTrigger()
     {
-        //Debuger.LogError(owner.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + "_______");
-        owner.GetComponent<Animator>().SetInteger("Action", 0);
-        
-        if (owner.AttackTarget != null && owner.TargetIsDead() == false)
+        Transform target = GetHitSprite(curSkillData.id);
+        ICanAttacked att = target.GetComponent<ICanAttacked>();
+        if(att != null)
         {
-
-            if (curSkillData.type == (int)SkillType.DAN_DAO)
-            {
-                //GameObject o = new GameObject();
-                //o.transform.position = transform.position;
-                //ShootObject shoot = o.gameObject.AddComponent<ShootObject>();
-                //shoot.SetTarget(owner.AttackTarget);
-                //shoot.Owner = owner as ActorMonster;
-                //shoot.SkillData = curSkillData;
-                //shoot.StartShoot();
-                Debuger.Log("弹道技能");
-            }
-            else if (curSkillData.type == (int)SkillType.ZHAO_HUAN)
-            {
-                Debuger.Log("召唤技能");
-            }
-            else if (curSkillData.type == (int)SkillType.SHUN_YI)
-            {
-                Debuger.Log("瞬移技能");
-            }
-            else
-            {
-                Debuger.Log("产生伤害");
-                ICanAttacked att = owner.AttackTarget.GetComponent<ICanAttacked>();
-                if(att != null)
-                {
-                    att.SetHurt(curSkillData.maxAttackValue);
-                }
-            }
+            att.SetHurt(curSkillData.maxAttackValue);
         }
-        //isCanSkill = true;
+    }
+    private Transform GetHitSprite(int skillid)
+    {
+        SkillData skill = SkillData.GetByID(skillid);
+        if(owner is Player)
+        {
+            return MonsterManager.Instance.monsterList[0].transform;
+        }
+        else
+        {
+            return GameWorld.player.transform;
+        }
+        switch ((TargetRangeType)skill.targetRangeType)
+        {
+            case TargetRangeType.CircleRange:
+                if(owner is Player)
+                {
+                    return MonsterManager.Instance.monsterList[0].transform;
+                }
+                else
+                {
+                    return GameWorld.player.transform;
+                }
+                
+                break;
+            default:
+                break;
+        }
     }
     /// <summary>
     /// 播放特效

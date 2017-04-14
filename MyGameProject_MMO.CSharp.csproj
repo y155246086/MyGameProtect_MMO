@@ -408,11 +408,14 @@
     <Compile Include="Assets\Scripts\GameStateManager\GameState\GraveState.cs" />
     <Compile Include="Assets\Scripts\GameStateManager\GameState\LoginState.cs" />
     <Compile Include="Assets\Scripts\GameStateManager\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\GameWorld.cs" />
+    <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Manager\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\DownloadManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Manager\MogoMainCamera.cs" />
     <Compile Include="Assets\Scripts\Manager\MonsterManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\PlayerSkillManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PropertyManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Manager\SkillManager.cs" />
