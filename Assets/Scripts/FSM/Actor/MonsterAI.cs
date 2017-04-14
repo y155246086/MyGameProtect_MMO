@@ -35,6 +35,7 @@ public class MonsterAI : FSM.AIController,ICanAttacked {
         Debuger.Log("产生伤害：" + value);
         Play("Action", 11);
         AddCallbackInFrames<string,int>(Play, "Action", 0);
+        FloatBlood(value);
     }
     /// <summary>
     /// 设置怪物数据

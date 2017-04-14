@@ -84,6 +84,24 @@
     <Reference Include="Pathfinding.Poly2Tri">
       <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MyGameProject_MMO.CSharp.Plugins.csproj">
@@ -92,6 +110,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\AutoSelect\MultiLayerTouch.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\AutoSelect\MultiLayerUI.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\MultiCamera\MultiCameraTouch.cs" />
@@ -460,6 +479,8 @@
     <Compile Include="Assets\Scripts\SingleTon.cs" />
     <Compile Include="Assets\Scripts\Sprite\SpriteBase.cs" />
     <Compile Include="Assets\Scripts\TestNetWork.cs" />
+    <Compile Include="Assets\Scripts\UI\Billboard\BillboardLogicManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Billboard\SplitBattleBillboard.cs" />
     <Compile Include="Assets\Scripts\UI\IViewBase.cs" />
     <Compile Include="Assets\Scripts\mogo\Event\EventDispatcher.cs" />
     <Compile Include="Assets\Scripts\mogo\Event\EventException.cs" />
@@ -472,6 +493,8 @@
     <Compile Include="Assets\Scripts\mogo\Timer\TimerData.cs" />
     <Compile Include="Assets\Scripts\mogo\Timer\TimerHeap.cs" />
     <Compile Include="Assets\Scripts\mogo\Timer\TimerManager.cs" />
+    <Compile Include="Assets\Test\BloodText.cs" />
+    <Compile Include="Assets\Test\TestDotween.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
@@ -505,6 +528,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
+    <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
+    <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
+    <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
+    <None Include="Assets\Demigiant\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
+    <None Include="Assets\Demigiant\DOTweenPro\DOTweenPro.XML" />
+    <None Include="Assets\Demigiant\DOTweenPro\Editor\DOTweenProEditor.XML" />
+    <None Include="Assets\Demigiant\DOTweenPro\readme.txt" />
+    <None Include="Assets\Demigiant\DemiLib\Core\DemiLib.xml" />
+    <None Include="Assets\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
+    <None Include="Assets\Demigiant\readme_DOTweenPro.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\How to migrate from EasyTouch 4.X.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\RealseNotes.txt" />
     <None Include="Assets\EasyTouchBundle\EasyTouch\_Documentation\How to migrate from EasyTouch 4.X.txt" />

@@ -34,7 +34,7 @@ public enum SpriteType
 /// <summary>
 /// 目标类型
 /// </summary>
-public enum TargetType
+public enum AttackTargetType
 {
     Enemy = 0,          // 敌人
     Myself = 1,         // 自己
@@ -52,6 +52,7 @@ public enum TargetRangeType
     LineRange = 3,
     WorldRange = 6
 }
+
 public class GameCommon
 {
     //npc活动范围的半径
