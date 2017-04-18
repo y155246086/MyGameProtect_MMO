@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-namespace mogo
+namespace Mogo.Util
 {
     public class TimerManager
     {

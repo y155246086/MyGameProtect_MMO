@@ -169,7 +169,7 @@ public class SkillManager : MonoBehaviour
         ICanAttacked att = target.GetComponent<ICanAttacked>();
         if(att != null)
         {
-            att.SetHurt(curSkillData.maxAttackValue);
+            att.SetHurt(Random.Range(curSkillData.minAttackValue, curSkillData.maxAttackValue)*1000);
         }
     }
     private Transform GetHitSprite(int skillid)

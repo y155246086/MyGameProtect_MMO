@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class Main : MonoBehaviour {
-
-    private PlayerSkillManager skillManager;
     void Awake()
     {
         this.gameObject.AddComponent<MonsterManager>();
@@ -13,7 +11,10 @@ public class Main : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        MonsterManager.Instance.CreateMonster(1, Vector3.zero);
+        AppFacade.Instance.StartUp();   //启动游戏
+        this.gameObject.AddComponent<GameStateManager>();
+        this.gameObject.AddComponent<DownloadManager>();
+        //
     }
 
     // Update is called once per frame

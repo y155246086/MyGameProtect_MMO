@@ -84,8 +84,42 @@ public class Packager {
         if (Directory.Exists(streamDir)) Directory.Delete(streamDir, true);
         AssetDatabase.Refresh();
     }
-
-    static void AddBuildMap(string bundleName, string pattern, string path) {
+    /// <summary>
+    /// 当前目录及子目录
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="pattern"></param>
+    /// <param name="fileList"></param>
+    static void Recursive(string path, string pattern, List<string> fileList)
+    {
+        string[] names = Directory.GetFiles(path, pattern);
+        string[] dirs = Directory.GetDirectories(path);
+        foreach (string filename in names)
+        {
+            string ext = Path.GetExtension(filename);
+            if (ext.Equals(".meta")) continue;
+            fileList.Add(filename.Replace('\\', '/'));
+        }
+        foreach (string dir in dirs)
+        {
+            paths.Add(dir.Replace('\\', '/'));
+            Recursive(dir, pattern, fileList);
+        }
+    }
+    static void AddBuildMap(string bundleName, string pattern, string path)
+    {
+        List<string> fileList = new List<string>();
+        Recursive(path, pattern, fileList);
+        for (int i = 0; i < fileList.Count; i++)
+        {
+            fileList[i] = fileList[i].Replace('\\', '/');
+        }
+        AssetBundleBuild build = new AssetBundleBuild();
+        build.assetBundleName = bundleName;
+        build.assetNames = fileList.ToArray();
+        maps.Add(build);
+    }
+    static void AddBuildMap_old(string bundleName, string pattern, string path) {
         string[] files = Directory.GetFiles(path, pattern);
         if (files.Length == 0) return;
 
@@ -162,12 +196,17 @@ public class Packager {
     static void HandleExampleBundle() {
         string resPath = AppDataPath + "/" + AppConst.AssetDir + "/";
         if (!Directory.Exists(resPath)) Directory.CreateDirectory(resPath);
+        //AddBuildMap("Testmat" + AppConst.ExtName, "*.mat", "Assets/Test/shader");
+        //AddBuildMap("TestShader" + AppConst.ExtName, "*.prefab", "Assets/Test/shader");
 
-        AddBuildMap("prompt" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Prompt");
-        AddBuildMap("message" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Message");
+        //AddBuildMap("prompt" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Prompt");
+        //AddBuildMap("message" + AppConst.ExtName, "*.prefab", "Assets/LuaFramework/Examples/Builds/Message");
 
-        AddBuildMap("prompt_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Prompt");
-        AddBuildMap("shared_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Shared");
+        //AddBuildMap("Shader" + AppConst.ExtName, "*.shader", "Assets/DefaultResourcesExtra");
+        //AddBuildMap("Fx" + AppConst.ExtName, "*.prefab", "Assets/Resources/Fx/fx_prefab");
+
+        //AddBuildMap("prompt_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Prompt");
+        //AddBuildMap("shared_asset" + AppConst.ExtName, "*.png", "Assets/LuaFramework/Examples/Textures/Shared");
     }
 
     /// <summary>

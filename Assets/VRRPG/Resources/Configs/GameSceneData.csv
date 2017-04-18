@@ -3,6 +3,5 @@ id_int|sceneName_string|levelName_string|ResRefreshPointsPath_string|bgsound_str
 0|0|0|0|0|0|0
 0|0|0|0|0|0|0
 0|0|0|0|0|0|0
-1|新手村|guichuideng_csd|Prefabs/MainCityPoint|sound/bgCity|0|CityState
-2|野外场景|guichuideng_demo|Prefabs/YewaiPoint|sound/bgYewai|sound/langYangtianchangxiao01|FieldState
-3|开始界面|MainScene|0|0|0|LoginState
+1|开始场景|GameStart|0|0|0|GameStartState
+2|主城|City|0|0|0|CityState

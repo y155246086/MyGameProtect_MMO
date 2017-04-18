@@ -56,7 +56,7 @@ namespace Res
         {
             //GameObject.Instantiate(resourceDic[assetName]);
         }
-        private string uiPanelPath = "UI/Panel";
+        private string uiPanelPath = "GUI/Panel";
         public GameObject GetUIPrefab(string name)
         {
             return LoadPrefab(name, uiPanelPath);
@@ -72,5 +72,6 @@ namespace Res
             }
             return prefab;
         }
+        //AppFacade.Instance.GetManager<LuaFramework.ResourceManager>(LuaFramework.ManagerName.Resource).LoadPrefab("Fx", "fx_die_x_1", LoadComplete1);
     }
 }

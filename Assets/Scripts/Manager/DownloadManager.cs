@@ -49,11 +49,11 @@ public class DownloadManager : MonoBehaviour {
     {
         float startPercent = 0;
         yield return new WaitForSeconds(0.1f);
-        GameObject[] sceneObject = GameObject.FindGameObjectsWithTag("scene");
-        for (int i = 0; i < sceneObject.Length; i++)
-        {
-            sceneObject[i].SetActive(false);
-        }
+        //GameObject[] sceneObject = GameObject.FindGameObjectsWithTag("scene");
+        //for (int i = 0; i < sceneObject.Length; i++)
+        //{
+        //    sceneObject[i].SetActive(false);
+        //}
         yield return new WaitForSeconds(0.1f);
         int startProgress = (int)(startPercent * 100);
         int displayProgress = startProgress;
@@ -83,9 +83,12 @@ public class DownloadManager : MonoBehaviour {
         op.allowSceneActivation = true;
         yield return new WaitForSeconds(0.1f);
 
-        GameObject point = Res.ResourceManager.Instance.Instantiate<GameObject>(data.ResRefreshPointsPath);
-        point.transform.parent = null;
-        point.transform.Reset();
+        if(data.ResRefreshPointsPath.Length>1)
+        {
+            GameObject point = Res.ResourceManager.Instance.Instantiate<GameObject>(data.ResRefreshPointsPath);
+            point.transform.parent = null;
+            point.transform.Reset();
+        }
 
         yield return new WaitForSeconds(1f);
 
@@ -142,5 +145,6 @@ public class DownloadManager : MonoBehaviour {
 
     void SetProgress(int progress)
     {
+        Mogo.Util.EventDispatcher.TriggerEvent<int>(GUIEvent.LOAD_SCENE_PROGRESS, progress);
     } 
 }

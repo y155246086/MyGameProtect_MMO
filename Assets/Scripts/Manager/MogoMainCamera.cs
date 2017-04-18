@@ -123,7 +123,7 @@ public class MogoMainCamera : MonoBehaviour
         //withoutTestObjectTags.Add("terrain");
         //withoutTestObjectTags.Add("Player");
 
-        EventDispatcher.TriggerEvent(Events.OtherEvent.MainCameraComplete);
+        //EventDispatcher.TriggerEvent(Events.OtherEvent.MainCameraComplete);
         m_camera = GetComponent<Camera>();
     }
 

@@ -24,7 +24,7 @@ namespace LuaFramework {
         /// </summary>
         void Init() {
             DontDestroyOnLoad(gameObject);  //防止销毁自己
-
+            GUIManager.ShowView(PanelNameConst.ResCheckPanel);
             CheckExtractResource(); //释放资源
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = AppConst.GameFrameRate;
@@ -80,7 +80,7 @@ namespace LuaFramework {
                 message = "正在解包文件:>" + fs[0];
                 Debug.Log("正在解包文件(" + curIndex + "/" + totalNum + "):>" + infile);
                 facade.SendMessageCommand(NotiConst.UPDATE_MESSAGE, message);
-
+                Mogo.Util.EventDispatcher.TriggerEvent<String>(GUIEvent.RESOURCE_UPDATE_MESSAGE, message);
                 string dir = Path.GetDirectoryName(outfile);
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
@@ -102,6 +102,7 @@ namespace LuaFramework {
             }
             message = "解包完成!!!";
             facade.SendMessageCommand(NotiConst.UPDATE_MESSAGE, message);
+            Mogo.Util.EventDispatcher.TriggerEvent<String>(GUIEvent.RESOURCE_UPDATE_MESSAGE, message);
             yield return new WaitForSeconds(0.1f);
 
             message = string.Empty;
@@ -157,6 +158,7 @@ namespace LuaFramework {
                     Debug.Log(fileUrl);
                     message = "downloading>>" + fileUrl;
                     facade.SendMessageCommand(NotiConst.UPDATE_MESSAGE, message);
+                    Mogo.Util.EventDispatcher.TriggerEvent<String>(GUIEvent.RESOURCE_UPDATE_MESSAGE, message);
                     /*
                     www = new WWW(fileUrl); yield return www;
                     if (www.error != null) {
@@ -174,6 +176,7 @@ namespace LuaFramework {
 
             message = "更新完成!!";
             facade.SendMessageCommand(NotiConst.UPDATE_MESSAGE, message);
+            Mogo.Util.EventDispatcher.TriggerEvent<String>(GUIEvent.RESOURCE_UPDATE_MESSAGE, message);
 
             OnResourceInited();
         }
@@ -181,6 +184,7 @@ namespace LuaFramework {
         void OnUpdateFailed(string file) {
             string message = "更新失败!>" + file;
             facade.SendMessageCommand(NotiConst.UPDATE_MESSAGE, message);
+            Mogo.Util.EventDispatcher.TriggerEvent<String>(GUIEvent.RESOURCE_UPDATE_MESSAGE, message);
         }
 
         /// <summary>
@@ -234,13 +238,14 @@ namespace LuaFramework {
 
         void OnInitialize() {
             LuaManager.InitStart();
-            LuaManager.DoFile("Logic/Game");         //加载游戏
-            LuaManager.DoFile("Logic/Network");      //加载网络
-            NetManager.OnInit();                     //初始化网络
-            Util.CallMethod("Game", "OnInitOK");     //初始化完成
-            TestNetWork.Instance.CreateRole();
+            //LuaManager.DoFile("Logic/Game");         //加载游戏
+           // LuaManager.DoFile("Logic/Network");      //加载网络
+            //NetManager.OnInit();                     //初始化网络
+            //Util.CallMethod("Game", "OnInitOK");     //初始化完成
+            //TestNetWork.Instance.CreateRole();
             initialize = true;
-
+            GUIManager.ShowView(PanelNameConst.LoginPanel);
+            return;
             //类对象池测试
             var classObjPool = ObjPoolManager.CreatePool<TestObjectClass>(OnPoolGetElement, OnPoolPushElement);
             //方法1

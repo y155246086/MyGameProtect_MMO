@@ -60,6 +60,24 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <HintPath>Assets\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+    </Reference>
     <Reference Include="Debugger">
       <HintPath>Assets\Plugins\Debugger.dll</HintPath>
     </Reference>
@@ -83,24 +101,6 @@
     </Reference>
     <Reference Include="Pathfinding.Poly2Tri">
       <HintPath>Assets\Plugins\AstarPathfindingProject\Plugins\Poly2Tri\Pathfinding.Poly2Tri.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>Assets\Demigiant\DOTween\DOTween43.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween50">
-      <HintPath>Assets\Demigiant\DOTween\DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTweenPro">
-      <HintPath>Assets\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween46">
-      <HintPath>Assets\Demigiant\DOTween\DOTween46.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +226,129 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-Glossy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-Parallax.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-ParallaxSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Alpha-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\AlphaTest-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\AlphaTest-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\AlphaTest-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\AlphaTest-Glossy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\AlphaTest-SoftEdgeUnlit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\AlphaTest-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Cubemaps\CubeBlend.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Cubemaps\CubeBlur.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Cubemaps\CubeBlurOdd.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Cubemaps\CubeCopy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Decal.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Flare.shader" />
+    <None Include="Assets\DefaultResourcesExtra\GIDebug\TextureUV.shader" />
+    <None Include="Assets\DefaultResourcesExtra\GIDebug\UV1sAsPositions.shader" />
+    <None Include="Assets\DefaultResourcesExtra\GIDebug\VertexColors.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-Glossy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-Parallax.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-ParallaxSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Illumin-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Internal-DeferredReflections.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Internal-DeferredShading.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Internal-PrePassLighting.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Lightmap-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Lightmap-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Lightmap-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Lightmap-Glossy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Lightmap-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-BumpSpec-1DirectionalLight.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Lightmap-Unlit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Particle-Add.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Particle-Alpha-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Particle-Alpha.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Particle-Multiply.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-Skybox.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-VertexLit-OnlyDirectionalLights.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Mobile\Mobile-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\SoftOcclusion\TreeSoftOcclusionBark.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\SoftOcclusion\TreeSoftOcclusionBarkRendertex.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\SoftOcclusion\TreeSoftOcclusionLeaves.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\SoftOcclusion\TreeSoftOcclusionLeavesRendertex.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\SpeedTree.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\SpeedTreeBillboard.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorBark.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorBarkOptimized.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorBarkRendertex.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeaves.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesFast.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesFastOptimized.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesOptimized.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Nature\TreeCreator\TreeCreatorLeavesRendertex.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-DiffuseDetail.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-DiffuseFast.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-Glossy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-Parallax.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-ParallaxSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Normal-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle Add.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle AddMultiply.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle AddSmooth.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle Alpha Blend.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle Blend.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle Multiply.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle MultiplyDouble.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle Premultiply Blend.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Particle VertexLit Blended.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-BumpNolight.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-BumpSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-BumpVertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-Glossy.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-Parallax.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-ParallaxSpec.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Reflect-VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Skybox-Cubed.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Skybox-Procedural.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Skybox.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Sprites-Diffuse.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Standard.shader" />
+    <None Include="Assets\DefaultResourcesExtra\StandardSpecular.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Details\VertexLit.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Details\WavingGrass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Details\WavingGrassBillboard.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\AddPass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\FirstPass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\Specular-AddPass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\Specular-Base.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\Specular-FirstPass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\Standard-AddPass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\Standard-Base.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Splats\Standard-FirstPass.shader" />
+    <None Include="Assets\DefaultResourcesExtra\TerrainShaders\Trees\BillboardTree.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Default.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-DefaultFont.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Lit-Bumped.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Lit-Detail.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Lit-Refraction.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Lit-RefractionDetail.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Lit-Transparent.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Unlit-Detail.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Unlit-Text.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Unlit-TextDetail.shader" />
+    <None Include="Assets\DefaultResourcesExtra\UI\UI-Unlit-Transparent.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Unlit\Unlit-Alpha.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Unlit\Unlit-AlphaTest.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Unlit\Unlit-Color.shader" />
+    <None Include="Assets\DefaultResourcesExtra\Unlit\Unlit-Normal.shader" />
     <None Include="Assets\Demigiant\DOTween\DOTween.XML" />
     <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
     <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />

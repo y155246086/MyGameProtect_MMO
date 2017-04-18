@@ -131,7 +131,8 @@ namespace LuaFramework {
                     AssetBundleRequest request = ab.LoadAssetAsync(assetPath, list[i].assetType);
                     yield return request;
                     result.Add(request.asset);
-
+                    ///重置资源的shader
+                    GameCommonUtils.ResetShader(request.asset);
                     //T assetObj = ab.LoadAsset<T>(assetPath);
                     //result.Add(assetObj);
                 }

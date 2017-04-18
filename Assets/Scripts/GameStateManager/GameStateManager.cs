@@ -51,11 +51,12 @@ public class GameStateManager : MonoBehaviour {
         currentState.Start();
     }
     /// <summary>
-    /// 加载场景15003262985
+    /// 加载场景
     /// </summary>
     /// <param name="sceneID"></param>
     public static void LoadScene(int sceneID)
     {
+        GUIManager.HideAllView();
         GameSceneData sceneData = GameSceneData.GetByID(sceneID);
         if (sceneData == null)
         {

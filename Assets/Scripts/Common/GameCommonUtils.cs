@@ -1053,6 +1053,48 @@ public class GameCommonUtils
         );
         return myList;
     }
+    /// <summary>
+    /// 重置加载的资源的shader，解决加载资源shader丢失的问题
+    /// </summary>
+    /// <param name="obj"></param>
+    public static void ResetShader(UnityEngine.Object obj)
+    {
+
+        List<Material> listMat = new List<Material>();
+        listMat.Clear();
+        if (obj is Material)
+        {
+
+            Material m = obj as Material;
+
+            listMat.Add(m);
+
+        }
+        else if (obj is GameObject)
+        {
+            GameObject go = obj as GameObject;
+            Renderer[] rends = go.GetComponentsInChildren<Renderer>();
+            if (null != rends)
+            {
+                foreach (Renderer item in rends)
+                {
+                    Material[] materialsArr = item.sharedMaterials;
+                    foreach (Material m in materialsArr)
+                        listMat.Add(m);
+                }
+            }
+        }
+        for (int i = 0; i < listMat.Count; i++)
+        {
+            Material m = listMat[i];
+            if (null == m)
+                continue;
+            var shaderName = m.shader.name;
+            var newShader = Shader.Find(shaderName);
+            if (newShader != null)
+                m.shader = newShader;
+        }
+    }
 }
 
 
