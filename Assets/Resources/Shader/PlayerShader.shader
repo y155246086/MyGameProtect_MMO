@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-
 Shader "Mogo/PlayerShader" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
@@ -77,7 +75,7 @@ struct Input {
 void separateSH (inout appdata_full v, out Input o)
 {
 	UNITY_INITIALIZE_OUTPUT(Input,o);  
-	float3 worldN = mul ((float3x3)unity_ObjectToWorld, SCALED_NORMAL);
+	float3 worldN = mul ((float3x3)_Object2World, SCALED_NORMAL);
 	//o.normal = v.normal;
 	o.shOcclusionAndAmbient = ShadeSH9 (float4(worldN,1.0));
 }
