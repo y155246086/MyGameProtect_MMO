@@ -1,8 +1,0 @@
-数据ID|资源路径|场景类型|大小类型|出口1|出口1类型|出口2|出口2类型|出口3|出口3类型|出口4|出口4类型|场景动态内容预制体
-id_int|resourcePath_string|sceneType_int|sizeType_int|ExitPath1_string|ExitType1_int|ExitPath2_string|ExitType2_int|ExitPath3_string|ExitType3_int|ExitPath4_string|ExitType4_int|sceneContentPath_string
-0|0|0|0|0|0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0|0|0|0|0|0
-1|terrain_main|1|1|door|1|0|0|0|0|0|0|0
-2|terrain_01|1|1|door|1|0|0|0|0|0|0|0
-3|terrain_02|1|1|door|1|0|0|0|0|0|0|0

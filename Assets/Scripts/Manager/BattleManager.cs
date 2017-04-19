@@ -4,7 +4,6 @@ using System.Collections;
 public class BattleManager : MonoBehaviour {
 
     private Animator anim;
-    private PlayerSkillManager skillManager;
     void Awake()
     {
         anim = this.GetComponent<Animator>();

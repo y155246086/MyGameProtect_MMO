@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Player : SpriteBase, ICanAttacked {
-
+    [System.NonSerialized]
     public SkillManager skillManager;
     protected override void Initialize()
     {
@@ -12,6 +12,9 @@ public class Player : SpriteBase, ICanAttacked {
         skillManager.AddSkill(3);
         skillManager.AddSkill(4);
         GameWorld.player = this;
+        this.gameObject.AddComponent<PlayerMoveController>();
+        this.gameObject.AddComponent<BattleManager>();
+        this.gameObject.AddComponent<DontDestroyMe>();
     }
     public void SetHurt(int value)
     {

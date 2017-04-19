@@ -1,6 +1,0 @@
-数据ID|状态名称|状态类型名称|旋转角度|上下仰角|高度|高度浮动|视角是否固定
-id_int|name_string|type_int|rotaionAngle_float|elevation_float|hight_float|heightChange_float|isStatic_int
-0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0
-0|0|0|0|0|0|0|0
-1|躺倒状态|1|PlayNormalWalkSound|100|100|100|0

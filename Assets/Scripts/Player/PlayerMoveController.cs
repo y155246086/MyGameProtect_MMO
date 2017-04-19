@@ -24,10 +24,5 @@ public class PlayerMoveController : MonoBehaviour {
             speed = Mathf.Max(Mathf.Abs(ETCInput.GetAxis("Vertical")), Mathf.Abs(ETCInput.GetAxis("Horizontal")));
         }
         anim.SetFloat("Speed", speed);
-        if (cc.isGrounded && ETCInput.GetAxis("Vertical") == 0 && ETCInput.GetAxis("Horizontal") == 0)
-        {
-        }
-        
-
     }
 }

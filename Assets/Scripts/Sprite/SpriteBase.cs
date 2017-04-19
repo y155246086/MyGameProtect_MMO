@@ -7,8 +7,11 @@ using System;
 public class SpriteBase : MonoBehaviour {
 
     protected SfxManager sfxManager;// 特效管理器
+    [NonSerialized]
     public SfxHandler sfxHandler;
+    [NonSerialized]
     public PropertyManager propertyManager;//属性管理器
+    [NonSerialized]
     public Vector3 BornPoint;//出生点
     protected SpriteType spriteType = SpriteType.NONE;
     

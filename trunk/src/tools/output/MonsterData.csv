@@ -3,4 +3,4 @@ id_int|PrefabsPath_string|type_int|name_string|currentHP_int|runSpeed_float|move
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
-1|Characters/NPC/NPC_1026|1|普通狼|300|2|2|300|14|3|2|0|8|10|2|3|5|0|0|sound/langDead03|0|0|1|2|0|1|0|Effect/Prefabs/eff_007_gushi_shouji|0|0|0|0|1|10
+1|Characters/NPC/NPC_1026|1|0|300|2|2|300|14|3|2|0|8|10|2|3|5|0|0|sound/langDead03|0|0|1|2|0|1|0|Effect/Prefabs/eff_007_gushi_shouji|0|0|0|0|1|10

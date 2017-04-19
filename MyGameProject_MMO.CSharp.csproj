@@ -510,32 +510,16 @@
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\DataCenter.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\AIData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraAnimData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraEffectData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraStateData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CreateAIData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\EffectData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\EventData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameSceneData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameTriggerData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GoodsData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ImportAnimationAddClipData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ImportAnimationAddEventData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\MonsterData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\NPCData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\OperationData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneClipData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ResourceData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneLevelData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneStaticData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\StoryData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\TriggerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\WaveData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\WeaponData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />

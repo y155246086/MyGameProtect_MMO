@@ -18,9 +18,14 @@ public class FieldState : GameState
     protected override void OnLoadComplete(params object[] args)
     {
         Debuger.Log("FieldState-->OnLoadComplete");
-        MonsterManager.Instance.CreateMonster(1, Vector3.zero);
         GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
         GUIManager.ShowView(PanelNameConst.FunctionButtonPanel,0);
+        GameObject bornPoint = GameObject.Find("BornPoint");
+        if (bornPoint != null)
+        {
+            bornPoint.SetActive(false);
+            GameWorld.player.transform.position = bornPoint.transform.position;
+        }
     }
 }
 
