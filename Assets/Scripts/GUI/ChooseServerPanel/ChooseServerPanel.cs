@@ -20,23 +20,15 @@ public class ChooseServerPanel : IViewBase {
         GUIManager.ShowView(PanelNameConst.LoginPanel);
         GUIManager.HideView(PanelNameConst.ChooseServerPanel);
     }
-    protected override void OnShow()
+    protected override void OnShow(params object[] args)
     {
-        panelObj.gameObject.SetActive(true);
+
     }
     protected override void OnHide()
     {
-        panelObj.gameObject.SetActive(false);
+
     }
     protected override void OnDestory()
-    {
-
-    }
-    protected override void AddEventListener()
-    {
-
-    }
-    protected override void RemoveEventListener()
     {
 
     }

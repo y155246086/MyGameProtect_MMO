@@ -30,7 +30,7 @@ public class GUIManager{
     /// 显示UI
     /// </summary>
     /// <param name="name"></param>
-	public static void ShowView(string name)
+    public static void ShowView(string name, params object[] args)
     {
         Debuger.Log("GUIManager.ShowView---" + name);
         IViewBase view = null;
@@ -53,7 +53,7 @@ public class GUIManager{
             }
             if(panelParent == null)
             {
-                panelParent = GameObject.Find("Canvas").transform.Find("UICamera").transform.Find("Panels");
+                panelParent = GameObject.Find("GUICanvas").transform.Find("Panels");
             }
             if(panelParent != null)
             {
@@ -88,7 +88,7 @@ public class GUIManager{
             HideView(item.Key);
         }
         UpdateIViewLayer(view);
-        view.Show();
+        view.Show(args);
 
     }
     private static void UpdateIViewLayer(IViewBase view)

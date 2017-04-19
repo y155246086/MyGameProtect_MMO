@@ -424,6 +424,7 @@
     <Compile Include="Assets\Scripts\GUI\Billboard\SplitBattleBillboard.cs" />
     <Compile Include="Assets\Scripts\GUI\ChooseServerPanel\ChooseServerPanel.cs" />
     <Compile Include="Assets\Scripts\GUI\EasyTouchControlsPanel\EasyTouchControlsPanel.cs" />
+    <Compile Include="Assets\Scripts\GUI\FunctionButtonPanel\FunctionButtonPanel.cs" />
     <Compile Include="Assets\Scripts\GUI\IViewBase.cs" />
     <Compile Include="Assets\Scripts\GUI\LoadingPanel\LoadingPanel.cs" />
     <Compile Include="Assets\Scripts\GUI\LoginPanel\LoginPanel.cs" />

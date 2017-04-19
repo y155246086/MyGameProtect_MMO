@@ -21,20 +21,27 @@ public abstract class IViewBase
     public GameObject panelObj = null;
 	public void Start()
     {
+        panelObj.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
+        panelObj.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+        panelObj.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        panelObj.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+        panelObj.GetComponent<RectTransform>().offsetMax = Vector2.zero;
         OnStart();
     }
     public void Destroy()
     {
         OnDestory();
     }
-    public void Show()
+    public void Show(params object[] args)
     {
-        OnShow();
+        panelObj.gameObject.SetActive(true);
+        OnShow(args);
         AddEventListener();
     }
     public void Hide()
     {
         RemoveEventListener();
+        panelObj.gameObject.SetActive(false);
         OnHide();
     }
     /// <summary>
@@ -53,8 +60,8 @@ public abstract class IViewBase
     }
 
     protected abstract void OnStart();
-    
-    protected abstract void OnShow();
+
+    protected abstract void OnShow(params object[] args);
     
     protected abstract void OnHide();
     protected abstract void OnDestory();

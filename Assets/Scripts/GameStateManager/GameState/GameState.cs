@@ -9,7 +9,7 @@ public abstract class GameState {
 	public void Start()
     {
         //TODO显示加载UI
-        //GUIManager.ShowView("LoadingPanel");
+        GUIManager.ShowView(PanelNameConst.LoadingPanel);
         OnStart();
     }
     public void Stop()
@@ -20,7 +20,7 @@ public abstract class GameState {
     {
         //TODO隐藏加载UI
         OnLoadComplete(args);
-        //GUIManager.HideView("LoadingPanel");
+        GUIManager.HideView(PanelNameConst.LoadingPanel);
     }
     protected abstract void OnStart();
     protected abstract void OnStop();

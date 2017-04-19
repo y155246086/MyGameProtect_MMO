@@ -10,7 +10,6 @@ public class CityState : GameState
 
     protected override void OnStart()
     {
-        GUIManager.ShowView(PanelNameConst.LoadingPanel);
         Debuger.Log("CityState-->OnStart");
         
     }
@@ -21,8 +20,8 @@ public class CityState : GameState
     protected override void OnLoadComplete(params object[] args)
     {
         Debuger.Log("CityState-->OnLoadComplete");
-        GUIManager.HideView(PanelNameConst.LoadingPanel);
         MonsterManager.Instance.CreateMonster(1, Vector3.zero);
         GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
+        GUIManager.ShowView(PanelNameConst.FunctionButtonPanel);
     }
 }

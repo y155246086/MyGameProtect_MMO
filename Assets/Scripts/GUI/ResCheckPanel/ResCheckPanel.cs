@@ -11,21 +11,26 @@ public class ResCheckPanel : IViewBase
         descText = panelObj.transform.Find("DescText").GetComponent<Text>();
         descText.text = "";
     }
-
+    protected override void AddEventListener()
+    {
+        Mogo.Util.EventDispatcher.AddEventListener<string>(GUIEvent.RESOURCE_UPDATE_MESSAGE, OnResUpdateMessageHandler);
+    }
+    protected override void RemoveEventListener()
+    {
+        Mogo.Util.EventDispatcher.RemoveEventListener<string>(GUIEvent.RESOURCE_UPDATE_MESSAGE, OnResUpdateMessageHandler);
+    }
     private void OnResUpdateMessageHandler(string message)
     {
         descText.text = message;
     }
 
-    protected override void OnShow()
+    protected override void OnShow(params object[] args)
     {
-        Mogo.Util.EventDispatcher.AddEventListener<string>(GUIEvent.RESOURCE_UPDATE_MESSAGE, OnResUpdateMessageHandler);
-        panelObj.gameObject.SetActive(true);
+        
     }
     protected override void OnHide()
     {
-        panelObj.gameObject.SetActive(false);
-        Mogo.Util.EventDispatcher.RemoveEventListener<string>(GUIEvent.RESOURCE_UPDATE_MESSAGE, OnResUpdateMessageHandler);
+        
     }
     protected override void OnDestory()
     {
