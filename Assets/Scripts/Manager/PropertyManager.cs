@@ -50,4 +50,16 @@ public class PropertyManager {
         }
         
     }
+    /// <summary>
+    /// 改变属性
+    /// </summary>
+    /// <param name="propertyType"></param>
+    /// <param name="value"></param>
+    public void ChangeProperty(PropertyType propertyType, int value)
+    {
+        if (map.ContainsKey(propertyType))
+        {
+            map[propertyType] += value;
+        }
+    }
 }

@@ -397,6 +397,7 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ViewWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\LuaConst.cs" />
     <Compile Include="Assets\Scripts\AwakeDestoryAllChild.cs" />
+    <Compile Include="Assets\Scripts\Common\ActorEvent.cs" />
     <Compile Include="Assets\Scripts\Common\GUIEvent.cs" />
     <Compile Include="Assets\Scripts\Common\GameCommon.cs" />
     <Compile Include="Assets\Scripts\Common\GameCommonUtils.cs" />

@@ -62,8 +62,13 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
     {
         if(!(this is ActorMyself))
         {
-            Play("Action", 11);
-            AddCallbackInFrames<string, int>(Play, "Action", 0);
+            GetEntity().propertyManager.ChangeProperty(PropertyType.HP, -value);
+            if (GetEntity().propertyManager.GetPropertyValue(PropertyType.HP)>0)
+            {
+                GetEntity().SetAction(ActionConstants.HIT);
+                AddCallbackInFrames<int>(GetEntity().SetAction, 0);
+            }
+            
             FloatBlood(value);
         }
     }

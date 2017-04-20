@@ -36,6 +36,22 @@ public class GameWorld {
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
+    public static EntityParent GetEntity(SpriteType type)
+    {
+        foreach (var item in spriteList)
+        {
+            if (item.Value.spriteType == type && item.Value.IsDead() == false)
+            {
+                return item.Value;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// 获取一个精灵
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public static EntityParent GetEntity(uint id)
     {
         if(spriteList.ContainsKey(id))
@@ -48,10 +64,13 @@ public class GameWorld {
     /// 添加一个新的精灵
     /// </summary>
     /// <param name="type"></param>
-    public static void AddNewEntity(SpriteType type)
+    public static void AddNewEntity(SpriteType type,EntityServerInfo info = null)
     {
+        if(info == null)
+        {
+            info = new EntityServerInfo();
+        }
         EntityParent entity = null;
-        EntityServerInfo info = new EntityServerInfo();
         switch (type)
         {
             case SpriteType.NONE:
@@ -61,7 +80,7 @@ public class GameWorld {
                 if(player == null)
                 {
                     entity = new EntityMyself();
-                    info.id = 1;
+                    info.id = 1000;
                     info.dataId = 1;
                     info.position = Vector3.zero;
                     info.x = 100;
@@ -80,19 +99,9 @@ public class GameWorld {
                 break;
             case SpriteType.Player:
                 entity = new EntityPlayer();
-                info.id = 2;
-                info.dataId = 1;
-                info.position = Vector3.zero;
-                info.x = 100;
-                info.y = 100;
                 break;
             case SpriteType.Monster:
                 entity = new EntityMonster();
-                info.id = 3;
-                info.dataId = 1;
-                info.position = Vector3.zero;
-                info.x = 100;
-                info.y = 100;
                 break;
             default:
                 break;
@@ -104,7 +113,7 @@ public class GameWorld {
         entity.EnterWorld();
         OnEnterWorld(entity);
     }
-    static private void RemoveEntity(uint eid)
+    static public void RemoveEntity(uint eid)
     {
         if (!spriteList.ContainsKey(eid))
         {

@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using BattleFramework.Data;
+using Mogo.Util;
 
 public class EntityMonster :  EntityParent {
 
     private MonsterData data = null;
+    public EntityMonster()
+    {
+        spriteType = SpriteType.Monster;
+    }
     protected override void OnCreateModel()
     {
         data = MonsterData.GetByID(serverInfo.dataId);
@@ -32,6 +37,20 @@ public class EntityMonster :  EntityParent {
     protected override void OnEnterWorld()
     {
         SetOwenr(data);
+        Mogo.Util.EventDispatcher.AddEventListener<uint>(ActorEvent.ACTOR_DEAD, OnDead);
+    }
+    private uint deadTimeID = 0;
+    private void OnDead(uint obj)
+    {
+        if(obj == ID)
+        {
+            deadTimeID = TimerHeap.AddTimer((uint)(10 * 1000f), 0, _OnDead);
+        }
+    }
+
+    private void _OnDead()
+    {
+        GameWorld.RemoveEntity(ID);
     }
     public void SetOwenr(MonsterData data)
     {
@@ -45,5 +64,8 @@ public class EntityMonster :  EntityParent {
     protected override void OnLeaveWorld()
     {
         skillManager.Clear();
+        Mogo.Util.EventDispatcher.RemoveEventListener<uint>(ActorEvent.ACTOR_DEAD, OnDead);
+        Mogo.Util.TimerHeap.DelTimer(deadTimeID);
+        gameObject.SetActive(false);
     }
 }

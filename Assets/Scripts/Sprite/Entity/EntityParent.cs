@@ -17,6 +17,7 @@ public abstract class EntityParent {
     private SfxManager sfxManager;
     public SfxHandler sfxHandler;
     public SkillManager skillManager;
+    public SpriteType spriteType;
     public ActorParent Actor { get; set; }
     /// <summary>
     /// 状态机初始化
@@ -90,6 +91,7 @@ public abstract class EntityParent {
     {
         serverInfo = info;
         ID = info.id;
+        bornPosition = info.position;
     }
     public virtual void UpdatePosition()
     {
@@ -140,6 +142,34 @@ public abstract class EntityParent {
     }
     internal bool IsDead()
     {
-        return false;
+        return propertyManager.GetPropertyValue(PropertyType.HP)<=0;
+    }
+    virtual public void SetAction(int act)
+    {
+        if (animator == null)
+        {
+            return;
+        }
+        animator.SetInteger("Action", act);
+        if (act == ActionConstants.HIT_AIR)
+        {
+
+        }
+        else if (act == ActionConstants.KNOCK_DOWN)
+        {
+
+        }
+        else if (act == ActionConstants.HIT)
+        {
+
+        }
+        else if (act == ActionConstants.PUSH)
+        {
+
+        }
+        else if (act == ActionConstants.HIT_GROUND)
+        {
+
+        }
     }
 }

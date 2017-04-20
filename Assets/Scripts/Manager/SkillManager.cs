@@ -142,7 +142,7 @@ public class SkillManager
         //设置cd
         cdDict[data.id] = Time.time;
         //播放动作
-        owner.gameObject.GetComponent<Animator>().SetInteger("Action", data.action);
+        owner.SetAction(data.action);
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(data);
@@ -160,7 +160,7 @@ public class SkillManager
     {
         isCanSkill = true;
         isSkillPlaying = false;
-        owner.gameObject.GetComponent<Animator>().SetInteger("Action", 0);
+        owner.SetAction(0);
     }
     private void DelayAttack()
     {
@@ -169,10 +169,13 @@ public class SkillManager
     protected void AttackTrigger()
     {
         Transform target = GetHitSprite(curSkillData.id);
-        ICanAttacked att = target.GetComponent<ICanAttacked>();
-        if(att != null)
+        if(target != null)
         {
-            att.SetHurt(Random.Range(curSkillData.minAttackValue, curSkillData.maxAttackValue)*1000);
+            ICanAttacked att = target.GetComponent<ICanAttacked>();
+            if (att != null)
+            {
+                att.SetHurt(Random.Range(curSkillData.minAttackValue, curSkillData.maxAttackValue) * 100);
+            }
         }
     }
     private Transform GetHitSprite(int skillid)
@@ -180,7 +183,15 @@ public class SkillManager
         SkillData skill = SkillData.GetByID(skillid);
         if(owner is EntityMyself)
         {
-            return GameWorld.GetEntity(3).transform;
+            if (GameWorld.GetEntity(SpriteType.Monster) != null)
+            {
+                return GameWorld.GetEntity(SpriteType.Monster).transform;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
         else
         {

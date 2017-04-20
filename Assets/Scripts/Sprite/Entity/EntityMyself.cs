@@ -6,6 +6,11 @@ public class EntityMyself : EntityPlayer
 {
     private ResourceData data;
     private BattleManager battleManager;
+
+    public EntityMyself()
+    {
+        spriteType = SpriteType.Myself;
+    }
     protected override void OnCreateModel()
     {
         data = ResourceData.GetByID(serverInfo.dataId);

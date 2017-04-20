@@ -13,16 +13,15 @@ public class DeadBase : FSMState
     public override void Enter(params Object[] args)
     {
         Debuger.Log("进入死亡状态");
-        animator.SetTrigger("TriggerDead");
-
+        owner.SetAction(ActionConstants.DIE);
+        owner.Actor.AddCallbackInFrames<int>(owner.SetAction, 0);
         ParticleSystem[] s = owner.gameObject.GetComponentsInChildren<ParticleSystem>();
         for (int i = 0; i < s.Length; i++)
         {
             s[i].gameObject.SetActive(false);
         }
 
-        GameObject.Destroy(owner.gameObject, 10f);
-        
+        Mogo.Util.EventDispatcher.TriggerEvent<uint>(ActorEvent.ACTOR_DEAD, owner.ID);
     }
     public override void Exit()
     {

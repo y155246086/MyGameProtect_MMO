@@ -24,7 +24,18 @@ public class CityState : GameState
         GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
         GUIManager.ShowView(PanelNameConst.FunctionButtonPanel);
         GameWorld.AddNewEntity(SpriteType.Myself);
-        GameWorld.AddNewEntity(SpriteType.Monster);
+        GameObject[] arr = GameObject.FindGameObjectsWithTag("MonsterPoint");
+        for (int i = 0; i < arr.Length; i++)
+        {
+            EntityServerInfo info = new EntityServerInfo();
+            info.id = (uint)(i+1);
+            info.dataId = 1;
+            info.position = arr[i].transform.position;
+            info.x = (short)info.position.x;
+            info.y = (short)info.position.z;
+            arr[i].SetActive(false);
+            GameWorld.AddNewEntity(SpriteType.Monster, info);
+        }
 
     }
 }
