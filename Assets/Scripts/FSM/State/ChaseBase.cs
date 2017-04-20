@@ -7,14 +7,13 @@ using UnityEngine;
 /// </summary>
 public class ChaseBase : FSMState {
 
-    public ChaseBase(Transform owner)
+    public ChaseBase(EntityParent owner)
     {
         curRotSpeed = 6;
         curSpeed = 4;
         this.owner = owner;
-        animator = owner.GetComponent<Animator>();
-        aiPath = owner.GetComponent<AIPath>();
-        aiController = owner.GetComponent<FSM.AIController>();
+        animator = owner.animator;
+        aiPath = owner.gameObject.GetComponent<AIPath>();
         //FindNextPoint();
     }
     public override void Enter(params Object[] args)
@@ -35,16 +34,16 @@ public class ChaseBase : FSMState {
     protected override bool OnUpdateState(Transform target)
     {
         destPos = target.position;
-        if (GetDistanceXZ(owner.position, destPos) <= aiController.AttackDistance)
+        if (GetDistanceXZ(owner.transform.position, destPos) <= owner.propertyManager.GetPropertyValue(PropertyType.Attack_Dis))
         {
             Debuger.Log("转换为攻击状态");
-            owner.GetComponent<FSM.AIController>().ChangeState(FSMStateType.Attacking);
+            owner.ChangeState(FSMStateType.Attacking);
             return true;
         }
-        else if (GetDistanceXZ(owner.position, destPos) >= aiController.ChaseDistance)
+        else if (GetDistanceXZ(owner.transform.position, destPos) >= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
             Debuger.Log("转变到巡逻状态");
-            owner.GetComponent<FSM.AIController>().ChangeState(FSMStateType.Patroling);
+            owner.ChangeState(FSMStateType.Patroling);
             return true;
         }
         return false;
@@ -52,7 +51,8 @@ public class ChaseBase : FSMState {
     protected override void OnUpdateAction(Transform target)
     {
         //到达目标点就停止移动
-        if (GetDistanceXZ(owner.position, destPos) <= aiController.ArriveDistance)
+
+        if (GetDistanceXZ(owner.transform.position, destPos) <= owner.propertyManager.GetPropertyValue(PropertyType.Arrive_Dis))
         {
             StopMove();
             return;
@@ -76,10 +76,10 @@ public class ChaseBase : FSMState {
         {
             destPos = target.position;
 
-            Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(owner.position.x, 0, owner.position.z);
+            Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
             //确定我当前角色的方向
             Quaternion targetRotation = Quaternion.LookRotation(dir);
-            owner.rotation = Quaternion.Slerp(owner.rotation, targetRotation, Time.deltaTime + curRotSpeed);
+            owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, targetRotation, Time.deltaTime + curRotSpeed);
         }
 
         

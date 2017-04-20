@@ -3,10 +3,8 @@ using System.Collections;
 
 public class BattleManager : MonoBehaviour {
 
-    private Animator anim;
     void Awake()
     {
-        anim = this.GetComponent<Animator>();
     }
 	void Start () {
 	}
@@ -27,11 +25,7 @@ public class BattleManager : MonoBehaviour {
 	}
     public void NormalAttack(int id)
     {
-        Player ai = GameObject.FindObjectOfType<Player>();
-        if(ai != null && ai.skillManager != null)
-        {
-            ai.skillManager.UseSkill(id);
-        }
+
     }
     public void SpellOneAttack()
     {

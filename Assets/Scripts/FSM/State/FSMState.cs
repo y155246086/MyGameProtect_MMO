@@ -6,10 +6,9 @@ public abstract class FSMState {
     protected Vector3 destPos;//目标点
     protected float curRotSpeed;//旋转速度
     protected float curSpeed;//移动速度
-    protected FSM.AIController aiController;
-    
 
-    protected Transform owner;
+
+    protected EntityParent owner;
     protected Animator animator;
     protected AIPath aiPath;
     private Transform pathTarget;
@@ -19,7 +18,7 @@ public abstract class FSMState {
         {
             if(pathTarget == null)
             {
-                GameObject o = new GameObject(owner.name + "_AIPathTarget");
+                GameObject o = new GameObject(owner + "_AIPathTarget");
                 pathTarget = o.transform;
             }
             return pathTarget;

@@ -20,12 +20,14 @@ public class FieldState : GameState
         Debuger.Log("FieldState-->OnLoadComplete");
         GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
         GUIManager.ShowView(PanelNameConst.FunctionButtonPanel,0);
-        GameObject bornPoint = GameObject.Find("BornPoint");
-        if (bornPoint != null)
-        {
-            bornPoint.SetActive(false);
-            GameWorld.player.transform.position = bornPoint.transform.position;
-        }
+        //GameObject bornPoint = GameObject.Find("BornPoint");
+        //if (bornPoint != null)
+        //{
+        //    bornPoint.SetActive(false);
+        //    GameWorld.player.transform.position = bornPoint.transform.position;
+        //}
+        GameWorld.AddNewEntity(SpriteType.Myself);
+        GameWorld.AddNewEntity(SpriteType.Monster);
     }
 }
 

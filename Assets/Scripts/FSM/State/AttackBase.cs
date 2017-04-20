@@ -5,51 +5,46 @@ using UnityEngine;
 public class AttackBase : FSMState
 {
 
-    public AttackBase(Transform owner)
+    public AttackBase(EntityParent owner)
     {
         curRotSpeed = 6;
         curSpeed = 80;
         this.owner = owner;
-        animator = owner.GetComponent<Animator>();
-        aiController = owner.GetComponent<FSM.AIController>();
+        animator = owner.animator;
     }
     public override void Enter(params Object[] args)
     {
         Debuger.Log("进入攻击状态");
-        //animator.SetTrigger("TriggerAttack01");
     }
     public override void Exit()
     {
         Debuger.Log("退出攻击状态");
-        //nimator.SetBool("TriggerAttack01",false);
     }
     public override void OnUpdate(Transform target)
     {
-        FSM.AIController ai = owner.GetComponent<FSM.AIController>();
-        if (ai != null && ai.skillManager)
-        {
-            ai.skillManager.Attack();
-        }
+        
     }
     protected override bool OnUpdateState(Transform target)
     {
-        FSM.AIController ai = owner.GetComponent<FSM.AIController>();
-        if (ai != null && ai.skillManager && ai.skillManager.IsSkillPlaying == true)
+        if (owner.skillManager!= null && owner.skillManager.IsSkillPlaying == true)
         {
             return false;
         }
-        float dist = GetDistanceXZ(owner.position, target.position);
-        if (dist >= aiController.AttackDistance && dist < aiController.ChaseDistance)
+        float dist = GetDistanceXZ(owner.transform.position, target.position);
+
+        if (dist >= owner.propertyManager.GetPropertyValue(PropertyType.Attack_Dis) && dist < owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
-            Debug.LogError("发现玩家");
-            owner.GetComponent<FSM.AIController>().ChangeState(FSMStateType.Chasing);
+            owner.ChangeState(FSMStateType.Chasing);
             return true;
         }
-        else if (dist >= aiController.ChaseDistance)
+        else if (dist >= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
-            Debug.LogError("丢是玩家");
-            owner.GetComponent<FSM.AIController>().ChangeState(FSMStateType.Patroling);
+            owner.ChangeState(FSMStateType.Patroling);
             return true;
+        }
+        if (owner.skillManager != null)
+        {
+            owner.skillManager.Attack();
         }
         return false;
     }
@@ -57,9 +52,12 @@ public class AttackBase : FSMState
     {
         destPos = target.position;
 
-        Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(owner.position.x, 0, owner.position.z);
+        Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
         //确定我当前角色的方向
-        Quaternion targetRotation = Quaternion.LookRotation(dir);
-        owner.rotation = Quaternion.Slerp(owner.rotation, targetRotation, Time.deltaTime + curRotSpeed);
+        if(dir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, targetRotation, Time.deltaTime + curRotSpeed);
+        }
     }
 }

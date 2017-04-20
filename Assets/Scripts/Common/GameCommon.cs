@@ -28,8 +28,9 @@ public enum CharactorProperty
 public enum SpriteType
 {
     NONE = 0,//无
-    Player = 1,//玩家
-    Monster =  2,//怪
+    Myself = 1,//玩家
+    Player = 3,//玩家
+    Monster =  4,//怪
 }
 /// <summary>
 /// 目标类型

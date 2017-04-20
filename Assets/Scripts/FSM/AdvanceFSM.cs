@@ -14,7 +14,7 @@ public enum FSMStateType
 public class AdvanceFSM : FSMBase {
     private Dictionary<FSMStateType, FSMState> map;
 
-    private FSM.AIController owner;
+    private EntityParent owner;
     protected Vector3 destPos;
 
     private FSMState currentState;
@@ -27,7 +27,7 @@ public class AdvanceFSM : FSMBase {
     {
         get { return currentType; }
     }
-    public AdvanceFSM(FSM.AIController owner)
+    public AdvanceFSM(EntityParent owner)
     {
         this.owner = owner;
         map = new Dictionary<FSMStateType, FSMState>();
@@ -98,11 +98,13 @@ public class AdvanceFSM : FSMBase {
     public override void FSMUpdate()
     {
         base.FSMUpdate();
-        CurrentState.OnUpdate(owner.playerTransfrom);
+        if (CurrentState != null)
+            CurrentState.OnUpdate(GameWorld.player.transform);
     }
     public override void FSMFixedUpdate()
     {
         base.FSMFixedUpdate();
-        CurrentState.OnFiexedUpdate(owner.playerTransfrom);
+        if (CurrentState!=null)
+            CurrentState.OnFiexedUpdate(GameWorld.player.transform);
     }
 }

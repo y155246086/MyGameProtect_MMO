@@ -4,7 +4,6 @@ using System.Collections;
 public class Main : MonoBehaviour {
     void Awake()
     {
-        this.gameObject.AddComponent<MonsterManager>();
         BattleFramework.Data.DataCenter.Instance();
         Application.targetFrameRate = 60;
     }

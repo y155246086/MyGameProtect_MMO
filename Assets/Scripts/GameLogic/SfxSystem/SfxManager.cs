@@ -5,9 +5,9 @@ using Mogo.Util;
 using BattleFramework.Data;
 
 public class SfxManager{
-    private SpriteBase theOwner;
+    private EntityParent theOwner;
     public Dictionary<int, List<uint>> sfxTimerIDDic { get; protected set; }
-    public SfxManager(SpriteBase owenr)
+    public SfxManager(EntityParent owenr)
     {
         this.theOwner = owenr;
         sfxTimerIDDic = new Dictionary<int, List<uint>>();

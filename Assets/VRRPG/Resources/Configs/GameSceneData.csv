@@ -1,8 +1,8 @@
-数据ID|场景名称|用于加载的场景名称|刷新点预设路径|背景音乐|随机播放音效|状态名称
-id_int|sceneName_string|levelName_string|ResRefreshPointsPath_string|bgsound_string|randomSound_string|stateName_string
-0|0|0|0|0|0|0
-0|0|0|0|0|0|0
-0|0|0|0|0|0|0
-1|开始场景|GameStart|0|0|0|GameStartState
-2|主城|City|0|0|0|CityState
-3|副本|10106_Beast_s|0|0|0|FieldState
+数据ID|场景名称|用于加载的场景名称|刷新点预设路径|背景音乐|随机播放音效|状态名称|初始坐标
+id_int|sceneName_string|levelName_string|ResRefreshPointsPath_string|bgsound_string|randomSound_string|stateName_string|enterPoint_vector3
+0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0
+1|开始场景|GameStart|0|0|0|GameStartState|0,0,0
+2|主城|City|0|0|0|CityState|0,0,0
+3|副本|10106_Beast_s|0|0|0|FieldState|15,0,6

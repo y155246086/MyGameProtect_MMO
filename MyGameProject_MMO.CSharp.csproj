@@ -408,10 +408,7 @@
     <Compile Include="Assets\Scripts\Debuger.cs" />
     <Compile Include="Assets\Scripts\DontDestroyMe.cs" />
     <Compile Include="Assets\Scripts\Extensions.cs" />
-    <Compile Include="Assets\Scripts\FSM\AIController.cs" />
     <Compile Include="Assets\Scripts\FSM\Actor\ActorBullet.cs" />
-    <Compile Include="Assets\Scripts\FSM\Actor\MonsterAI.cs" />
-    <Compile Include="Assets\Scripts\FSM\Actor\NPCAI.cs" />
     <Compile Include="Assets\Scripts\FSM\AdvanceFSM.cs" />
     <Compile Include="Assets\Scripts\FSM\FSMBase.cs" />
     <Compile Include="Assets\Scripts\FSM\State\AttackBase.cs" />
@@ -447,7 +444,6 @@
     <Compile Include="Assets\Scripts\Manager\DownloadManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Manager\MogoMainCamera.cs" />
-    <Compile Include="Assets\Scripts\Manager\MonsterManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerSkillManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PropertyManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
@@ -488,9 +484,17 @@
     <Compile Include="Assets\Scripts\Net\Protocols\RoleProtocols.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerC.cs" />
     <Compile Include="Assets\Scripts\Player\ICanAttacked.cs" />
-    <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMoveController.cs" />
     <Compile Include="Assets\Scripts\SingleTon.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Actors\ActorMonster.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Actors\ActorMyself.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Actors\ActorParent.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Actors\ActorPlayer.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Entity\EntityMonster.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Entity\EntityMyself.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Entity\EntityParent.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Entity\EntityPlayer.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Entity\EntityServerInfo.cs" />
     <Compile Include="Assets\Scripts\Sprite\SpriteBase.cs" />
     <Compile Include="Assets\Scripts\TestNetWork.cs" />
     <Compile Include="Assets\Scripts\mogo\Event\EventDispatcher.cs" />

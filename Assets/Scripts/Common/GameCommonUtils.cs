@@ -506,7 +506,7 @@ public class GameCommonUtils
             {
                 continue;
             }
-            if (item.Value is SpriteBase)
+            if (item.Value is EntityMonster)
             {
                 listMonster.Add(item.Key);
             }
@@ -551,9 +551,9 @@ public class GameCommonUtils
         List<uint> listPlayer = new List<uint>();
         List<uint> listMercenary = new List<uint>();
         //遍历entities
-        foreach (KeyValuePair<uint, SpriteBase> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
         {
-            SpriteBase entity = pair.Value;
+            EntityParent entity = pair.Value;
             if (!entity.transform)
             {
                 continue;
@@ -562,7 +562,7 @@ public class GameCommonUtils
             float entityRadius = 1f;
             if ((position - entity.transform.position).magnitude > radius + entityRadius) continue;
 
-            if (pair.Value is MonsterAI)
+            if (pair.Value is EntityMonster)
             {
                 listMonster.Add(pair.Key);
             }
@@ -601,7 +601,7 @@ public class GameCommonUtils
         list.Add(listPlayer);
         list.Add(listMercenary);
 
-        foreach (KeyValuePair<uint, SpriteBase> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
         {
             if (pair.Value.transform == null)
             {
@@ -637,7 +637,7 @@ public class GameCommonUtils
             {
                 continue;
             }
-            if (pair.Value is MonsterAI)
+            if (pair.Value is EntityMonster)
             {
                 listMonster.Add(pair.Key);
             }
@@ -664,7 +664,7 @@ public class GameCommonUtils
         foreach (RaycastHit hit in hits)
         {
             SpriteBase entity = hit.transform.GetComponent<SpriteBase>();
-            if (entity is MonsterAI)
+            if (entity is EntityMonster)
             {
                 listMonster.Add(1);
             }
@@ -700,9 +700,9 @@ public class GameCommonUtils
         m = m * m1;
         Vector3 posi = new Vector3(m.m03, m.m13, m.m23);
         //遍历entities
-        foreach (KeyValuePair<uint, SpriteBase> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
         {
-            SpriteBase entity = pair.Value;
+            EntityParent entity = pair.Value;
             if (!entity.transform)
             {
                 continue;
@@ -712,7 +712,7 @@ public class GameCommonUtils
             //if ((t.position - entity.Transform.position).magnitude > radius + entityRadius) continue;
             if ((posi - entity.transform.position).magnitude > radius + entityRadius) continue;
 
-            if (pair.Value is MonsterAI)
+            if (pair.Value is EntityParent)
             {
                 listMonster.Add(pair.Key);
             }
@@ -750,9 +750,9 @@ public class GameCommonUtils
         m = m * m1;
         Vector3 posi = new Vector3(m.m03, m.m13, m.m23);
         //遍历entities
-        foreach (KeyValuePair<uint, SpriteBase> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
         {
-            SpriteBase entity = pair.Value;
+            EntityParent entity = pair.Value;
 
 
             float entityRadius = 1f;//精灵半径
@@ -769,7 +769,7 @@ public class GameCommonUtils
             //判断b - a 是否在 angle/2内
             if ((b - a) > angle / 2) continue;
 
-           if (pair.Value is MonsterAI)
+           if (pair.Value is EntityParent)
             {
                 listMonster.Add(pair.Key);
             }
@@ -896,22 +896,7 @@ public class GameCommonUtils
 
    
 
-    static public bool GetPointInTerrain(float x, float z, out Vector3 point)
-    {
-        RaycastHit hit;
-        var flag = Physics.Linecast(new Vector3(x, 1000, z), new Vector3(x, -1000, z), out hit, (int)LayerMask.GetMask("Terrain"));
-        if (flag)
-        {
-            point = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
-            return true;
-        }
-        else
-        {
-            point = new Vector3(x, 50, z);
-            return false;
-        }
-
-    }
+    
 
     /// <summary>
     /// 由近到远排序
@@ -1094,6 +1079,23 @@ public class GameCommonUtils
             if (newShader != null)
                 m.shader = newShader;
         }
+    }
+    static public bool GetPointInTerrain(float x, float z, out Vector3 point)
+    {
+        RaycastHit hit;
+        var flag = Physics.Linecast(new Vector3(x, 1000, z), new Vector3(x, -1000, z), out hit, (int)LayerMask.GetMask("Terrain"));
+        if (flag)
+        {
+            point = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
+            return true;
+        }
+        else
+        {
+            point = new Vector3(x, 50, z);
+            Debuger.LogWarning("hit noting:" + x + "," + z);
+            return false;
+        }
+
     }
 }
 

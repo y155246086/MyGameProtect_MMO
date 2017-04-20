@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class GameSceneData {
         public static string csvFilePath = "Configs/GameSceneData";
-        public static string[] columnNameArray = new string[7];
+        public static string[] columnNameArray = new string[8];
         public static List<GameSceneData> dataList;
         public static List<GameSceneData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
@@ -15,7 +15,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[7];
+            columnNameArray = new string[8];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 GameSceneData data = new GameSceneData();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -32,6 +32,12 @@ namespace BattleFramework.Data{
                 columnNameArray [5] = "randomSound";
                 data.stateName = csvFile.mapData[i].data[6];
                 columnNameArray [6] = "stateName";
+                data.enterPoint= new Vector3();
+                strs = csvFile.mapData[i].data[7].Split(new char[1]{','});
+                    data.enterPoint.x = (float.Parse(strs[0]));
+                    data.enterPoint.y = (float.Parse(strs[1]));
+                    data.enterPoint.z = (float.Parse(strs[2]));
+                columnNameArray [7] = "enterPoint";
                 dataList.Add(data);
             }
             return dataList;
@@ -60,5 +66,6 @@ namespace BattleFramework.Data{
         public string bgsound;//背景音乐
         public string randomSound;//随机播放音效
         public string stateName;//状态名称
+        public Vector3 enterPoint;//初始坐标
     }
 }

@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PatrolBase : FSMState {
 
-    public PatrolBase(Transform owner)
+    public PatrolBase(EntityParent owner)
     {
         curRotSpeed = 6;
         curSpeed = 1;
         this.owner = owner;
-        destPos = owner.position;
-        animator = owner.GetComponent<Animator>();
-        aiPath = owner.GetComponent<AIPath>();
-        aiController = owner.GetComponent<FSM.AIController>();
+        destPos = owner.transform.position;
+        animator = owner.animator;
+        aiPath = owner.gameObject.GetComponent<AIPath>();
     }
     public override void Enter(params Object[] args)
     {
@@ -23,7 +22,6 @@ public class PatrolBase : FSMState {
     public override void Exit()
     {
         Debuger.Log("退出巡逻状态");
-        Animator ani = owner.GetComponent<Animator>();
         StopMove();
     }
     public override void OnUpdate(Transform target)
@@ -32,21 +30,22 @@ public class PatrolBase : FSMState {
     }
     protected override bool OnUpdateState(Transform target)
     {
-        if (Vector3.Distance(owner.position, target.position) <= aiController.ChaseDistance)
+        if (target != null && Vector3.Distance(owner.transform.position, target.position) <= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
             Debuger.Log("转换为追逐状态");
-            owner.GetComponent<FSM.AIController>().ChangeState(FSMStateType.Chasing);
+            owner.ChangeState(FSMStateType.Chasing);
             return true;
         }
-        if (GetDistanceXZ(owner.position, destPos) <= aiController.ArriveDistance)
+        if (GetDistanceXZ(owner.transform.position, destPos) <= owner.propertyManager.GetPropertyValue(PropertyType.Arrive_Dis))
         {
-            if (aiController.data.patrolRadius <=0)
+            float patrolRadius = owner.propertyManager.GetPropertyValue(PropertyType.Patrol_Radius);
+            if (patrolRadius <= 0)
             {
-                destPos = owner.position;
+                destPos = owner.bornPosition;
             }
             else
             {
-                destPos = new Vector3(aiController.BornPoint.x + UnityEngine.Random.RandomRange(-aiController.data.patrolRadius, aiController.data.patrolRadius), aiController.BornPoint.y, aiController.BornPoint.z + UnityEngine.Random.RandomRange(-aiController.data.patrolRadius, aiController.data.patrolRadius));
+                destPos = new Vector3(owner.bornPosition.x + UnityEngine.Random.RandomRange(-patrolRadius, patrolRadius), owner.bornPosition.y, owner.bornPosition.z + UnityEngine.Random.RandomRange(-patrolRadius, patrolRadius));
             }
             AIPathTarget.position = destPos;
         }
@@ -56,17 +55,11 @@ public class PatrolBase : FSMState {
     protected override void OnUpdateAction(Transform target)
     {
         //到达目标点就停止移动
-        if (GetDistanceXZ(owner.position, destPos) <= aiController.ArriveDistance)
+        if (GetDistanceXZ(owner.transform.position, destPos) <= owner.propertyManager.GetPropertyValue(PropertyType.Arrive_Dis))
         {
             StopMove();
-            //animator.SetBool("IsWalk", false);
             return;
         }
-        //角色移动
-        //destPos = target.position;
-        //AIPathTarget.position = destPos;
-        //StartMove();
-        //animator.Play(Animator.StringToHash("Base Layer.walk"));
     }
     
 }

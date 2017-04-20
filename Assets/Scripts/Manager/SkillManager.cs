@@ -5,20 +5,15 @@ using System.Collections.Generic;
 using Mogo.Util;
 
 
-public class SkillManager : MonoBehaviour
+public class SkillManager
 {
     private List<SkillData> skillList = new List<SkillData>();
-    private SpriteBase owner;
+    private EntityParent owner;
     private Dictionary<int, float> cdDict = new Dictionary<int, float>();
     private SkillData curSkillData = null;
     private bool isCanSkill = true;
     private bool isSkillPlaying = false;
-    public SkillManager()
-    {
-
-    }
-
-    public void SetOwenr(SpriteBase owner)
+    public SkillManager(EntityParent owner)
     {
         this.owner = owner;
     }
@@ -145,7 +140,7 @@ public class SkillManager : MonoBehaviour
         //设置cd
         cdDict[data.id] = Time.time;
         //播放动作
-        owner.GetComponent<Animator>().SetInteger("Action", data.action);
+        owner.gameObject.GetComponent<Animator>().SetInteger("Action", data.action);
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(data);
@@ -157,7 +152,7 @@ public class SkillManager : MonoBehaviour
     {
         isCanSkill = true;
         isSkillPlaying = false;
-        owner.GetComponent<Animator>().SetInteger("Action", 0);
+        owner.gameObject.GetComponent<Animator>().SetInteger("Action", 0);
     }
     private void DelayAttack()
     {
@@ -175,9 +170,9 @@ public class SkillManager : MonoBehaviour
     private Transform GetHitSprite(int skillid)
     {
         SkillData skill = SkillData.GetByID(skillid);
-        if(owner is Player)
+        if(owner is EntityMyself)
         {
-            return MonsterManager.Instance.monsterList[0].transform;
+            return GameWorld.GetEntity(3).transform;
         }
         else
         {
@@ -186,9 +181,9 @@ public class SkillManager : MonoBehaviour
         switch ((TargetRangeType)skill.targetRangeType)
         {
             case TargetRangeType.CircleRange:
-                if(owner is Player)
+                if (owner is EntityMyself)
                 {
-                    return MonsterManager.Instance.monsterList[0].transform;
+                    return GameWorld.GetEntity(3).transform;
                 }
                 else
                 {

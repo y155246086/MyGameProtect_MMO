@@ -14,7 +14,7 @@ public abstract class GameState {
     }
     public void Stop()
     {
-        MonsterManager.Instance.Reset();
+        GameWorld.Reset();
         OnStop();
     }
     public void LoadComplete(params object[] args)

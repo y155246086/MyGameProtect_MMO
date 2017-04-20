@@ -1,68 +1,71 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-/// <summary>
-/// 精灵基类
-/// </summary>
-public class SpriteBase : MonoBehaviour {
 
-    protected SfxManager sfxManager;// 特效管理器
-    [NonSerialized]
-    public SfxHandler sfxHandler;
-    [NonSerialized]
-    public PropertyManager propertyManager;//属性管理器
-    [NonSerialized]
-    public Vector3 BornPoint;//出生点
-    protected SpriteType spriteType = SpriteType.NONE;
-    
-    /// <summary>
-    /// 获取精灵类型
-    /// </summary>
-    public SpriteType SpriteType
+public class ActorParent<T> : ActorParent where T : EntityParent
+{
+    private T m_theEntity;
+    public T theEntity
     {
-        get
-        {
-            return spriteType;
-        }
+        get { return m_theEntity; }
+        set { m_theEntity = value; }
+    }
+    public override EntityParent GetEntity()
+    {
+        return m_theEntity;
+    }
+}
+[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Seeker))]
+[RequireComponent(typeof(AIPath))]
+[RequireComponent(typeof(Pathfinding.RVO.RVOSimulator))]
+[RequireComponent(typeof(Pathfinding.FunnelModifier))]
+public class ActorParent : MonoBehaviour,ICanAttacked {
+    
+    public virtual EntityParent GetEntity()
+    {
+        return null;
+    }
+    void Awake()
+    {
+        OnAwake();
     }
     void Start()
     {
-        Initialize();
+        OnStart();
     }
-
     void Update()
     {
-        FSMUpdate();
+        OnUpdate();
     }
     void FixedUpdate()
     {
-        FSMFixedUpdate();
+        OnFixedUpdate();
     }
-    protected virtual void Initialize()
-    {
-        propertyManager = new PropertyManager();
-        //sfxManager = new SfxManager(this);
-        sfxHandler = this.gameObject.AddComponent<SfxHandler>();
-    }
-
-    protected virtual void FSMUpdate()
+    protected virtual void OnAwake()
     {
 
     }
-    protected virtual void FSMFixedUpdate()
+    protected virtual void OnStart()
     {
 
     }
-    /// <summary>
-    /// 播放特效
-    /// </summary>
-    public void PlaySfx(int id)
+    protected virtual void OnUpdate()
     {
-        if (sfxManager == null)
+        this.GetEntity().OnUpdate();
+    }
+    protected virtual void OnFixedUpdate()
+    {
+        this.GetEntity().OnFixedUpdate();
+    }
+    public void SetHurt(int value)
+    {
+        if(!(this is ActorMyself))
         {
-            return;
+            Play("Action", 11);
+            AddCallbackInFrames<string, int>(Play, "Action", 0);
+            FloatBlood(value);
         }
-        sfxManager.PlaySfx(id);
     }
     public void Play(string parameterName, bool value)
     {

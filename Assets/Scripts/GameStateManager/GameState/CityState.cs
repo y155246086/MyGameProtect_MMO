@@ -25,23 +25,9 @@ public class CityState : GameState
         GUIManager.ShowView(PanelNameConst.FunctionButtonPanel);
         if(GameWorld.player == null)
         {
-            CreateRole();
+            GameWorld.AddNewEntity(SpriteType.Myself);
         }
-        GameObject bornPoint = GameObject.Find("BornPoint");
-        if (bornPoint != null)
-        {
-            bornPoint.SetActive(false);
-            GameWorld.player.transform.position = bornPoint.transform.position;
-        }
-        MonsterManager.Instance.CreateMonster(1, Vector3.zero);
-    }
-    private void CreateRole()
-    {
-        ResourceData data = ResourceData.GetByID(1);
-        GameObject go = Res.ResourceManager.Instance.Instantiate<GameObject>(data.resourcePath);
-        go.tag = "Player";
-        GameWorld.player = go.AddComponent<Player>();
-        
-        
+        GameWorld.AddNewEntity(SpriteType.Monster);
+
     }
 }

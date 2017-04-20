@@ -5,7 +5,11 @@ using UnityEngine;
 public enum PropertyType
 {
     HP,
-    MAX_HP
+    MAX_HP,
+    Attack_Dis,//攻击距离
+    Chase_Dis,//追逐距离
+    Arrive_Dis,
+    Patrol_Radius
 }
 public class PropertyManager {
     //存放属性
@@ -13,6 +17,12 @@ public class PropertyManager {
     public PropertyManager()
     {
         map = new Dictionary<PropertyType, int>();
+        AddProperty(PropertyType.HP, 100);
+        AddProperty(PropertyType.MAX_HP, 1000);
+        AddProperty(PropertyType.Attack_Dis, 5);
+        AddProperty(PropertyType.Chase_Dis, 10);
+        AddProperty(PropertyType.Arrive_Dis, 2);
+        AddProperty(PropertyType.Patrol_Radius, 5);
     }
     /// <summary>
     /// 获取属性值
