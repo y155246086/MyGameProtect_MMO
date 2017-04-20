@@ -44,6 +44,6 @@ public class EntityMonster :  EntityParent {
     }
     protected override void OnLeaveWorld()
     {
-        
+        skillManager.Clear();
     }
 }

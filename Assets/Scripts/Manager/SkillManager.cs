@@ -13,6 +13,8 @@ public class SkillManager
     private SkillData curSkillData = null;
     private bool isCanSkill = true;
     private bool isSkillPlaying = false;
+    private uint delayAttackTimerID = 0;
+    private uint EndAttackTimerID = 0;
     public SkillManager(EntityParent owner)
     {
         this.owner = owner;
@@ -144,9 +146,15 @@ public class SkillManager
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(data);
-        TimerHeap.AddTimer((uint)(data.triggerTime * 1000f), 0, DelayAttack);
-        TimerHeap.AddTimer((uint)(data.duration * 1000f), 0, EndAttackAction);
+        delayAttackTimerID = TimerHeap.AddTimer((uint)(data.triggerTime * 1000f), 0, DelayAttack);
+        EndAttackTimerID = TimerHeap.AddTimer((uint)(data.duration * 1000f), 0, EndAttackAction);
         //GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
+    }
+    
+    public void Clear()
+    {
+        TimerHeap.DelTimer(delayAttackTimerID);
+        TimerHeap.DelTimer(EndAttackTimerID);
     }
     private void EndAttackAction()
     {

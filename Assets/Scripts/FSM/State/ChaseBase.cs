@@ -14,13 +14,11 @@ public class ChaseBase : FSMState {
         this.owner = owner;
         animator = owner.animator;
         aiPath = owner.gameObject.GetComponent<AIPath>();
-        //FindNextPoint();
     }
     public override void Enter(params Object[] args)
     {
         Debuger.Log("进入追逐状态");
         animator.applyRootMotion = false;
-        //StartMove();
     }
     public override void Exit()
     {

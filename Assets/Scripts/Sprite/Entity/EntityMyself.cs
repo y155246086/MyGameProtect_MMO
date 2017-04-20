@@ -38,5 +38,6 @@ public class EntityMyself : EntityPlayer
     }
     protected override void OnLeaveWorld()
     {
+        skillManager.Clear();
     }
 }

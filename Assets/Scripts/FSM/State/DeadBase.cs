@@ -7,8 +7,6 @@ public class DeadBase : FSMState
 
     public DeadBase(EntityParent owner)
     {
-        curRotSpeed = 6;
-        curSpeed = 80;
         this.owner = owner;
         animator = owner.animator;
     }

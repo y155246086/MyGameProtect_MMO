@@ -116,20 +116,19 @@ public class MogoMainCamera : MonoBehaviour
             if (go == null) return;
             target = go.transform;
         }
-
-
-        //�ڴ������Ҫ�ų���������,�Ժ������layer�������
-        //withoutTestObjectTags.Add("MainCamera");
-        //withoutTestObjectTags.Add("terrain");
-        //withoutTestObjectTags.Add("Player");
-
-        //EventDispatcher.TriggerEvent(Events.OtherEvent.MainCameraComplete);
         m_camera = GetComponent<Camera>();
     }
-
+    Transform GetTarget()
+    {
+        if (target == null && GameWorld.player != null)
+        {
+            target = GameWorld.player.transform;
+        }
+        return target;
+    }
     void LateUpdate()
     {
-        if (!target)
+        if (!GetTarget() == null)
             return;
 
         switch (CurrentState)

@@ -26,7 +26,10 @@ public class GameWorld {
     // 处理 entity 离开场景事件
     static private void OnLeaveWorld(uint eid)
     {
-        
+        if (spriteList.ContainsKey(eid))
+        {
+            spriteList.Remove(eid);
+        }
     }
     /// <summary>
     /// 获取一个精灵
@@ -101,6 +104,19 @@ public class GameWorld {
         entity.EnterWorld();
         OnEnterWorld(entity);
     }
+    static private void RemoveEntity(uint eid)
+    {
+        if (!spriteList.ContainsKey(eid))
+        {
+            return;
+        }
+
+        EntityParent entity = spriteList[eid];
+        if (entity == null)
+            return;
+        entity.LeaveWorld();
+        OnLeaveWorld(eid);
+    }
     internal static void Reset()
     {
         List<uint> list = new List<uint>();
@@ -113,7 +129,7 @@ public class GameWorld {
         }
         foreach (var item in list)
         {
-            spriteList.Remove(item);
+            RemoveEntity(item);
         }
 
     }

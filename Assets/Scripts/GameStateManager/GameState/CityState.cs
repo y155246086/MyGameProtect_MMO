@@ -23,10 +23,7 @@ public class CityState : GameState
         Debuger.Log("CityState-->OnLoadComplete");
         GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
         GUIManager.ShowView(PanelNameConst.FunctionButtonPanel);
-        if(GameWorld.player == null)
-        {
-            GameWorld.AddNewEntity(SpriteType.Myself);
-        }
+        GameWorld.AddNewEntity(SpriteType.Myself);
         GameWorld.AddNewEntity(SpriteType.Monster);
 
     }
