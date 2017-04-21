@@ -84,7 +84,8 @@ namespace LuaFramework {
         //==============================================
         public void SendMessageForHttp(ByteBuffer buffer, int ProtocolId)
         {
-            NetworkManagerC.Instance.SendMessageForHttp(buffer, ProtocolId);
+            //NetworkManagerC.Instance.SendMessageForHttp(buffer, ProtocolId);
+            NetworkManagerProxy.Instance.Client.SendMessageForLua(buffer, ProtocolId);
         }
     }
 }

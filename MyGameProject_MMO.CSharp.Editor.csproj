@@ -433,6 +433,7 @@
     <None Include="Assets\Resources\Shader\TestFX.shader" />
     <None Include="Assets\Resources\Shader\TestFX2.shader" />
     <None Include="Assets\Resources\Shader\UVTwirl.shader" />
+    <None Include="Assets\Scripts\clienthelp\protobuf-net\Web\TODO.txt" />
     <None Include="Assets\StreamingAssets\files.txt" />
     <None Include="Assets\VRRPG\Resources\Configs\SysConfig\BaseConfig.txt" />
     <None Include="Assets\VRRPG\Resources\Configs\SysConfig\UserConfig.txt" />

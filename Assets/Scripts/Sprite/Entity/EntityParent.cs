@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using BattleFramework.Data;
+using Mogo.Util;
 
 public abstract class EntityParent {
 
@@ -55,7 +56,15 @@ public abstract class EntityParent {
         propertyManager = new PropertyManager();
         sfxManager = new SfxManager(this);
         sfxHandler = this.gameObject.AddComponent<SfxHandler>();
-        skillManager = new SkillManager(this);
+        if(this is EntityMyself)
+        {
+            skillManager = new PlayerSkillManager(this);
+        }
+        else
+        {
+            skillManager = new SkillManager(this);
+        }
+        
         fsm = new AdvanceFSM(this);
         if (this is EntityMonster)
             ConstructFSM();
@@ -171,5 +180,37 @@ public abstract class EntityParent {
         {
 
         }
+    }
+    /// <summary>
+    /// 分身
+    /// </summary>
+    public void CreateDuplication()
+    {
+        GameObject duplication = (GameObject)UnityEngine.Object.Instantiate(Actor.gameObject, Vector3.zero, Quaternion.identity);
+
+        MonoBehaviour[] scripts = duplication.GetComponentsInChildren<MonoBehaviour>();
+        foreach (MonoBehaviour script in scripts)
+        {
+            if (script.GetType() != typeof(Transform))
+            {
+                UnityEngine.Object.Destroy(script);
+            }
+        }
+
+        Animator anima = duplication.GetComponent<Animator>();
+        if (anima != null)
+            UnityEngine.Object.Destroy(anima);
+
+        CharacterController chaController = duplication.GetComponent<CharacterController>();
+        if (chaController != null)
+            UnityEngine.Object.Destroy(chaController);
+
+        AIPath AIPath = duplication.GetComponent<AIPath>();
+        if (AIPath != null)
+            UnityEngine.Object.Destroy(AIPath);
+
+        duplication.transform.position = transform.position;
+        duplication.transform.rotation = transform.rotation;
+        TimerHeap.AddTimer<GameObject>(1000, 0, (copy) => { UnityEngine.Object.Destroy(copy); }, duplication);
     }
 }

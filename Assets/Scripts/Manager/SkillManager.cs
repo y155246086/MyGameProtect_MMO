@@ -99,7 +99,7 @@ public class SkillManager
     /// 技能是不是在cd 中
     /// </summary>
     /// <returns></returns>
-    private bool IsCding(int skillID)
+    protected bool IsCding(int skillID)
     {
         SkillData data = SkillData.GetByID(skillID);
         if (data!= null && cdDict.ContainsKey(data.id))
@@ -138,11 +138,22 @@ public class SkillManager
     {
         //先判断当前状态可不可以使用技能，如：沉默，晕眩等限制状态
 
+        if (owner is EntityMyself)
+        {
+            Mogo.Util.EventDispatcher.TriggerEvent(GUIEvent.STOP_JOYSTICK_TURN);
+        }
         curSkillData = data;
         //设置cd
         cdDict[data.id] = Time.time;
         //播放动作
         owner.SetAction(data.action);
+
+        //面向敌人
+        Transform target = GetHitSprite(curSkillData.id);
+        if (target != null)
+        {
+            owner.transform.LookAt(new Vector3(target.position.x, owner.transform.position.y, target.position.z));
+        }
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(data);
@@ -156,13 +167,17 @@ public class SkillManager
         TimerHeap.DelTimer(delayAttackTimerID);
         TimerHeap.DelTimer(EndAttackTimerID);
     }
-    private void EndAttackAction()
+    protected void EndAttackAction()
     {
         isCanSkill = true;
         isSkillPlaying = false;
         owner.SetAction(0);
+        if(owner is EntityMyself)
+        {
+            Mogo.Util.EventDispatcher.TriggerEvent(GUIEvent.START_JOYSTICK_TURN);
+        }
     }
-    private void DelayAttack()
+    protected void DelayAttack()
     {
         AttackTrigger();
     }
@@ -178,7 +193,7 @@ public class SkillManager
             }
         }
     }
-    private Transform GetHitSprite(int skillid)
+    protected Transform GetHitSprite(int skillid)
     {
         SkillData skill = SkillData.GetByID(skillid);
         if(owner is EntityMyself)
@@ -217,7 +232,7 @@ public class SkillManager
     /// <summary>
     /// 播放特效
     /// </summary>
-    private void AttackingFx(SkillData skillData)
+    protected void AttackingFx(SkillData skillData)
     {
         owner.PlaySfx(skillData.id);
         if(skillData.cameraTweenId>0)
