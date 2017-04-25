@@ -16,9 +16,9 @@ namespace BattleFramework.Data
 			EditorWindow.GetWindow (typeof(CreateClassFromCSV));
 		}
 
-        string csvDirection = @"Assets/VRRPG/Resources/Configs";
-        string classFilePath = @"Assets/VRRPG/Scripts/BattleFramework/Data/Entity";
-        string dataCenterFilePath = @"Assets/VRRPG/Scripts/BattleFramework/Data/DataCenter.cs";
+        string csvDirection = @"Assets/Resources/Configs";
+        string classFilePath = @"Assets/Scripts/BattleFramework/Data/Entity";
+        string dataCenterFilePath = @"Assets/Scripts/BattleFramework/Data/DataCenter.cs";
 
 		int top;
 		int height;

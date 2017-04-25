@@ -464,6 +464,21 @@
     <Compile Include="Assets\LuaFramework\ToLua\Source\Generate\ViewWrap.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Source\LuaConst.cs" />
     <Compile Include="Assets\Scripts\AwakeDestoryAllChild.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\DataCenter.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\CameraAnimData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\EffectData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\EquipData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\GameSceneData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\GoodsData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\MonsterData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\ResourceData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SceneData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
     <Compile Include="Assets\Scripts\Common\ActorEvent.cs" />
     <Compile Include="Assets\Scripts\Common\GUIEvent.cs" />
     <Compile Include="Assets\Scripts\Common\GameCommon.cs" />
@@ -708,21 +723,6 @@
     <Compile Include="Assets\Test\TestAddEquid.cs" />
     <Compile Include="Assets\Test\TestDotween.cs" />
     <Compile Include="Assets\Test\TestUISend.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\DataCenter.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraAnimData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\EffectData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\EquipData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameSceneData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GoodsData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\MonsterData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\ResourceData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SceneData.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
@@ -885,6 +885,9 @@
     <None Include="Assets\Plugins\AstarPathfindingProject\Readme.txt" />
     <None Include="Assets\Plugins\AstarPathfindingProject\Readme_upgrading.txt" />
     <None Include="Assets\Plugins\AstarPathfindingProject\link.xml" />
+    <None Include="Assets\Resources\Configs\SysConfig\BaseConfig.txt" />
+    <None Include="Assets\Resources\Configs\SysConfig\UserConfig.txt" />
+    <None Include="Assets\Resources\Localize\ch.txt" />
     <None Include="Assets\Resources\Shader\AngryInclude.cginc" />
     <None Include="Assets\Resources\Shader\DiamondShader.shader" />
     <None Include="Assets\Resources\Shader\DissionShader.shader" />
@@ -939,9 +942,6 @@
     <None Include="Assets\Resources\Shader\UVTwirl.shader" />
     <None Include="Assets\Scripts\clienthelp\protobuf-net\Web\TODO.txt" />
     <None Include="Assets\StreamingAssets\files.txt" />
-    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\BaseConfig.txt" />
-    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\UserConfig.txt" />
-    <None Include="Assets\VRRPG\Resources\Localize\ch.txt" />
     <None Include="Assets\readme.txt" />
     <None Include="Assets\readme1.txt" />
   </ItemGroup>

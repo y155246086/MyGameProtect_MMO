@@ -14,8 +14,8 @@ namespace BattleFramework.Data
 			EditorWindow.GetWindow (typeof(CreateConfigConstFromFile));
 		}
 
-        const string configDirection = @"Assets/VRRPG/Resources/Configs";
-        const string classFilePath = @"Assets/VRRPG/Scripts/BattleFramework/Data/Config";
+        const string configDirection = @"Assets/Resources/Configs";
+        const string classFilePath = @"Assets/Scripts/BattleFramework/Data/Config";
 		const string className = "SysConfigConst";
 
 		int top = 20;

@@ -7,5 +7,5 @@ if exist ..\client\Assets\download\output (
 	del /q  ..\client\Assets\download\output
 )
 
-copy .\output\*.* ..\..\..\Assets\VRRPG\Resources\Configs
+copy .\output\*.* ..\..\..\Assets\Resources\Configs
 pause

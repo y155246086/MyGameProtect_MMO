@@ -257,9 +257,9 @@
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaExport.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaMenu.cs" />
     <Compile Include="Assets\LuaFramework\ToLua\Editor\ToLuaTree.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\Editor\CreateClassFromCSV.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\Editor\CreateConfigConstFromFile.cs" />
-    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\Editor\CreateSysConstFromFile.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\CSV\Editor\CreateClassFromCSV.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\Editor\CreateConfigConstFromFile.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Config\Editor\CreateSysConstFromFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
@@ -422,6 +422,9 @@
     <None Include="Assets\Plugins\AstarPathfindingProject\Readme.txt" />
     <None Include="Assets\Plugins\AstarPathfindingProject\Readme_upgrading.txt" />
     <None Include="Assets\Plugins\AstarPathfindingProject\link.xml" />
+    <None Include="Assets\Resources\Configs\SysConfig\BaseConfig.txt" />
+    <None Include="Assets\Resources\Configs\SysConfig\UserConfig.txt" />
+    <None Include="Assets\Resources\Localize\ch.txt" />
     <None Include="Assets\Resources\Shader\AngryInclude.cginc" />
     <None Include="Assets\Resources\Shader\DiamondShader.shader" />
     <None Include="Assets\Resources\Shader\DissionShader.shader" />
@@ -476,9 +479,6 @@
     <None Include="Assets\Resources\Shader\UVTwirl.shader" />
     <None Include="Assets\Scripts\clienthelp\protobuf-net\Web\TODO.txt" />
     <None Include="Assets\StreamingAssets\files.txt" />
-    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\BaseConfig.txt" />
-    <None Include="Assets\VRRPG\Resources\Configs\SysConfig\UserConfig.txt" />
-    <None Include="Assets\VRRPG\Resources\Localize\ch.txt" />
     <None Include="Assets\readme.txt" />
     <None Include="Assets\readme1.txt" />
   </ItemGroup>
