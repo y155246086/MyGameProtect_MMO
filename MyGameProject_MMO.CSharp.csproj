@@ -60,6 +60,21 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="cai-nav-u3d">
+      <HintPath>Assets\CAI\cai-nav-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nav">
+      <HintPath>Assets\CAI\cai-nav.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild-extras-u3d">
+      <HintPath>Assets\CAI\cai-nmbuild-extras-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util-u3d">
+      <HintPath>Assets\CAI\cai-util-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util">
+      <HintPath>Assets\CAI\cai-util.dll</HintPath>
+    </Reference>
     <Reference Include="DemiLib">
       <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
     </Reference>
@@ -110,6 +125,58 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CAI\CaiDemo\AIPath_CAI.cs" />
+    <Compile Include="Assets\CAI\CaiDemo\CAINavInitManager.cs" />
+    <Compile Include="Assets\CAI\CaiDemo\UIManager.cs" />
+    <Compile Include="Assets\CAI\Common\BufferHandler.cs" />
+    <Compile Include="Assets\CAI\Common\FreeMove.cs" />
+    <Compile Include="Assets\CAI\Common\IState.cs" />
+    <Compile Include="Assets\CAI\Common\LabelRegion.cs" />
+    <Compile Include="Assets\CAI\Common\MouseLooker.cs" />
+    <Compile Include="Assets\CAI\Common\NullState.cs" />
+    <Compile Include="Assets\CAI\Common\SimGUIUtil.cs" />
+    <Compile Include="Assets\CAI\Common\SimStandard.cs" />
+    <Compile Include="Assets\CAI\Common\StdButtons.cs" />
+    <Compile Include="Assets\CAI\Common\StringList.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Agent.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\AgentContext.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\IsUserControlled.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\MoveToRandom.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\FollowGoalCrowd.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\MoveToCrowd.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\MoveToLocal.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\MoveToSimple.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavAgent.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavAgentData.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavAgentGroup.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavController.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavDebugView.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavEvents.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavFlag.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavMode.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavPath.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\NavPlanner.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\RangeType.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\SimpleMover.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Nav\SuspendInCrowd.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\SetUseCrowd.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\BaseTask.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\CompletionPolicy.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\ICondition.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\ITask.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\KeepActive.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\ParallelNode.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\PrioritySelector.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\SequentialNode.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\TaskState.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\TaskUtil.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\Task\TrueCondition.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\UntilUserControlled.cs" />
+    <Compile Include="Assets\CAI\DemoCommon\WaitForNavStrict.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\AgentGroupSettings.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\CrowdAvoidanceSet.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\NavManager.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\NavManagerProvider.cs" />
     <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\AutoSelect\MultiLayerTouch.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Examples\4.X\AdvancedExamples\AutoSelect\MultiLayerUI.cs" />
@@ -492,6 +559,10 @@
     <Compile Include="Assets\Scripts\clienthelp\Message\CA_QuickLoginAuthMessage.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Message\CG_CreateRoleMessage.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Message\CG_LoginGameMessage.cs" />
+    <Compile Include="Assets\Scripts\clienthelp\Message\CG_RecastMessage.cs" />
+    <Compile Include="Assets\Scripts\clienthelp\Message\GC_LoginGameMessage.cs" />
+    <Compile Include="Assets\Scripts\clienthelp\Message\GC_RecastMessage.cs" />
+    <Compile Include="Assets\Scripts\clienthelp\Message\GC_SpritePosMessage.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Message\MySerializer.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Message\ProtobufSerializer.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Message\ProtocolMessage.cs" />
@@ -530,6 +601,7 @@
     <Compile Include="Assets\Scripts\clienthelp\Protocols\MailProtocols.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Protocols\Protocols.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Protocols\QuestProtocols.cs" />
+    <Compile Include="Assets\Scripts\clienthelp\Protocols\RecastPosProtocols.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Protocols\RoleProtocols.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Protocols\ServerProtocols.cs" />
     <Compile Include="Assets\Scripts\clienthelp\protobuf-net\BclHelpers.cs" />
@@ -633,13 +705,16 @@
     <Compile Include="Assets\Scripts\mogo\Timer\TimerManager.cs" />
     <Compile Include="Assets\Scripts\mogo\Utils.cs" />
     <Compile Include="Assets\Test\BloodText.cs" />
+    <Compile Include="Assets\Test\TestAddEquid.cs" />
     <Compile Include="Assets\Test\TestDotween.cs" />
+    <Compile Include="Assets\Test\TestUISend.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\CSV\CSVFile.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\DataCenter.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\CameraAnimData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\EffectData.cs" />
+    <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\EquipData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameBaseData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GameSceneData.cs" />
     <Compile Include="Assets\VRRPG\Scripts\BattleFramework\Data\Entity\GoodsData.cs" />
@@ -651,6 +726,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
+    <None Include="Assets\CAI\DemoCommon\Nav\DesignNotes.txt" />
+    <None Include="Assets\CAI\GlobalAssets\ReadMe.txt" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-BumpSpec.shader" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-Bumped.shader" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-Diffuse.shader" />

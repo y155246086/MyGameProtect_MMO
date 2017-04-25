@@ -60,6 +60,21 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="cai-nav-u3d">
+      <HintPath>Assets\CAI\cai-nav-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nav">
+      <HintPath>Assets\CAI\cai-nav.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild-extras-u3d">
+      <HintPath>Assets\CAI\cai-nmbuild-extras-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util-u3d">
+      <HintPath>Assets\CAI\cai-util-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util">
+      <HintPath>Assets\CAI\cai-util.dll</HintPath>
+    </Reference>
     <Reference Include="DemiLib">
       <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
     </Reference>
@@ -227,6 +242,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
+    <None Include="Assets\CAI\DemoCommon\Nav\DesignNotes.txt" />
+    <None Include="Assets\CAI\GlobalAssets\ReadMe.txt" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-BumpSpec.shader" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-Bumped.shader" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-Diffuse.shader" />

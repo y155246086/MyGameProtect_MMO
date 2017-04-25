@@ -1,0 +1,7 @@
+数据ID|类型|预设资源路径|模型|材质|插口|在主城是的插口|优先级|0|适合|适合个数|是不是武器
+id_int|type_list<int>|prefabPath_list<string>|mesh_string|material_string|slot_list<string>|slotInCity_list<string>|priority_int|putOnMethod_int|suit_int|suitCount_int|isWeapon_int
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0|0|0|0|0|0
+104001|1,2,3|0|Characters/Avatar/104/equip/equip_assassin_02|Characters/Avatar/104/equip/Materials/equip_assassin_02_fx_5_mat|104_00|0|1|2|-1|-1|0
+104002|4|equip_assassin_twinblade_03_p.prefab,equip_assassin_twinblade_03_p.prefab|104a_01|104a|bip_weapon_right,bip_weapon_left|bip_weapon_LB,bip_weapon_RB|1|1|-1|-1|1

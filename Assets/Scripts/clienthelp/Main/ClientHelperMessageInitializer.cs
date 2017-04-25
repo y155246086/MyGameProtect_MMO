@@ -24,6 +24,8 @@ namespace ClientHelper
 			AddMessage(typeof(AC_CreateAccountMessage));
 			AddMessage(typeof(AC_BindAccountMessage));
 			AddMessage(typeof(AC_ChangePasswordMessage));
+            AddMessage(typeof(GC_RecastMessage));
+            AddMessage(typeof(GC_SpritePosMessage));
 			
 		}
 	}

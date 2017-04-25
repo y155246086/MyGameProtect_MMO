@@ -39,14 +39,39 @@ namespace ClientHelper
 			delegateNode.isShortConnect = true;
 			msgDelegateInitializer.AddMessageReceiveDelegate(typeof(AC_ChangePasswordMessage), delegateNode);
 		}
-
-
+        public void SetOnLoginGameRes(Action<GC_LoginGameMessage> onLoginGameRes)
+        {
+            MessageDelegateNode delegateNode = new MessageDelegateNode();
+            delegateNode.receiveAction = delegate(Network.Message msg) { onLoginGameRes((GC_LoginGameMessage)msg); };
+            msgDelegateInitializer.AddMessageReceiveDelegate(typeof(GC_LoginGameMessage), delegateNode);
+        }
+        public void SetOnRecastRes(Action<GC_RecastMessage> onLoginGameRes)
+        {
+            MessageDelegateNode delegateNode = new MessageDelegateNode();
+            delegateNode.receiveAction = delegate(Network.Message msg) { onLoginGameRes((GC_RecastMessage)msg); };
+            msgDelegateInitializer.AddMessageReceiveDelegate(typeof(GC_RecastMessage), delegateNode);
+        }
+        public void SetOnSpritePosRes(Action<GC_SpritePosMessage> onLoginGameRes)
+        {
+            MessageDelegateNode delegateNode = new MessageDelegateNode();
+            delegateNode.receiveAction = delegate(Network.Message msg) { onLoginGameRes((GC_SpritePosMessage)msg); };
+            msgDelegateInitializer.AddMessageReceiveDelegate(typeof(GC_SpritePosMessage), delegateNode);
+        }
         public void SetOnConnectAuthRes()
         {
 
-            Debuger.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,暂时删除了的");
+            MessageDelegateNode delegateNode = new MessageDelegateNode();
+            delegateNode.receiveAction = delegate(Network.Message msg) { OnRecvConnectAuthRes((AC_ConnectMessage)msg); };
+            msgDelegateInitializer.AddMessageReceiveDelegate(typeof(AC_ConnectMessage), delegateNode);
         }
-
+        public void OnRecvConnectAuthRes(AC_ConnectMessage message)
+        {
+            if (waitSendAuthMsg != null)
+            {
+                connection.Send(waitSendAuthMsg);
+                waitSendAuthMsg = null;
+            }
+        }
 
     }
 }

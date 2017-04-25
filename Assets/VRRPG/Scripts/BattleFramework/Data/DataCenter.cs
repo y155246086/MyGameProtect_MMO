@@ -11,6 +11,7 @@ namespace BattleFramework.Data
   
         public List<CameraAnimData> list_CameraAnimData;
         public List<EffectData> list_EffectData;
+        public List<EquipData> list_EquipData;
         public List<GameBaseData> list_GameBaseData;
         public List<GameSceneData> list_GameSceneData;
         public List<GoodsData> list_GoodsData;
@@ -36,6 +37,7 @@ namespace BattleFramework.Data
         {
             list_CameraAnimData = CameraAnimData.LoadDatas ();
             list_EffectData = EffectData.LoadDatas ();
+            list_EquipData = EquipData.LoadDatas ();
             list_GameBaseData = GameBaseData.LoadDatas ();
             list_GameSceneData = GameSceneData.LoadDatas ();
             list_GoodsData = GoodsData.LoadDatas ();

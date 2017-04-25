@@ -90,6 +90,39 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="cai-nav-u3d">
+      <HintPath>Assets\CAI\cai-nav-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nav">
+      <HintPath>Assets\CAI\cai-nav.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild-extras-u3d">
+      <HintPath>Assets\CAI\cai-nmbuild-extras-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util-u3d">
+      <HintPath>Assets\CAI\cai-util-u3d.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util">
+      <HintPath>Assets\CAI\cai-util.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nav-u3d-editor">
+      <HintPath>Assets\CAI\Editor\cai-nav-u3d-editor.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild-extras-u3d-editor">
+      <HintPath>Assets\CAI\Editor\cai-nmbuild-extras-u3d-editor.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild-u3d-editor">
+      <HintPath>Assets\CAI\Editor\cai-nmbuild-u3d-editor.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild">
+      <HintPath>Assets\CAI\Editor\cai-nmbuild.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmgen">
+      <HintPath>Assets\CAI\Editor\cai-nmgen.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util-u3d-editor">
+      <HintPath>Assets\CAI\Editor\cai-util-u3d-editor.dll</HintPath>
+    </Reference>
     <Reference Include="DemiLib">
       <HintPath>Assets\Demigiant\DemiLib\Core\DemiLib.dll</HintPath>
     </Reference>
@@ -176,6 +209,12 @@
     <Compile Include="Assets\AstarPathfindingEditor\Editor\RVOSquareObstacleEditor.cs" />
     <Compile Include="Assets\AstarPathfindingEditor\Editor\RecastMeshObjEditor.cs" />
     <Compile Include="Assets\AstarPathfindingEditor\Editor\SeekerEditor.cs" />
+    <Compile Include="Assets\CAI\Common\Editor\MaterialsPostProcessor.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\Editor\AgentGroupNames.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\Editor\AgentGroupNamesEditor.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\Editor\AgentGroupSettingsEditor.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\Editor\CrowdAvoidanceSetEditor.cs" />
+    <Compile Include="Assets\CAI\cai-nav-u3d-extras\Editor\NavManagerProviderEditor.cs" />
     <Compile Include="Assets\Demigiant\DOTweenPro\Editor\DOTweenAnimationInspector.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchInspector.cs" />
     <Compile Include="Assets\EasyTouchBundle\EasyTouch\Plugins\Editor\EasyTouchMenu.cs" />
@@ -224,6 +263,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh2.shader" />
+    <None Include="Assets\CAI\DemoCommon\Nav\DesignNotes.txt" />
+    <None Include="Assets\CAI\GlobalAssets\ReadMe.txt" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-BumpSpec.shader" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-Bumped.shader" />
     <None Include="Assets\DefaultResourcesExtra\Alpha-Diffuse.shader" />

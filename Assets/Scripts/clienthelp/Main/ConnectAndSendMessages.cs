@@ -31,7 +31,7 @@ namespace ClientHelper
 				loginMsg.Protocol.deviceInfo = deviceInfo;
 
 				waitSendAuthMsg = loginMsg;
-
+                //connection.Send(waitSendAuthMsg);
 				return true;
 			}
 			catch(Exception ex)

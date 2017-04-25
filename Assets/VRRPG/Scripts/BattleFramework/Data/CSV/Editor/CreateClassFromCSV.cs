@@ -126,7 +126,19 @@ namespace BattleFramework.Data
 				} else if (type.ToUpper () == "STRING") {
 					type = "string";
 					fieldName = columnName.Substring (0, columnName.LastIndexOf ("_"));
-				} else if (type.ToUpper () == "LIST") {
+                }
+                else if (type.ToUpper() == "LIST<INT>")
+                {
+                    type = "List<int>";
+                    fieldName = columnName.Substring(0, columnName.LastIndexOf("_"));
+                }
+                else if (type.ToUpper() == "LIST<STRING>")
+                {
+                    type = "List<string>";
+                    fieldName = columnName.Substring(0, columnName.LastIndexOf("_"));
+                }
+                else if (type.ToUpper() == "LIST2")
+                {
 					type = "List<List<int>>";
 					fieldName = columnName.Substring (0, columnName.LastIndexOf ("_"));
 				} else if (type.ToUpper () == "VECTOR3") {
@@ -145,7 +157,25 @@ namespace BattleFramework.Data
 					file.WriteLine ("                    data." + fieldName + ".x = (float.Parse(strs[0]));");
 					file.WriteLine ("                    data." + fieldName + ".y = (float.Parse(strs[1]));");
 					file.WriteLine ("                    data." + fieldName + ".z = (float.Parse(strs[2]));");
-				} else if (type == "List<List<int>>") {
+                }
+                else if (type == "List<int>")
+                {
+                    file.WriteLine("                data." + fieldName + "= new List<int>();");
+                    file.WriteLine("                strs = " + "csvFile.mapData[i].data[" + i + "].Split(new char[1]{\',\'});");
+                    file.WriteLine("                for(int j=0;j<strs.Length;j++){");
+                    file.WriteLine("                    data." + fieldName + ".Add(int.Parse(strs[j]));");
+                    file.WriteLine("                }");
+                }
+                else if (type == "List<string>")
+                {
+                    file.WriteLine("                data." + fieldName + "= new List<string>();");
+                    file.WriteLine("                strs = " + "csvFile.mapData[i].data[" + i + "].Split(new char[1]{\',\'});");
+                    file.WriteLine("                for(int j=0;j<strs.Length;j++){");
+                    file.WriteLine("                    data." + fieldName + ".Add(strs[j]);");
+                    file.WriteLine("                }");
+                }
+                else if (type == "List<List<int>>")
+                {
 					file.WriteLine ("                data." + fieldName + "= new List<List<int>>();");
 					file.WriteLine ("                strs = " + "csvFile.mapData[i].data[" + i + "].Split(new char[1]{\';\'});");
 					file.WriteLine ("                for(int j=0;j<strs.Length;j++){");

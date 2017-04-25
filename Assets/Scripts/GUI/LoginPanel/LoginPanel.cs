@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using com.kz.protocol;
 using com.kz.message.proto;
 using System;
+using Messages;
 public class LoginPanel : IViewBase
 {
     private Button loginGameButton = null;
@@ -17,10 +18,19 @@ public class LoginPanel : IViewBase
         loginGameButton.onClick.AddListener(OnLoginGameHandler);
         chooseServerButton.onClick.AddListener(OnChooseServerHandler);
 
-        //NetworkManagerProxy.Instance.Client.SetOnLoginAuthRes(OnAuthenticationHandle);
-        //NetworkManagerProxy.Instance.Client.SetOnConnectGameRes(OnConnectionGameSeverHandle);
-        //NetworkManagerProxy.Instance.Client.SetOnLoginGameRes(OnLoginGameServerHandle);
-        //NetworkManagerProxy.Instance.Client.SetOnCreateRoleRes(OnCreateRoleHandle);
+
+        NetworkManagerProxy.Instance.Client.SetOnLoginAuthRes(OnAuthenticationHandle);
+        NetworkManagerProxy.Instance.Client.SetOnLoginGameRes(OnLoginGameServerHandle);
+    }
+
+    private void OnLoginGameServerHandle(GC_LoginGameMessage obj)
+    {
+        Debug.LogError("--------------LoginGame");
+    }
+
+    private void OnAuthenticationHandle(Messages.AC_LoginAuthMessage obj)
+    {
+        Debug.LogError("ABCDDDFSDKFJSDFJLSJDFKJSD");
     }
 
     private void OnChooseServerHandler()
@@ -31,15 +41,10 @@ public class LoginPanel : IViewBase
 
     private void OnLoginGameHandler()
     {
+        //LoginGame();
         GameStateManager.LoadScene(2);
     }
-
-    private void OnClickHandler()
-    {
-        Debuger.Log("登陆游戏");
-        GUIManager.ShowView(PanelNameConst.LoadingPanel);
-    }
-    public void LoginGame(string accountName, string password)
+    public void LoginGame(string accountName = "aa", string password = "bb")
     {
         DeviceInfoPro device = new DeviceInfoPro();
         device.deviceName = "test";
@@ -49,12 +54,15 @@ public class LoginPanel : IViewBase
         System.Random random = new System.Random();
         int randomSeed = random.Next(Int32.MinValue, Int32.MaxValue);
 
-        NetworkManagerProxy.Instance.Client.LoginAS(SysConfig.GetInstance().GetStringProperties(SysConfig.K_AUTH_SERVER_IP),
-            SysConfig.GetInstance().GetIntProperties(SysConfig.K_AUTH_SERVER_PORT),
+        NetworkManagerProxy.Instance.Client.LoginAS("192.168.99.123",
+            889,
             accountName, password, "" + randomSeed,
-            SysConfig.GetInstance().GetIntProperties(SysConfig.K_CHANNELID),
-            SysConfig.GetInstance().GetStringProperties(SysConfig.K_VERSION), device);
+            1,
+            "1", device);
+
+       
     }
+
     protected override void OnShow(params object[] args)
     {
 
