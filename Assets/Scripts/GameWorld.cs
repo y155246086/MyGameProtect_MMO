@@ -11,6 +11,7 @@ public class GameWorld {
     static private Dictionary<uint, EntityParent> spriteList = new Dictionary<uint, EntityParent>();
     public static EntityMyself player;
     public static GameSceneData sceneData;
+    public static bool inCity = false;
     static public Dictionary<uint, EntityParent> SpriteList
     {
         get { return spriteList; }

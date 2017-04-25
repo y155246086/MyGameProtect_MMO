@@ -9,6 +9,7 @@ namespace BattleFramework.Data
     {
         static DataCenter instance;
   
+        public List<AvatarModelData> list_AvatarModelData;
         public List<CameraAnimData> list_CameraAnimData;
         public List<EffectData> list_EffectData;
         public List<EquipData> list_EquipData;
@@ -35,6 +36,7 @@ namespace BattleFramework.Data
    
         public void LoadCSV ()
         {
+            list_AvatarModelData = AvatarModelData.LoadDatas ();
             list_CameraAnimData = CameraAnimData.LoadDatas ();
             list_EffectData = EffectData.LoadDatas ();
             list_EquipData = EquipData.LoadDatas ();

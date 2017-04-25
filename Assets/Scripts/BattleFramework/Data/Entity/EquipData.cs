@@ -91,5 +91,6 @@ namespace BattleFramework.Data{
         public int suit;//适合
         public int suitCount;//适合个数
         public int isWeapon;//是不是武器
+        public List<int> subEquip;
     }
 }

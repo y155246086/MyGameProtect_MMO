@@ -468,6 +468,7 @@
     <Compile Include="Assets\Scripts\BattleFramework\Data\Config\SysConfig.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Config\SysConfigConst.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\DataCenter.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\AvatarModelData.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\CameraAnimData.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\EffectData.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\EquipData.cs" />

@@ -102,10 +102,4 @@ public class TestAddEquid : MonoBehaviour {
 
     }
 }
-class EquipObjectData
-{
-    public int type;//1挂载，2mesh
-    public List<GameObject> goList;
-    public Material mat;
-    public SkinnedMeshRenderer smr;
-}
+

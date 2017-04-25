@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+using BattleFramework.Data;
+using UnityEngine.Rendering;
 
 public class ActorParent<T> : ActorParent where T : EntityParent
 {
@@ -229,4 +232,650 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
                 }
         }
     }
+
+    
+    #region 换装
+    private static object m_equipWeaponLock = new object();
+
+    public bool m_isChangingWeapon = false;
+    //身上已穿装备<部位类型，装备id>
+    private Dictionary<int, int> m_equipOnDic = new Dictionary<int, int>();
+    ////裸体时的“装备”（外形显示）
+    private List<int> m_nakedEquipList = new List<int>();
+    //已装备中的用挂载方法装备的装备
+    private List<GameObject> m_equipList = new List<GameObject>();
+    //已装备中的Mesh或Material
+    private List<UnityEngine.Object> m_equipMeshOrMaterialList = new List<UnityEngine.Object>();
+    private List<GameObject> weaponObj = new List<GameObject>();
+    public List<GameObject> WeaponObj { get { return weaponObj; } }
+    private EquipData m_weaponData = null;
+    private List<SkinnedMeshRenderer> m_smrList = new List<SkinnedMeshRenderer>();
+    public List<SkinnedMeshRenderer> SmrList { get { return m_smrList; } }
+    private List<SkinnedMeshRenderer> m_smrAllList = new List<SkinnedMeshRenderer>();
+
+    private Dictionary<int, EquipObjectData> m_equipGoDic = new Dictionary<int, EquipObjectData>();
+
+    public EquipData WeaponData
+    {
+        get
+        {
+            return m_weaponData;
+        }
+    }
+
+    public Dictionary<int, int> EquipOnDic
+    {
+        get
+        {
+            return m_equipOnDic;
+        }
+    }
+    private AvatarModelData GetAvatarModelData(int vocation)
+    {
+        for (int i = 0; i < DataCenter.Instance().list_AvatarModelData.Count; i++)
+        {
+            return DataCenter.Instance().list_AvatarModelData[i];
+        }
+        
+        return null;
+    }
+    /// <summary>
+    /// 初始化装备外形
+    /// </summary>
+    public void InitEquipment()
+    {
+        Debuger.Log("name:" + transform.name + ",vocation:" + (int)GetEntity().vocation);
+        AvatarModelData data = GetAvatarModelData((int)GetEntity().vocation);
+        if (data == null)
+            return;
+        if (data.nakedEquipList == null || data.nakedEquipList.Count <= 0) return;
+        SetNakedEquid(data.nakedEquipList);
+        InitNakedEquid();
+    }
+
+    public void InitEquipment(int vocation)
+    {
+        AvatarModelData data = GetAvatarModelData(vocation);
+        if (data == null)
+            return;
+        if (data.nakedEquipList == null || data.nakedEquipList.Count <= 0) return;
+        SetNakedEquid(data.nakedEquipList);
+        InitNakedEquid();
+    }
+
+    /// <summary>
+    /// 初始显示裸装
+    /// </summary>
+    public void InitNakedEquid()
+    {
+        //Debuger.Log("InitNakedEquid");
+        ClearOriginalModel();
+        PutOnNakedEquip();
+        ReEquidAll(m_equipOnDic);
+    }
+    private void ClearOriginalModel()
+    {
+        if (m_smrAllList.Count <= 0)
+        {
+            foreach (Transform t in transform)
+            {
+                SkinnedMeshRenderer smr = t.GetComponent<SkinnedMeshRenderer>();
+                if (smr == null) continue;
+                smr.gameObject.SetActive(true);
+                smr.sharedMesh = null;
+                m_smrAllList.Add(smr);
+            }
+        }
+        else
+        {
+            foreach (SkinnedMeshRenderer smr in m_smrAllList)
+            {
+                smr.gameObject.SetActive(true);
+                smr.sharedMesh = null;
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// 设置裸装，用于卸装时恢复裸装
+    /// </summary>
+    /// <param name="ids"></param>
+    public void SetNakedEquid(List<int> _nakedEquipList)
+    {
+        m_nakedEquipList = _nakedEquipList;
+    }
+    public void Equip(List<int> idList, Action onDone = null)
+    {
+        List<EquipData> equipDataList = new List<EquipData>();
+        for (int i = 0; i < idList.Count; i++)
+        {
+            int equidID = idList[i];
+            EquipData equipData = EquipData.GetByID(equidID);
+            if (equipData == null)
+                return;
+
+            if (m_equipOnDic.ContainsValue(equipData.id)) continue;
+
+
+            equipDataList.Add(equipData);
+        }
+
+        if (equipDataList.Count == 0)
+        {
+            if (onDone != null) onDone();
+            return;
+        }
+        GetEquipObjectList(equipDataList, (equipGoDic, equipOnDic) =>
+        {
+            m_equipGoDic = equipGoDic;
+
+            RemoveOld();
+
+            //根据优先级等重装所有装备
+            ReEquidAll(equipOnDic);
+
+            if (onDone != null)
+            {
+                onDone();
+            }
+        });
+    }
+
+    /// <summary>
+    /// 刷新身上装备，有时候因为模型没创建好却调用装备接口引起装备失败
+    /// </summary>
+    public void RefreshEquip()
+    {
+        RemoveOld();
+        //穿上裸装
+        PutOnNakedEquip();
+
+
+        //根据优先级等重装所有装备
+        ReEquidAll(m_equipOnDic);
+    }
+
+    /// <summary>
+    /// 穿上装备
+    /// </summary>
+    /// <param name="_equidID"></param>
+    public void Equip(int _equidID, Action onDone = null)
+    {
+        //Debuger.Log("Equid:" + _equidID);
+
+        EquipData equipData = EquipData.GetByID(_equidID);
+        if (equipData == null)
+            return;
+
+        foreach (int id in m_equipOnDic.Values)
+        {
+            if (id == equipData.id)
+            {
+                if (onDone != null) onDone();
+                return;
+            }
+        }
+
+        List<EquipData> equipDataList = new List<EquipData>();
+        equipDataList.Add(equipData);
+        if (equipDataList.Count == 0)
+        {
+            if (onDone != null) onDone();
+            return;
+        }
+        GetEquipObjectList(equipDataList, (equipGoDic, equipOnDic) =>
+        {
+            if (!this) return;
+            if (transform == null) return;
+            m_equipGoDic = equipGoDic;
+
+            RemoveOld();
+
+            //根据优先级等重装所有装备
+            ReEquidAll(equipOnDic);
+
+            if (onDone != null)
+            {
+                onDone();
+
+            }
+           
+        });
+    }
+    protected void PutOnNakedEquip()
+    {
+        if (m_nakedEquipList == null) return;
+        foreach (int id in m_nakedEquipList)
+        {
+            if (EquipData.GetByID(id) == null)
+            {
+                Debuger.Log("cannot find equipData:" + id);
+            }
+            EquipData equip = EquipData.GetByID(id);
+            if (m_equipOnDic.ContainsKey(equip.type[0])) continue;
+            m_equipOnDic[equip.type[0]] = id;
+        }
+    }
+
+    private void UncombineEquip(EquipData equipData, int type)
+    {
+        EquipData old = EquipData.GetByID(m_equipOnDic[type]);
+        if (old.subEquip == null) return;
+        if (old.subEquip.Count > 0)
+        {
+            foreach (int id in old.subEquip)
+            {
+                EquipData equip = EquipData.GetByID(id);
+
+                //子装备只允许为一个type
+                m_equipOnDic[equip.type[0]] = equip.id;
+            }
+        }
+    }
+
+    private void CombineEquip(EquipData newEquip)
+    {
+        if (newEquip.suit <= 0) return;
+        int count = 0;
+        foreach (int id in m_equipOnDic.Values)
+        {
+            EquipData equip = EquipData.GetByID(id);
+            if (equip.type[0] == newEquip.type[0])
+            {
+                count++;
+                continue;
+            }
+            if (equip.suit == newEquip.suit) count++;
+        }
+        if (count != newEquip.suitCount) return;
+
+        EquipData suit = EquipData.GetByID(newEquip.suit);
+        foreach (int id in suit.subEquip)
+        {
+            EquipData equip = EquipData.GetByID(id);
+            m_equipOnDic[equip.type[0]] = suit.id;
+        }
+    }
+
+    /// <summary>
+    /// 按优先级顺序重新穿上所有装备
+    /// </summary>
+    protected void ReEquidAll(Dictionary<int, int> equipOnDic)
+    {
+        List<int> equipIds = new List<int>();
+        foreach (int id in equipOnDic.Values)
+        {
+            equipIds.Add(id);
+        }
+
+        equipIds.Sort(delegate(int a, int b)
+        {
+            if (EquipData.GetByID(a).priority >= EquipData.GetByID(b).priority) return 1;
+            else return -1;
+        });
+
+        HashSet<int> suitHasPuton = new HashSet<int>();
+
+
+        for (int i = 0; i < equipIds.Count; i++)
+        {
+            if (suitHasPuton.Contains(equipIds[i])) continue;
+            EquipData equip = EquipData.GetByID(equipIds[i]);
+            AddEquid(equip);
+            if ((equip.subEquip != null && equip.subEquip.Count > 0) || equip.type.Count > 1)
+                suitHasPuton.Add(equip.id);
+        }
+    }
+
+    /// <summary>
+    /// 卸下所有装备只剩裸装
+    /// </summary>
+    public void RemoveAll()
+    {
+        m_equipOnDic.Clear();
+        RemoveOld();
+        PutOnNakedEquip();
+        ReEquidAll(m_equipOnDic);
+    }
+
+    public void RemoveOld()
+    {
+
+        for (int i = 0; i < m_equipList.Count; i++)
+        {
+            Debuger.Log("m_equipList装备资源释放");
+            m_equipList[i] = null;
+        }
+        for (int i = 0; i < m_equipMeshOrMaterialList.Count; i++)
+        {
+            Debuger.Log("m_equipMeshOrMaterialList装备资源释放");
+            m_equipMeshOrMaterialList[i] = null;
+        }
+        for (int i = 0; i < m_smrList.Count; i++)
+        {
+            m_smrList[i].sharedMaterial = null;
+            m_smrList[i].sharedMesh = null;
+            m_smrList[i] = null;
+        }
+
+        //m_smr.sharedMaterial = null;
+        //m_smr.sharedMesh = null;
+
+        m_smrList.Clear();
+        m_equipList.Clear();
+        m_equipMeshOrMaterialList.Clear();
+    }
+
+    private void AddEquid(EquipData equip)
+    {
+        if (equip.putOnMethod == 1)
+        {
+            AddEquidMethod1(equip);
+        }
+        else
+        {
+            AddEquidMethod2(equip);
+        }
+    }
+
+    /// <summary>
+    /// 替换mesh和material
+    /// </summary>
+    /// <param name="equipData"></param>
+    private void AddEquidMethod2(EquipData equipData)
+    {
+        if (!m_equipGoDic.ContainsKey(equipData.id))
+        {
+            Debuger.LogWarning("!m_equipGoDic.ContainsKey(equipData.id):" + equipData.id);
+            return;
+        }
+        Material material = m_equipGoDic[equipData.id].mat;
+        GameObject instance = m_equipGoDic[equipData.id].goList[0];
+        if (transform == null) return;
+        Transform equipPart = GameCommonUtils.GetChild(transform, equipData.slot[0]);
+
+        if (equipPart == null)
+        {
+            Debuger.Log("can not find slot:" + equipData.slot[0] + ",equipId:" + equipData.id);
+            Debuger.Log("gameObject:" + name);
+            Debuger.LogError("can not find slot:" + equipData.slot[0] + ",equipId:" + equipData.id + ",vocation:" + GetEntity().vocation);
+            return;
+        }
+
+        SkinnedMeshRenderer smr = equipPart.GetComponent<SkinnedMeshRenderer>();
+        if (!smr)//安全检查
+            return;
+        m_smrList.Add(smr);
+        m_equipMeshOrMaterialList.Add(material);
+        smr.sharedMaterial = material;
+        smr.shadowCastingMode = ShadowCastingMode.Off;
+        smr.receiveShadows = false;
+        smr.useLightProbes = true;
+        SkinnedMeshRenderer smrTemp = m_equipGoDic[equipData.id].smr;
+        UVAnim tempUV = smrTemp.gameObject.GetComponent<UVAnim>();
+        UVAnim uv = smr.GetComponent<UVAnim>();
+        if(tempUV != null && uv == null)
+        {
+            uv = smr.gameObject.AddComponent<UVAnim>();
+            uv.Direction = tempUV.Direction;
+            uv.speed = tempUV.speed;
+        }
+        if(uv == null)
+        {
+            uv = smr.gameObject.AddComponent<UVAnim>();
+            uv.Direction = new Vector2(0.5f,0.13f);
+            uv.speed = 1.5f;
+        }
+        if (equipData.type.Count > 1) ClearOriginalModel();
+
+        smr.sharedMesh = smrTemp.sharedMesh;
+        //CombineInstance ci = new CombineInstance();
+        //ci.mesh = smrTemp.sharedMesh;
+        //m_combineInstances.Add(ci);
+
+        List<Transform> bones = new List<Transform>();
+        for (int i = 0; i < smrTemp.bones.Length; i++)
+        {
+            bones.Add(GameCommonUtils.GetChild(this.transform, smrTemp.bones[i].name));
+        }
+        //m_bones.AddRange(bones);
+        smr.bones = bones.ToArray();
+        m_equipMeshOrMaterialList.Add(instance);
+
+    }
+
+    EquipData currentEquip;
+    const string EQUIP_TAP = "equip";
+
+    /// <summary>
+    /// 装备挂载在某个gameObject下
+    /// </summary>
+    /// <param name="equipData"></param>
+    private void AddEquidMethod1(EquipData equipData)
+    {
+        if (transform == null) return;
+        if (!m_equipGoDic.ContainsKey(equipData.id))
+        {
+            Debuger.LogWarning("!m_equipGoDic.ContainsKey(equipData.id):" + equipData.id);
+            return;
+        }
+        int ccount = 0;
+
+        currentEquip = equipData;
+
+        weaponObj.Clear();
+        m_weaponData = equipData;
+
+
+        EquipObjectData eod = m_equipGoDic[equipData.id];
+        for (int i = 0; i < equipData.prefabPath.Count; i++)
+        {
+            int index = i;
+            GameObject equipGo = null;
+
+
+            equipGo = eod.goList[index];
+            if (equipGo == null)
+            {
+                Debuger.LogError("equip load fail!");
+                ccount++;
+                return;
+            }
+
+            Transform equipPart = null;
+            if (equipGo == null) return;
+            if (transform == null) return;
+
+            if (GameWorld.inCity)
+            {
+                equipPart = GameCommonUtils.GetChild(transform, equipData.slotInCity[ccount]);
+            }
+            else
+            {
+                equipPart = GameCommonUtils.GetChild(transform, equipData.slot[ccount]);
+            }
+
+
+            if (equipPart == null)
+            {
+                Debuger.LogError("cannot find equip slot!");
+                ccount++;
+                return;
+            }
+
+            Vector3 scale = equipGo.transform.localScale;
+            equipGo.transform.parent = equipPart;
+            equipGo.transform.localPosition = Vector3.zero;
+            equipGo.transform.localEulerAngles = Vector3.zero;
+            equipGo.transform.localScale = scale;
+
+            if (equipData.isWeapon > 0)
+            {
+                weaponObj.Add(equipGo);
+            }
+            //保存已穿装备，方便替换时卸载
+            m_equipList.Add(equipGo);
+
+            ccount++;
+
+            if (m_isChangingWeapon)
+            {
+                m_isChangingWeapon = false;
+                if (GetEntity() != null)
+                    GetEntity().weaponAnimator = equipGo.GetComponent<Animator>();
+            }
+
+        }
+
+    }
+
+    /// <summary>
+    /// 装备换位，一些动作变换需要用到
+    /// </summary>
+    /// <param name="equipName"></param>
+    /// <param name="partName"></param>
+    public void ChangeEquipPosition(string equipName, string partName)
+    {
+        Transform t = GameCommonUtils.GetChild(transform, equipName);
+        t.parent = GameCommonUtils.GetChild(transform, partName);
+        t.localPosition = Vector3.zero;
+        t.localEulerAngles = Vector3.zero;
+    }
+
+    public void ChangeEquipPosition(GameObject weapon, string partName)
+    {
+        if (weapon == null) return;
+        Transform t = weapon.transform;
+        t.parent = GameCommonUtils.GetChild(transform, partName);
+        t.localPosition = Vector3.zero;
+        t.localEulerAngles = Vector3.zero;
+    }
+    //暂时清空这两个函数-fred
+    private void InstanceLoaded(int copyId, bool isInCopy)
+    {
+       
+    }
+
+    public IEnumerator SwitchWeaponPos(bool isInCopy)
+    {
+        yield return 0;
+    }
+
+    private void GetEquipObjectList(List<EquipData> equipDataList, Action<Dictionary<int, EquipObjectData>, Dictionary<int, int>> onLoad)
+    {
+        HashSet<int> equipIdSet = new HashSet<int>();
+        for (int i = 0; i < equipDataList.Count; i++)
+        {
+            equipIdSet = GetEquipIdSet(equipDataList[i]);
+        }
+
+        Dictionary<int, int> tempEquipOnDic = new Dictionary<int, int>();
+        foreach (KeyValuePair<int, int> pair in m_equipOnDic)
+        {
+            tempEquipOnDic[pair.Key] = pair.Value;
+        }
+
+        Dictionary<int, EquipObjectData> eo = new Dictionary<int, EquipObjectData>();
+        int count = 0;
+        foreach (int id in equipIdSet)
+        {
+            eo[id] = new EquipObjectData();
+            var index = id;
+            EquipData equip = EquipData.GetByID(id);
+            if (equip.putOnMethod == 1)
+            {
+                GetInstanceList(equip.prefabPath, (goList) =>
+                {
+                    eo[index].type = 1;
+                    eo[index].goList = goList;
+                    count++;
+                    if (count == equipIdSet.Count) onLoad(eo, tempEquipOnDic);
+                });
+            }
+            else if (equip.putOnMethod == 2)
+            {
+                eo[index].type = 2;
+                eo[index].mat = Res.ResourceManager.Instance.Instantiate<Material>(equip.material);
+                GameObject go = Res.ResourceManager.Instance.Instantiate<GameObject>(equip.mesh);
+                eo[index].goList = new List<GameObject>();
+                eo[index].goList.Add(go);
+                eo[index].smr = go.GetComponentInChildren<SkinnedMeshRenderer>();
+                go.SetActive(false);
+                //eo[index].smr = go.transform.FindChild(equip.mesh).GetComponent<SkinnedMeshRenderer>();
+
+                count++;
+                if (count == equipIdSet.Count) onLoad(eo, tempEquipOnDic);
+            }
+        }
+    }
+
+    private HashSet<int> GetEquipIdSet(EquipData equipData)
+    {
+
+        HashSet<int> equipIdSet = new HashSet<int>();
+
+        //判断是否需要解除套装
+        foreach (int t in equipData.type)
+        {
+            if (m_equipOnDic.ContainsKey(t))
+            {
+                UncombineEquip(equipData, t);
+            }
+        }
+
+        //去陈推新
+        foreach (int t in equipData.type)
+        {
+
+            if (m_equipOnDic.ContainsKey(t))
+            {
+                EquipData old = EquipData.GetByID(m_equipOnDic[t]);
+                if (old != null && old.type.Count > 0)
+                {
+                    foreach (int temp in old.type)
+                    {
+                        m_equipOnDic.Remove(temp);
+                    }
+                }
+            }
+            m_equipOnDic[t] = equipData.id;
+        }
+
+        //判断是否需要装备“合体”
+        if (equipData.type.Count == 1)
+        {
+            CombineEquip(equipData);
+        }
+
+        //穿上裸装
+        PutOnNakedEquip();
+
+
+        foreach (int id in m_equipOnDic.Values)
+        {
+            if (!equipIdSet.Contains(id)) equipIdSet.Add(id);
+        }
+
+        return equipIdSet;
+    }
+
+    private void GetInstanceList(List<string> prefabNameList, Action<List<GameObject>> onLoad)
+    {
+        List<GameObject> goList = new List<GameObject>();
+        for (int i = 0; i < prefabNameList.Count; i++)
+        {
+            goList.Add(Res.ResourceManager.Instance.Instantiate<GameObject>(prefabNameList[i]));
+            
+        }
+        onLoad(goList);
+    }
+    #endregion
+}
+class EquipObjectData
+{
+    public int type;//1挂载，2mesh
+    public List<GameObject> goList;
+    public Material mat;
+    public SkinnedMeshRenderer smr;
 }

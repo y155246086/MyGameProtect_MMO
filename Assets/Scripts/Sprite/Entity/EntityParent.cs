@@ -19,6 +19,23 @@ public abstract class EntityParent {
     public SfxHandler sfxHandler;
     public SkillManager skillManager;
     public SpriteType spriteType;
+    /// <summary>
+    /// 职业
+    /// </summary>
+    private Vocation m_vocation;
+    public Animator weaponAnimator;
+
+    /// <summary>
+    /// 职业
+    /// </summary>
+    public Vocation vocation
+    {
+        get { return m_vocation; }
+        set
+        {
+            m_vocation = value;
+        }
+    }
     public ActorParent Actor { get; set; }
     /// <summary>
     /// 状态机初始化
@@ -160,6 +177,10 @@ public abstract class EntityParent {
             return;
         }
         animator.SetInteger("Action", act);
+        if (weaponAnimator)
+        {
+            weaponAnimator.SetInteger("Action", act);
+        }
         if (act == ActionConstants.HIT_AIR)
         {
 

@@ -10,8 +10,17 @@ public enum PlayerState
     Battle = 0,
     UNBattle = 1
 }
-
-
+/// <summary>
+/// 职业
+/// </summary>
+public enum Vocation
+{
+    Warrior = 1,         // 战士
+    Assassin = 2,       // 刺客
+    Archer = 3,         // 弓箭手
+    Mage = 4,           // 法师
+    Others = 5           // 其他
+}
 /// <summary>
 ///  角色属性
 /// </summary>
