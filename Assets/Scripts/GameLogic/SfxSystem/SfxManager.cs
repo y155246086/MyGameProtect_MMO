@@ -18,7 +18,7 @@ public class SfxManager{
     /// <param name="skillID"></param>
     public void PlaySfx(int skillID)
     {
-        SkillData skillData = SkillData.GetByID(skillID);
+        SkillAction skillData = SkillAction.GetByID(skillID);
         if (skillData == null)
         {
             LoggerHelper.Error("not exist spell data:" + skillID);
@@ -28,16 +28,16 @@ public class SfxManager{
         // 从技能表中获取 sfx 配置
         // 逐个， 按序， 按时触发特效
         //key  特效id value 延时启动时间
-        Dictionary<int, float> sfx = new Dictionary<int, float>(); ;
+        Dictionary<int, float> sfx = skillData.sfx;
 
-        List<EffectData> effectList = EffectData.dataList;
-        for (int i = 0; i < effectList.Count; i++)
-        {
-            if(effectList[i].skillId == skillID)
-            {
-                sfx.Add(effectList[i].id, effectList[i].delay);
-            }
-        }
+        //List<EffectData> effectList = EffectData.dataList;
+        //for (int i = 0; i < effectList.Count; i++)
+        //{
+        //    if(effectList[i].skillId == skillID)
+        //    {
+        //        sfx.Add(effectList[i].id, effectList[i].delay);
+        //    }
+        //}
 
         SfxHandler cueHandler = theOwner.sfxHandler;
 

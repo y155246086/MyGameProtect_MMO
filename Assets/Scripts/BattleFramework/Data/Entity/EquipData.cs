@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/EquipData";
         public static string[] columnNameArray = new string[13];
         public static List<EquipData> dataList;
+        public static Dictionary<int, EquipData> dataMap;
         public static List<EquipData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<EquipData>();
+            dataMap = new Dictionary<int, EquipData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -65,6 +67,7 @@ namespace BattleFramework.Data{
                 }
                 columnNameArray [12] = "subEquip";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

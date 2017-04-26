@@ -41,6 +41,11 @@ public class EntityMyself : EntityPlayer
         ap.Equip(104001);
         ap.Equip(104002);
 
+        if(data.scale>0)
+        {
+            ap.transform.localScale = Vector3.one*data.scale;
+        }
+
         GameObject light = Res.ResourceManager.Instance.Instantiate<GameObject>("Gear/RoundLight");
         light.transform.parent = gameObject.transform;
         light.transform.localPosition = new Vector3(0, 1, 0);

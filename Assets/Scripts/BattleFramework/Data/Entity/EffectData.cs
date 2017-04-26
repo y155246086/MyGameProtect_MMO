@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/EffectData";
         public static string[] columnNameArray = new string[14];
         public static List<EffectData> dataList;
+        public static Dictionary<int, EffectData> dataMap;
         public static List<EffectData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<EffectData>();
+            dataMap = new Dictionary<int, EffectData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -51,6 +53,7 @@ namespace BattleFramework.Data{
                 float.TryParse(csvFile.mapData[i].data[13],out data.soundDelay);
                 columnNameArray [13] = "soundDelay";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

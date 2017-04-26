@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/GoodsData";
         public static string[] columnNameArray = new string[12];
         public static List<GoodsData> dataList;
+        public static Dictionary<int, GoodsData> dataMap;
         public static List<GoodsData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<GoodsData>();
+            dataMap = new Dictionary<int, GoodsData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -55,6 +57,7 @@ namespace BattleFramework.Data{
                     data.rotion.z = (float.Parse(strs[2]));
                 columnNameArray [11] = "rotion";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

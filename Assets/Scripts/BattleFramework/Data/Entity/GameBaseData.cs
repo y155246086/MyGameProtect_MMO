@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/GameBaseData";
         public static string[] columnNameArray = new string[12];
         public static List<GameBaseData> dataList;
+        public static Dictionary<int, GameBaseData> dataMap;
         public static List<GameBaseData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<GameBaseData>();
+            dataMap = new Dictionary<int, GameBaseData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -43,6 +45,7 @@ namespace BattleFramework.Data{
                 float.TryParse(csvFile.mapData[i].data[11],out data.luopanMinDis);
                 columnNameArray [11] = "luopanMinDis";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

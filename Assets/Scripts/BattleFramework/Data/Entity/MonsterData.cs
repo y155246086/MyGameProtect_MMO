@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/MonsterData";
         public static string[] columnNameArray = new string[34];
         public static List<MonsterData> dataList;
+        public static Dictionary<int, MonsterData> dataMap;
         public static List<MonsterData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<MonsterData>();
+            dataMap = new Dictionary<int, MonsterData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -87,6 +89,7 @@ namespace BattleFramework.Data{
                 int.TryParse(csvFile.mapData[i].data[33],out data.exp);
                 columnNameArray [33] = "exp";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

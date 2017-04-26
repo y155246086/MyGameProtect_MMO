@@ -479,6 +479,7 @@
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\PlayerData.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\ResourceData.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SceneData.cs" />
+    <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SkillAction.cs" />
     <Compile Include="Assets\Scripts\BattleFramework\Data\Entity\SkillData.cs" />
     <Compile Include="Assets\Scripts\Common\ActorEvent.cs" />
     <Compile Include="Assets\Scripts\Common\GUIEvent.cs" />

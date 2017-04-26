@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/AvatarModelData";
         public static string[] columnNameArray = new string[11];
         public static List<AvatarModelData> dataList;
+        public static Dictionary<int, AvatarModelData> dataMap;
         public static List<AvatarModelData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<AvatarModelData>();
+            dataMap = new Dictionary<int, AvatarModelData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -53,6 +55,7 @@ namespace BattleFramework.Data{
                 data.vocation = csvFile.mapData[i].data[10];
                 columnNameArray [10] = "vocation";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

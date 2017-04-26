@@ -87,11 +87,13 @@ namespace BattleFramework.Data
 			csvFile.Open (resourcesPath);
 			file.WriteLine ("        public static string[] columnNameArray = new string[" + csvFile.listColumnName.Count + "];");
             file.WriteLine ("        public static List<" + className+ "> dataList;");
-
+            file.WriteLine ("        public static Dictionary<int, " + className + "> dataMap;");
+            
 			file.WriteLine ("        public static List<" + className + "> LoadDatas(){");
 			file.WriteLine ("            CSVFile csvFile = new CSVFile();");
 			file.WriteLine ("            csvFile.Open (csvFilePath);");
 			file.WriteLine ("            dataList = new List<" + className + ">();");
+            file.WriteLine ("            dataMap = new Dictionary<int, " + className + ">();");
 			file.WriteLine ("            string[] strs;");
 			file.WriteLine ("            string[] strsTwo;");
 			file.WriteLine ("            List<int> listChild;");
@@ -126,6 +128,11 @@ namespace BattleFramework.Data
 				} else if (type.ToUpper () == "STRING") {
 					type = "string";
 					fieldName = columnName.Substring (0, columnName.LastIndexOf ("_"));
+                }
+                else if (type.ToUpper() == "MAP<INT,FLOAT>")
+                {
+                    type = "Dictionary<int, float>";
+                    fieldName = columnName.Substring(0, columnName.LastIndexOf("_"));
                 }
                 else if (type.ToUpper() == "LIST<INT>")
                 {
@@ -174,6 +181,16 @@ namespace BattleFramework.Data
                     file.WriteLine("                    data." + fieldName + ".Add(strs[j]);");
                     file.WriteLine("                }");
                 }
+                else if (type == "Dictionary<int, float>")
+                {
+                    file.WriteLine("                data." + fieldName + "= new Dictionary<int, float>();");
+                    file.WriteLine("                strs = " + "csvFile.mapData[i].data[" + i + "].Split(new char[1]{\',\'});");
+                    file.WriteLine("                for(int j=0;j<strs.Length;j++){");
+                    file.WriteLine("                    strsTwo = " + "strs[j].Split(new char[1]{\':\'});");
+                    file.WriteLine("                    if (strsTwo.Length == 2)");
+                    file.WriteLine("                        data." + fieldName + ".Add(int.Parse(strsTwo[0]),float.Parse(strsTwo[1]));");
+                    file.WriteLine("                }");
+                }
                 else if (type == "List<List<int>>")
                 {
 					file.WriteLine ("                data." + fieldName + "= new List<List<int>>();");
@@ -194,6 +211,7 @@ namespace BattleFramework.Data
 				file.WriteLine ("                columnNameArray [" + i + "] = \"" + fieldName + "\";");
 			}
 			file.WriteLine ("                dataList.Add(data);");
+            file.WriteLine("                dataMap.Add(data.id,data);");
 			file.WriteLine ("            }");
 			file.WriteLine ("            return dataList;");
 			file.WriteLine ("        }");

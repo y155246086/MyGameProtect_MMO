@@ -18,6 +18,7 @@ namespace BattleFramework.Data
         public List<GoodsData> list_GoodsData;
         public List<MonsterData> list_MonsterData;
         public List<ResourceData> list_ResourceData;
+        public List<SkillAction> list_SkillAction;
         public List<SkillData> list_SkillData;
   
         public static DataCenter Instance ()
@@ -45,6 +46,7 @@ namespace BattleFramework.Data
             list_GoodsData = GoodsData.LoadDatas ();
             list_MonsterData = MonsterData.LoadDatas ();
             list_ResourceData = ResourceData.LoadDatas ();
+            list_SkillAction = SkillAction.LoadDatas ();
             list_SkillData = SkillData.LoadDatas ();
         }
  

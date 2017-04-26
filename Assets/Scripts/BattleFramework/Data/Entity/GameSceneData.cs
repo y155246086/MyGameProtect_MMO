@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/GameSceneData";
         public static string[] columnNameArray = new string[8];
         public static List<GameSceneData> dataList;
+        public static Dictionary<int, GameSceneData> dataMap;
         public static List<GameSceneData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<GameSceneData>();
+            dataMap = new Dictionary<int, GameSceneData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -39,6 +41,7 @@ namespace BattleFramework.Data{
                     data.enterPoint.z = (float.Parse(strs[2]));
                 columnNameArray [7] = "enterPoint";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -8,10 +8,12 @@ namespace BattleFramework.Data{
         public static string csvFilePath = "Configs/CameraAnimData";
         public static string[] columnNameArray = new string[8];
         public static List<CameraAnimData> dataList;
+        public static Dictionary<int, CameraAnimData> dataMap;
         public static List<CameraAnimData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
             csvFile.Open (csvFilePath);
             dataList = new List<CameraAnimData>();
+            dataMap = new Dictionary<int, CameraAnimData>();
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
@@ -35,6 +37,7 @@ namespace BattleFramework.Data{
                 float.TryParse(csvFile.mapData[i].data[7],out data.zSwing);
                 columnNameArray [7] = "zSwing";
                 dataList.Add(data);
+                dataMap.Add(data.id,data);
             }
             return dataList;
         }

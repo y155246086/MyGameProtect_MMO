@@ -7,10 +7,10 @@ using Mogo.Util;
 
 public class SkillManager
 {
-    private List<SkillData> skillList = new List<SkillData>();
+    private List<SkillAction> skillList = new List<SkillAction>();
     private EntityParent owner;
     private Dictionary<int, float> cdDict = new Dictionary<int, float>();
-    private SkillData curSkillData = null;
+    private SkillAction curSkillData = null;
     private bool isCanSkill = true;
     private bool isSkillPlaying = false;
     private uint delayAttackTimerID = 0;
@@ -29,7 +29,7 @@ public class SkillManager
         {
             return;
         }
-        SkillData data = SkillData.GetByID(skillId);
+        SkillAction data = SkillAction.GetByID(skillId);
         if(data != null)
         {
             skillList.Add(data);
@@ -38,7 +38,7 @@ public class SkillManager
         skillList.Sort(SortList);
     }
 
-    private int SortList(SkillData x, SkillData y)
+    private int SortList(SkillAction x, SkillAction y)
     {
         if(x.cd - y.cd>0)
         {
@@ -75,7 +75,7 @@ public class SkillManager
         }
         for (int i = 0; i < skillList.Count; i++)
         {
-            SkillData data = skillList[i];
+            SkillAction data = skillList[i];
             if(cdDict.ContainsKey(data.id))
             {
                 if (Time.time - cdDict[data.id] >= data.cd && isCanSkill == true)//cd时间到
@@ -101,7 +101,7 @@ public class SkillManager
     /// <returns></returns>
     protected bool IsCding(int skillID)
     {
-        SkillData data = SkillData.GetByID(skillID);
+        SkillAction data = SkillAction.GetByID(skillID);
         if (data!= null && cdDict.ContainsKey(data.id))
         {
             if (Time.time - cdDict[data.id] >= data.cd)//cd时间到
@@ -128,13 +128,13 @@ public class SkillManager
     {
         if (isSkillPlaying == true) return;
         if (IsCding(skillid)) return;
-        UseSkill(SkillData.GetByID(skillid));
+        UseSkill(SkillAction.GetByID(skillid));
     }
     /// <summary>
     /// 使用技能
     /// </summary>
     /// <param name="data"></param>
-    private void UseSkill(SkillData data)
+    private void UseSkill(SkillAction data)
     {
         //先判断当前状态可不可以使用技能，如：沉默，晕眩等限制状态
 
@@ -196,7 +196,7 @@ public class SkillManager
     }
     protected Transform GetHitSprite(int skillid)
     {
-        SkillData skill = SkillData.GetByID(skillid);
+        SkillAction skill = SkillAction.GetByID(skillid);
         if(owner is EntityMyself)
         {
             if (GameWorld.GetEntity(SpriteType.Monster) != null)
@@ -233,7 +233,7 @@ public class SkillManager
     /// <summary>
     /// 播放特效
     /// </summary>
-    protected void AttackingFx(SkillData skillData)
+    protected void AttackingFx(SkillAction skillData)
     {
         owner.PlaySfx(skillData.id);
         if(skillData.cameraTweenId>0)
