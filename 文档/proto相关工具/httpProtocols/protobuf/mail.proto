@@ -1,0 +1,22 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "MailProBuf";
+
+	message MailListPro 
+	{
+	    repeated MailPro mailList=1;
+	}
+
+	message MailPro
+	{
+		required int64 roleId= 1;
+		required int64 mailId=2;
+		required int64 time=3;
+		optional string content=4;
+		optional string attach=5;
+		optional string sender=6;
+		optional string title=7;
+		required int32 type=8;
+	}
+	
+
+	

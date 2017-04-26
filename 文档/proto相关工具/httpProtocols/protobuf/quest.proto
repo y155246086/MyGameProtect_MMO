@@ -1,0 +1,19 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "QuestProBuf";
+
+	message QuestListPro 
+	{
+	    repeated QuestPro questList=1;
+	}
+
+	message QuestPro
+	{
+		required int32 questId=1;
+		required int64 endTime=2;
+		optional string data=3;
+		required int32 type=4;
+		required int32 state=5;
+	}
+	
+
+	

@@ -1,0 +1,34 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "LoginProBuf";
+
+import "Role.proto";
+
+message LoginGameReq
+{
+	required string username = 1;
+	required string password = 2;
+}
+
+message LoginGameRes
+{
+	required int32 result = 1;
+	optional RoleBaseDataPro roleData=2;
+}
+
+message CreateRoleReq
+{
+	required string username = 1;
+	required string password = 2;
+}
+
+message CreateRoleRes
+{
+	required int32 result=1;
+}
+
+//玩家掉线，或异地登录，需要玩家重新登录游戏
+message MessageErrorRes
+{
+	required int32 result=1;
+}
+

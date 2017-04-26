@@ -1,0 +1,54 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "ItemProBuf";
+
+message UseItemReq
+{
+	required int32 itemId=1;
+	required int32 itemNum=2;
+}
+
+message SaleItemReq
+{
+	required int32 itemId=1;
+	required int32 itemCount=2;	
+	required int64 itemPkId=3;
+}
+
+message BagPro
+{
+	repeated ItemPro items=1;
+	required int64 maxPkId = 2;
+}
+
+message ItemPro 
+{
+	required int32 itemId = 1;
+	required int32 itemCount = 2;
+	//物品pkId
+	optional int64 itemPkId = 3;
+	optional int64 effectTime = 4;
+	optional EquipItemPro equipPro = 5;
+}
+
+message EquipItemPro
+{	
+	//装备相关属性
+	optional int64 shipId = 1;
+	optional int32 qhLevel = 2;
+	optional int32 jlLevel = 3;
+	optional int32 jlExp = 4;
+}
+
+message LevelUpEquipReq
+{
+	required int64 equipId=1;
+	required bool up1Level = 2;
+}
+
+message EquipAllLevelUpRes
+{
+	required int32 result = 1;
+	repeated ItemPro item = 2;
+	required int32 gold = 3;
+}
+

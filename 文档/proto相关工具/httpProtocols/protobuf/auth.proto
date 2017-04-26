@@ -1,0 +1,96 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "AuthProBuf";
+
+message LocalLoginReq
+{
+		optional string email = 1;
+		optional string password = 2;
+		optional string randomSeed = 3;
+		optional string version = 4;
+		optional int32 channelID = 5;
+		optional DeviceInfoPro deviceInfo = 6;
+}
+
+message BindAccountReq
+{
+		optional string email = 1;
+		optional string password = 2;
+		optional string randomSeed = 3;
+		optional string version = 4;
+		optional int32 channelID = 5;
+		optional DeviceInfoPro deviceInfo = 6;
+}
+
+message BindAccountRes
+{
+		required int32 result=1;
+}
+
+message CreateAccountReq
+{
+		optional string email = 1;
+		optional string password = 2;
+		optional string randomSeed = 3;
+		optional string version = 4;
+		optional int32 channelID = 5;
+		optional DeviceInfoPro deviceInfo = 6;
+}
+
+message CreateAccountRes
+{
+		required int32 result=1;
+}
+	
+message ChangePasswordReq
+{
+	required string email=1;
+	required string newPassword=2;
+	required string oldPassword=3;
+}
+
+message ChangePasswordRes
+{
+	required int32 result=1;
+}
+
+message DeviceInfoPro
+{
+	optional string OSType = 1;
+	optional string OSVersion = 2;
+	optional int32 deviceType = 3;
+	optional string UDID = 4;
+	optional string deviceName = 5;
+}
+
+message LoginRes
+{
+ required int32 result = 1;
+ optional int64 accountID = 2;
+ optional string token = 3;
+ repeated AreaPro areas = 4;
+ optional int32 lastAreaID = 5 [default = -1];
+ optional bool isFirstQuickLogin = 6;
+ optional bool isShowActivityInterface = 7;
+ optional ChannelMessagePro channel=8;
+ }
+ 
+message ChannelMessagePro
+{
+		optional string accessToken = 1; //360平台专用
+		optional string channelUniqueId = 2;
+    optional string channelUserName = 3;
+		optional string oid = 4; //目前360平台使用	
+}
+ 
+message AreaPro
+{
+	required int32 areaID = 1;
+	required string name = 2;
+	required int32 status = 3;//0 为关闭，1：流畅，2：爆满，3：已满
+	required string interfaceServerIP = 4;
+	required int32 interfaceServerPort = 5;
+	optional int32 areaAvatarNumber = 6 [default = 0]; //角色的数量
+	optional int32 showAreaID = 7; //显示用的AreaId
+	required bool isNewServer=8;//是否为新服
+	required bool isRecommendServer=9;//是否在推荐列表里
+}

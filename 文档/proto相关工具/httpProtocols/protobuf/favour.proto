@@ -1,0 +1,15 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "FavourProBuf";
+
+message FavourAllPro
+{
+	repeated FavourPro favours=1;
+	required int64 maxPkId = 2;
+}
+
+message FavourPro 
+{
+	required int32 npcId = 1;
+	required int32 favour = 2;
+}
+

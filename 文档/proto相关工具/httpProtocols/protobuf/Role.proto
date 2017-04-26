@@ -1,0 +1,128 @@
+package com.kz.game.message.proto;
+option java_outer_classname = "RoleProBuf";
+
+message RoleBaseDataPro
+{
+	required int64 roleId=1;
+	required int64 userId=2;
+	required string roleName=3;
+	required int32 money=4;
+	required int32 rmb=5;
+	required int32 energy=6;
+	required int32 vipLevel=7;
+	required int32 areaId=8;
+	required int32 spriteId=9;
+	required int32 level=10;
+	required int32 exp=11;
+	required int64 lastLoginTime=12;
+	required int64 lastLogoutTime=13;
+	required int32 hairId=14;
+	required int32 gangcai=15;
+	required int32 lvcai=16;
+	required int32 danyao=17;
+	required int32 ranliao=18;
+	required int32 rank=19;
+	required int32 shipExpItemNum=20;
+	required int32 jlCurrency1=21;
+	required int32 jlCurrency2=22;
+	required int32 jlCurrency3=23;
+	required int32 jlCurrency4=24;
+	required int32 shipSpeedUpItemNum=25;
+	required int32 invitationBlueNum=26;
+	required int32 invitationPurpleNum=27;
+	required int32 arenaCurrency=28;
+	required int32 pointX=29;
+	required int32 pointY=30;
+	required int32 pointZ=31;
+}
+
+message CurrencyChangeLogPro
+{
+	required int32 currencyType=1;
+	required int32 addNum=2;
+	required int32 finalNum=3;
+}
+
+message PointPro
+{
+	required int32 pointX=1;
+	required int32 pointY=2;
+	required int32 pointZ=3;
+	required int32 towardX=4;
+	required int32 towardY=5;
+	required int32 towardZ=6;
+}
+
+message RoleMovePro
+{
+	required int64 roleId=1;
+	required PointPro pointData=2;
+}
+
+message RoleInScenePro
+{
+	repeated RoleBaseDataPro datas=1;
+	repeated NpcBaseDataPro npcDatas=2;
+}
+
+message NpcBaseDataPro
+{
+	required int32 npcId=1;
+	required int32 SpriteId=2;
+	required PointPro pointData=3;
+}
+
+message RoomListPro
+{
+	repeated RoomDataPro datas=1;
+}
+
+message RoomDataPro
+{
+	required int32 roomId=1;
+	required string roomName=2;
+	required int32 curNumber=3;
+	required int32 maxNumber=4;
+}
+
+message RoomItemPoint
+{
+	required int32 point = 1;
+	required int32 itemType = 2;
+}
+
+message RoomItemPointList
+{
+	repeated RoomItemPoint points=1;
+}
+
+message RoomBattleResultPro
+{
+	repeated RoomKillDataPro datas=1;
+}
+
+message RoomKillDataPro
+{
+	required string sourceName=1;
+	required string targetName=2;
+}
+
+message NpcMovePro
+{
+	required int32 npcId=1;
+	required PointPro pointData=2;
+}
+
+message BattleResultPro
+{
+	required int64 sourceId=1;//¹¥»÷·½id
+	required int64 targetId=2;//Ä¿±êid
+	required int64 damage=3;//ÉËº¦
+}
+
+message TransferControlPro
+{
+	required int32 npcId=1;//¿ØÖÆnpcId
+	required int32 state=2;//×´Ì¬£¬0·µ»Ø£¬1¹¥»÷
+	required int64 targetId=3;//¹¥»÷Ä¿±êid
+}
