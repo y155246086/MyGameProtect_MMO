@@ -18,7 +18,7 @@ public class LoginPanel : IViewBase
         loginGameButton.onClick.AddListener(OnLoginGameHandler);
         chooseServerButton.onClick.AddListener(OnChooseServerHandler);
 
-
+        NetworkManagerProxy.Instance.Client.SetCallBackRes<GC_LoginGameMessage>(OnLoginGameServerHandle);
         NetworkManagerProxy.Instance.Client.SetOnLoginAuthRes(OnAuthenticationHandle);
         NetworkManagerProxy.Instance.Client.SetOnLoginGameRes(OnLoginGameServerHandle);
     }

@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class EquipData {
         public static string csvFilePath = "Configs/EquipData";
-        public static string[] columnNameArray = new string[12];
+        public static string[] columnNameArray = new string[13];
         public static List<EquipData> dataList;
         public static List<EquipData> LoadDatas(){
             CSVFile csvFile = new CSVFile();
@@ -15,7 +15,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[12];
+            columnNameArray = new string[13];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 EquipData data = new EquipData();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -58,6 +58,12 @@ namespace BattleFramework.Data{
                 columnNameArray [10] = "suitCount";
                 int.TryParse(csvFile.mapData[i].data[11],out data.isWeapon);
                 columnNameArray [11] = "isWeapon";
+                data.subEquip= new List<int>();
+                strs = csvFile.mapData[i].data[12].Split(new char[1]{','});
+                for(int j=0;j<strs.Length;j++){
+                    data.subEquip.Add(int.Parse(strs[j]));
+                }
+                columnNameArray [12] = "subEquip";
                 dataList.Add(data);
             }
             return dataList;
@@ -91,6 +97,6 @@ namespace BattleFramework.Data{
         public int suit;//适合
         public int suitCount;//适合个数
         public int isWeapon;//是不是武器
-        public List<int> subEquip;
+        public List<int> subEquip;//子装备
     }
 }

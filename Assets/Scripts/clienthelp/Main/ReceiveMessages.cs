@@ -57,6 +57,17 @@ namespace ClientHelper
             delegateNode.receiveAction = delegate(Network.Message msg) { onLoginGameRes((GC_SpritePosMessage)msg); };
             msgDelegateInitializer.AddMessageReceiveDelegate(typeof(GC_SpritePosMessage), delegateNode);
         }
+        /// <summary>
+        /// 设置消息回调
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="onLoginGameRes"></param>
+        public void SetCallBackRes<T>(Action<T> onCallBackRes) where T : Network.Message
+        {
+            MessageDelegateNode delegateNode = new MessageDelegateNode();
+            delegateNode.receiveAction = delegate(Network.Message msg) { onCallBackRes((T)msg); };
+            msgDelegateInitializer.AddMessageReceiveDelegate(typeof(T), delegateNode);
+        }
         public void SetOnConnectAuthRes()
         {
 

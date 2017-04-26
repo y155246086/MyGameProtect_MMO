@@ -147,6 +147,7 @@ public class SkillManager
         cdDict[data.id] = Time.time;
         //播放动作
         owner.SetAction(data.action);
+        owner.Actor.AddCallbackInFrames<int>(owner.SetAction,0);
 
         //面向敌人
         Transform target = GetHitSprite(curSkillData.id);

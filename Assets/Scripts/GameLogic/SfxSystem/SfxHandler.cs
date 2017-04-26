@@ -129,7 +129,15 @@ public class SfxHandler : MonoBehaviour {
         {
             m_fxDic[id] = new Dictionary<string, GameObject>();
         }
-        m_fxDic[id].Add(guid, go);
+        if (!m_fxDic[id].ContainsKey(guid))
+        {
+            m_fxDic[id].Add(guid, go);
+        }
+        else
+        {
+            m_fxDic[id][guid] = go;
+        }
+        
         //处理音效
         var audio = go.GetComponent<AudioSource>();
         if (audio != null)

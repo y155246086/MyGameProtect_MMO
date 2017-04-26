@@ -46,9 +46,9 @@ namespace BattleFramework.Data{
                 columnNameArray [6] = "prefabName";
                 float.TryParse(csvFile.mapData[i].data[7],out data.scale);
                 columnNameArray [7] = "scale";
-                int.TryParse(csvFile.mapData[i].data[8],out data.scaleRadius);
+                float.TryParse(csvFile.mapData[i].data[8],out data.scaleRadius);
                 columnNameArray [8] = "scaleRadius";
-                int.TryParse(csvFile.mapData[i].data[9],out data.speed);
+                float.TryParse(csvFile.mapData[i].data[9],out data.speed);
                 columnNameArray [9] = "speed";
                 data.vocation = csvFile.mapData[i].data[10];
                 columnNameArray [10] = "vocation";
@@ -81,8 +81,8 @@ namespace BattleFramework.Data{
         public List<int> nakedEquipList;//初始装备id
         public string prefabName;//预设名称
         public float scale;//缩放系数
-        public int scaleRadius;//半径
-        public int speed;//速度
+        public float scaleRadius;//半径
+        public float speed;//速度
         public string vocation;//职业
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ActorMyself : ActorPlayer<EntityMyself>
 {
+    [System.NonSerialized]
+    public bool enableStick = true;
     void LateUpdate()
     {
         float speed = 0;
@@ -10,7 +12,19 @@ public class ActorMyself : ActorPlayer<EntityMyself>
         {
             speed = Mathf.Max(Mathf.Abs(ETCInput.GetAxis("Vertical")), Mathf.Abs(ETCInput.GetAxis("Horizontal")));
         }
-        this.theEntity.animator.SetFloat("Speed", speed);
+        if(enableStick == true)
+        {
+            this.theEntity.animator.SetFloat("Speed", speed);
+            if (this.theEntity.character)
+            {
+                this.theEntity.character.SimpleMove(this.transform.forward * Mathf.Abs(speed) * 4);
+            }
+        }
+        else
+        {
+            this.theEntity.animator.SetFloat("Speed", 0);
+        }
+        
         if (ETCInput.GetButtonDown("ButtonAttack"))
         {
             NormalAttack(3);
@@ -21,7 +35,7 @@ public class ActorMyself : ActorPlayer<EntityMyself>
         }
         if (ETCInput.GetButtonDown("ButtonAttack2"))
         {
-            NormalAttack(3);
+            NormalAttack(5);
         }
     }
     public void NormalAttack(int id)

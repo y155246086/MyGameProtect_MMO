@@ -6,5 +6,5 @@ id_int|skillId_int|duration_float|isConflict_int|isStatic_int|locationType_int|s
 1|1|1|0|0|2|slot_head|0,0,0|0|fx/fx_prefab/skill_102_fan_attack_1|0.3|0|0|0
 2|2|1|0|0|2|slot_head|0,0,0|0|fx/fx_prefab/skill_101_blade_powerattack_1|0.3|0|0|0
 3|3|1|0|0|2|slot_weapon_fx|0,0,0|0|fx/fx_prefab/skill_npc_1031_1|0.3|0|0|0
-4|4|1|0|0|2|slot_weapon_fx|0,0,0|0|fx/fx_prefab/skill_101_blade_powerattack_1|0.3|0|0|0
-5|4|1|0|0|2|slot_weapon_fx|0,0,0|0|fx/fx_prefab/skill_101_skill_1_03|0.8|0|0|0
+4|4|1|0|0|1|slot_weapon_fx|0,0,0|0|fx/fx_prefab/skill_101_blade_powerattack_1|0.1|0|0|0
+5|4|1|0|0|1|slot_weapon_fx|0,0,0|0|fx/fx_prefab/skill_101_skill_1_03|0.1|0|0|0

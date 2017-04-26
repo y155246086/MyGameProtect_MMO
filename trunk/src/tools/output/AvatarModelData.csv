@@ -1,6 +1,6 @@
 数据ID|出生特效|出生时间|死亡时间|死亡特效|初始装备id|预设名称|缩放系数|半径|速度|职业
-id_int|bornFx_list<int>|bornTime_int|deadTime_int|dieFx_list<int>|nakedEquipList_list<int>|prefabName_string|scale_float|scaleRadius_int|speed_int|vocation_string
+id_int|bornFx_list<int>|bornTime_int|deadTime_int|dieFx_list<int>|nakedEquipList_list<int>|prefabName_string|scale_float|scaleRadius_float|speed_float|vocation_string
 0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0
 0|0|0|0|0|0|0|0|0|0|0
-1|0|0|0|0|104001,104002|Characters/Avatar/Avatar_104|1|0|400|Assassin
+1|0|0|0|0|104001,104002|Characters/Avatar/Avatar_104|1.5|0|4|Assassin

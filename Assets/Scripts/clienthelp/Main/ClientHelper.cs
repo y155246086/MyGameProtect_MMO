@@ -173,6 +173,18 @@ namespace ClientHelper
             {
                 return;
             }
+            NetworkBuffer outBuffer = new NetworkBuffer(NetworkParameters._MAX_SEND_BUFFER_SIZE, true);
+            outBuffer.WriteInt32(ProtocolId);
+
+            ByteBuffer buf = new ByteBuffer(buffer.ToBytes());
+
+            byte[] bs = buf.ReadBytes();//这种方式会吧头部多余的一个Int值省略掉
+            outBuffer.WriteBytes(bs, 0, bs.Length);
+
+            int readableByteLength = outBuffer.ReadableBytes;
+            byte[] readableBytes = outBuffer.ReadBytes(0, readableByteLength);
+
+            connection._Send(readableBytes, 0, readableByteLength);
         }
 
         public void Update()

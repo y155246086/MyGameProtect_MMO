@@ -5,5 +5,6 @@ id_int|name_string|type_int|targetType_int|targetRangeType_int|targetRangeParam|
 0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
 1|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|1.5|1|1|1.5|se/se_mark|0|0|0|0|0
 2|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|2|3|1|2|se/se_mark|0|0.5|1|0|0
-3|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|1.5|1|1|1.5|se/se_mark|0|0|0|0|0
-4|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|2|3|1|2|se/se_mark|1|1|0.1|0|0
+3|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|0.7|1|0.3|0.66|se/se_mark|0|0|0|0|0
+4|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|0.7|3|0.3|0.68|se/se_mark|1|0.3|0.1|0|0
+5|0|0|0|0|0|0|5|10|0|0|fx/fx_prefab/skill_102_fan_attack_1|0|0.8|2|0.4|0.8|se/se_mark|0|0|0|0|0

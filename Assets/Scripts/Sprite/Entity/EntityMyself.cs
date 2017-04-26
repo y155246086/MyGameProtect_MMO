@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using BattleFramework.Data;
+using Mogo.Util;
 
 public class EntityMyself : EntityPlayer
 {
     //private ResourceData data;
     private BattleManager battleManager;
     private AvatarModelData data;
-
+    public CharacterController character;
     public EntityMyself()
     {
         spriteType = SpriteType.Myself;
@@ -31,7 +32,9 @@ public class EntityMyself : EntityPlayer
         animator = gameObject.GetComponent<Animator>();
         this.Actor = ap;
         UpdatePosition();
-        animator.applyRootMotion = true;
+
+        animator.applyRootMotion = false;
+
         battleManager = gameObject.AddComponent<BattleManager>();
         gameObject.AddComponent<DontDestroyMe>();
         //ap.InitEquipment();
@@ -42,15 +45,38 @@ public class EntityMyself : EntityPlayer
         light.transform.parent = gameObject.transform;
         light.transform.localPosition = new Vector3(0, 1, 0);
 
+        character = ap.GetComponent<CharacterController>();
+
     }
     protected override void OnEnterWorld()
     {
         GameWorld.player = this;
         skillManager.AddSkill(3);
         skillManager.AddSkill(4);
+
+        Mogo.Util.EventDispatcher.AddEventListener(GUIEvent.STOP_JOYSTICK_TURN, OnStopJoystickTurn);
+        Mogo.Util.EventDispatcher.AddEventListener(GUIEvent.START_JOYSTICK_TURN, OnStartJoystickTurn);
+    }
+
+    private void OnStartJoystickTurn()
+    {
+        (Actor as ActorMyself).enableStick = true;
+    }
+
+    private void OnStopJoystickTurn()
+    {
+        (Actor as ActorMyself).enableStick = false;
     }
     protected override void OnLeaveWorld()
     {
         skillManager.Clear();
+    }
+    private void Stand()
+    {
+        if (GameWorld.inCity)
+        {
+            TimerHeap.AddTimer(500, 0, SetAction, -1);
+        }
+        //motor.enableStick = true;
     }
 }
