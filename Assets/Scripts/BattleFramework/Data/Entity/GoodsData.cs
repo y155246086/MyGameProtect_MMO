@@ -57,7 +57,8 @@ namespace BattleFramework.Data{
                     data.rotion.z = (float.Parse(strs[2]));
                 columnNameArray [11] = "rotion";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -43,7 +43,8 @@ namespace BattleFramework.Data{
                 }
                 columnNameArray [6] = "skillAction";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

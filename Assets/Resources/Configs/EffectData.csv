@@ -10,3 +10,11 @@ id_int|skillId_int|duration_float|isConflict_int|isStatic_int|locationType_int|s
 5|0|1|0|0|1|Avatar_104_twinblade|0,0,0|0|fx/fx_prefab/fx_skill_104_x_twinblade/skill_104_x_twinblade_attack_2|0|0|0|0
 6|0|1|0|0|1|Avatar_104_twinblade|0,0,0|0|fx/fx_prefab/fx_skill_104_x_twinblade/skill_104_x_twinblade_attack_4|0|0|0|0
 7|0|1|0|0|1|Avatar_104_twinblade|0,0,0|0|fx/fx_prefab/fx_skill_104_x_twinblade/skill_104_x_twinblade_attack_5|0|0|0|0
+104409|0|1.5|1|0|1|Avatar_104_twinblade|0,0,0|Avatar_104_twinblade|fx/fx_prefab/fx_skill_104_x_twinblade/skill_104_x_twinblade_skill_2|0|0|0|0
+810401|0|0.7|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_attack_1|0|0|0|0
+810402|0|1|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_attack_2|0|0|0|0
+810403|0|1|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_attack_3|0|0|0|0
+810404|0|1|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_attack_4|0|0|0|0
+810405|0|1|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_attack_5|0|0|0|0
+104309|0|1.5|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_skill_2|0|0|0|0
+1043092|0|1.5|1|0|1|0|0,0,0|Avatar_104_twinblade|fx/fx_prefab/skill_104_x_dagger/skill_104_x_dagger_skill_2-02|0|0|0|0

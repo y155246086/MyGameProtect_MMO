@@ -89,7 +89,8 @@ namespace BattleFramework.Data{
                 int.TryParse(csvFile.mapData[i].data[33],out data.exp);
                 columnNameArray [33] = "exp";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -25,14 +25,16 @@ public class BillboardLogicManager{
         {
             bloodText = BloodText.Instance.GetComponent<Text>();
         }
-        bloodText.gameObject.SetActive(true);
-        bloodText.text = "暴击 " + hp.ToString();
+        GameObject t = GetObj();
+        Text text = t.GetComponent<Text>();
+        text.gameObject.SetActive(true);
+        text.text = "暴击 " + hp.ToString();
         Camera uicamera = GameObject.Find("UICamera").GetComponent<Camera>();
         Vector3 pos = Camera.main.WorldToViewportPoint(vector3);
         pos = uicamera.ViewportToWorldPoint(pos);
-        bloodText.transform.position = pos;
-        bloodText.rectTransform.DOLocalMoveY(bloodText.rectTransform.anchoredPosition3D.y + 100, 0.3f);
-        bloodText.rectTransform.DOScale(2, 0.3f).OnComplete(() => { OnComplete(bloodText.gameObject); });
+        text.transform.position = pos;
+        text.rectTransform.DOLocalMoveY(text.rectTransform.anchoredPosition3D.y + 100, 0.3f);
+        text.rectTransform.DOScale(2, 0.3f).OnComplete(() => { OnComplete(text.gameObject); });
         //AppFacade.Instance.GetManager<LuaFramework.ResourceManager>(LuaFramework.ManagerName.Resource).LoadPrefab("Fx", "particle_1058_attack1_1", LoadComplete1);
     }
     private void LoadComplete1(Object[] obj)
@@ -41,10 +43,29 @@ public class BillboardLogicManager{
 
        // ResetShader(o);
     }
-    
+    private List<GameObject> textList = new List<GameObject>();
+    private GameObject GetObj()
+    {
+        GameObject textobj = null;
+        if(textList.Count>0)
+        {
+            textobj = textList[0];
+            textList.RemoveAt(0);
+            return textobj;
+        }
+        else
+        {
+            textobj = GameObject.Instantiate<GameObject>(bloodText.gameObject);
+            GameObject.Destroy(textobj.GetComponent<BloodText>());
+            textobj.transform.SetParent(bloodText.transform.parent);
+            textobj.transform.Reset();
+            return textobj;
+        }
+    }
     private void OnComplete(GameObject obj)
     {
-        bloodText.transform.localScale = Vector3.one;
-        bloodText.gameObject.SetActive(false);
+        obj.transform.localScale = Vector3.one;
+        obj.gameObject.SetActive(false);
+        textList.Add(obj);
     }
 }

@@ -45,7 +45,8 @@ namespace BattleFramework.Data{
                 float.TryParse(csvFile.mapData[i].data[11],out data.luopanMinDis);
                 columnNameArray [11] = "luopanMinDis";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -28,6 +28,9 @@ public class EntityMonster :  EntityParent {
         ap.theEntity = this;
         animator = gameObject.GetComponent<Animator>();
         this.Actor = ap;
+
+        this.Motor = gameObject.AddComponent<MotorParent>();
+        this.Motor.theEntity = this;
         UpdatePosition();
         if (data.scale > 0)
             gameObject.transform.localScale = new Vector3(data.scale, data.scale, data.scale);

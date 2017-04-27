@@ -53,7 +53,8 @@ namespace BattleFramework.Data{
                 float.TryParse(csvFile.mapData[i].data[13],out data.soundDelay);
                 columnNameArray [13] = "soundDelay";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -20,9 +20,6 @@ public class GUIManager{
         }
 
         GameObject UIPrefab = GameObject.Instantiate<GameObject>(prefab);
-
-        UIPrefab.transform.parent = null;
-        UIPrefab.transform.Reset();
         return UIPrefab;
     }
     private static Transform panelParent;
@@ -57,7 +54,7 @@ public class GUIManager{
             }
             if(panelParent != null)
             {
-                panel.transform.parent = panelParent;
+                panel.transform.SetParent(panelParent);
                 panel.transform.Reset();
             }
             viewMap.Add(name, new KeyValuePair<GameObject, IViewBase>(panel, view));

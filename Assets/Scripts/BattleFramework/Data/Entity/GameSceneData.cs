@@ -41,7 +41,8 @@ namespace BattleFramework.Data{
                     data.enterPoint.z = (float.Parse(strs[2]));
                 columnNameArray [7] = "enterPoint";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

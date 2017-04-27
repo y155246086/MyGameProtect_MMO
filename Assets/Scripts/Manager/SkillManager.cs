@@ -7,10 +7,10 @@ using Mogo.Util;
 
 public class SkillManager
 {
-    private List<SkillAction> skillList = new List<SkillAction>();
+    private List<SkillData> skillList = new List<SkillData>();
     private EntityParent owner;
     private Dictionary<int, float> cdDict = new Dictionary<int, float>();
-    private SkillAction curSkillData = null;
+    private SkillData curSkillData = null;
     private bool isCanSkill = true;
     private bool isSkillPlaying = false;
     private uint delayAttackTimerID = 0;
@@ -29,21 +29,21 @@ public class SkillManager
         {
             return;
         }
-        SkillAction data = SkillAction.GetByID(skillId);
+        SkillData data = SkillData.GetByID(skillId);
         if(data != null)
         {
             skillList.Add(data);
-            cdDict[data.id] = Time.time - data.cd;
+            cdDict[data.id] = Time.time - data.cd[0];
         }
         skillList.Sort(SortList);
     }
 
-    private int SortList(SkillAction x, SkillAction y)
+    private int SortList(SkillData x, SkillData y)
     {
-        if(x.cd - y.cd>0)
+        if(x.cd[0] - y.cd[0]>0)
         {
             return -1;
-        }else if(x.cd - y.cd <0)
+        }else if(x.cd[0] - y.cd[0] <0)
         {
             return 1;
         }
@@ -75,10 +75,10 @@ public class SkillManager
         }
         for (int i = 0; i < skillList.Count; i++)
         {
-            SkillAction data = skillList[i];
+            SkillData data = skillList[i];
             if(cdDict.ContainsKey(data.id))
             {
-                if (Time.time - cdDict[data.id] >= data.cd && isCanSkill == true)//cd时间到
+                if (Time.time - cdDict[data.id] >= data.cd[0] && isCanSkill == true)//cd时间到
                 {
                     UseSkill(data);
                     break;
@@ -101,10 +101,10 @@ public class SkillManager
     /// <returns></returns>
     protected bool IsCding(int skillID)
     {
-        SkillAction data = SkillAction.GetByID(skillID);
+        SkillData data = SkillData.GetByID(skillID);
         if (data!= null && cdDict.ContainsKey(data.id))
         {
-            if (Time.time - cdDict[data.id] >= data.cd)//cd时间到
+            if (Time.time - cdDict[data.id] >= data.cd[0])//cd时间到
             {
                 return false;
             }
@@ -126,15 +126,15 @@ public class SkillManager
     }
     public void UseSkill(int skillid)
     {
-        if (isSkillPlaying == true) return;
-        if (IsCding(skillid)) return;
-        UseSkill(SkillAction.GetByID(skillid));
+        //if (isSkillPlaying == true) return;
+        //if (IsCding(skillid)) return;
+        UseSkill(SkillData.GetByID(skillid));
     }
     /// <summary>
     /// 使用技能
     /// </summary>
     /// <param name="data"></param>
-    private void UseSkill(SkillAction data)
+    private void UseSkill(SkillData data)
     {
         //先判断当前状态可不可以使用技能，如：沉默，晕眩等限制状态
 
@@ -146,9 +146,9 @@ public class SkillManager
         //设置cd
         cdDict[data.id] = Time.time;
         //播放动作
-        owner.SetAction(data.action);
+        SkillAction skillAction = SkillAction.GetByID(data.skillAction[0]);
+        owner.SetAction(skillAction.action);
         owner.Actor.AddCallbackInFrames<int>(owner.SetAction,0);
-
         //面向敌人
         Transform target = GetHitSprite(curSkillData.id);
         if (target != null)
@@ -157,9 +157,10 @@ public class SkillManager
         }
         isCanSkill = false;
         isSkillPlaying = true;
-        AttackingFx(data);
-        delayAttackTimerID = TimerHeap.AddTimer((uint)(data.triggerTime * 1000f), 0, DelayAttack);
-        EndAttackTimerID = TimerHeap.AddTimer((uint)(data.duration * 1000f), 0, EndAttackAction);
+        AttackingFx(skillAction);
+        delayAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.triggerTime * 1000f), 0, DelayAttack,skillAction);
+        TimerHeap.DelTimer(EndAttackTimerID);
+        EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration * 1000f), 0, EndAttackAction, skillAction);
         //GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
     }
     
@@ -168,31 +169,44 @@ public class SkillManager
         TimerHeap.DelTimer(delayAttackTimerID);
         TimerHeap.DelTimer(EndAttackTimerID);
     }
-    protected void EndAttackAction()
+    protected void EndAttackAction(SkillAction skillAction)
     {
         isCanSkill = true;
         isSkillPlaying = false;
         owner.SetAction(0);
+        owner.ClearSkill();
         if(owner is EntityMyself)
         {
             Mogo.Util.EventDispatcher.TriggerEvent(GUIEvent.START_JOYSTICK_TURN);
         }
     }
-    protected void DelayAttack()
+    protected void DelayAttack(SkillAction skillAction)
     {
-        AttackTrigger();
-    }
-    protected void AttackTrigger()
-    {
-        Transform target = GetHitSprite(curSkillData.id);
-        if(target != null)
+        List<EntityParent> list = GetHitEntities(curSkillData.id);
+        for (int i = 0; i < list.Count; i++)
         {
-            ICanAttacked att = target.GetComponent<ICanAttacked>();
+            ICanAttacked att = list[i].Actor.GetComponent<ICanAttacked>();
             if (att != null)
             {
-                att.SetHurt(Random.Range(curSkillData.minAttackValue, curSkillData.maxAttackValue) * 100);
+                att.SetHurt(Random.Range(skillAction.minAttackValue, skillAction.maxAttackValue) * 100);
             }
         }
+    }
+    protected List<EntityParent> GetHitEntities(int skillid)
+    {
+        List<EntityParent> list = new List<EntityParent>();
+        if (owner is EntityMyself)
+        {
+            foreach (var item in GameWorld.SpriteList)
+            {
+                if(item.Value != owner)
+                {
+                    list.Add(item.Value);
+                }
+            }
+
+        }
+        return list;
     }
     protected Transform GetHitSprite(int skillid)
     {
@@ -240,11 +254,6 @@ public class SkillManager
         {
             ////有震屏,调用震屏接口
             TimerHeap.AddTimer<int, float>((uint)(skillData.cameraTweenSL * 1000), 0, MogoMainCamera.Instance.Shake, skillData.cameraTweenId, skillData.cameraTweenST);
-        }
-        if (curSkillData.skillSound.Length > 1)
-        {
-            //播放声音
-            //Mogo.SoundManager.GameObjectPlaySound(curSkillData.skillSound, this.gameObject, false, true);
         }
     }
 }

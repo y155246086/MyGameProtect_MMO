@@ -1,39 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BattleManager : MonoBehaviour {
+public class BattleManager{
+    protected EntityParent theOwner;
+    protected SkillManager skillManager;
 
-    void Awake()
+    public BattleManager(EntityParent _owner)
     {
+        this.theOwner = _owner;
     }
-	void Start () {
-	}
-	
-	void Update () {
-        if (ETCInput.GetButtonDown("ButtonAttack"))
-        {
-            NormalAttack(3);
-        }
-        if (ETCInput.GetButtonDown("ButtonAttack1"))
-        {
-            NormalAttack(4);
-        }
-        if (ETCInput.GetButtonDown("ButtonAttack2"))
-        {
-            NormalAttack(3);
-        }
-	}
-    public void NormalAttack(int id)
+
+    public BattleManager(EntityParent _owner, SkillManager _skillManager)
+    {
+        // TODO: Complete member initialization
+        this.theOwner = _owner;
+        this.skillManager = _skillManager;
+    }
+
+
+
+    public virtual void Clean()
     {
 
     }
-    public void SpellOneAttack()
-    {
 
-    }
-    public void SpellTwoAttack()
+    // 主动释放技能。直接进入PREPARING放技能
+    virtual public void CastSkill(int actionID)
     {
-
+        //theOwner.ChangeMotionState(MotionState.ATTACKING, actionID);
+        skillManager.UseSkill(actionID);
     }
-    
 }

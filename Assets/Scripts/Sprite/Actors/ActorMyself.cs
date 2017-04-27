@@ -40,6 +40,7 @@ public class ActorMyself : ActorPlayer<EntityMyself>
     }
     public void NormalAttack(int id)
     {
-        GetEntity().skillManager.UseSkill(id);
+       // GetEntity().skillManager.UseSkill(id);
+        (GetEntity().battleManager as PlayerBattleManager).NormalAttack();
     }
 }

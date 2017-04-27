@@ -67,7 +67,8 @@ namespace BattleFramework.Data{
                 }
                 columnNameArray [12] = "subEquip";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -55,7 +55,8 @@ namespace BattleFramework.Data{
                 data.vocation = csvFile.mapData[i].data[10];
                 columnNameArray [10] = "vocation";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }

@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class SkillAction {
         public static string csvFilePath = "Configs/SkillAction";
-        public static string[] columnNameArray = new string[22];
+        public static string[] columnNameArray = new string[18];
         public static List<SkillAction> dataList;
         public static Dictionary<int, SkillAction> dataMap;
         public static List<SkillAction> LoadDatas(){
@@ -17,7 +17,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[22];
+            columnNameArray = new string[18];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 SkillAction data = new SkillAction();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -38,40 +38,33 @@ namespace BattleFramework.Data{
                 columnNameArray [7] = "minAttackValue";
                 int.TryParse(csvFile.mapData[i].data[8],out data.maxAttackValue);
                 columnNameArray [8] = "maxAttackValue";
-                float.TryParse(csvFile.mapData[i].data[9],out data.speed);
-                columnNameArray [9] = "speed";
-                float.TryParse(csvFile.mapData[i].data[10],out data.angle);
-                columnNameArray [10] = "angle";
-                float.TryParse(csvFile.mapData[i].data[11],out data.cd);
-                columnNameArray [11] = "cd";
-                int.TryParse(csvFile.mapData[i].data[12],out data.action);
-                columnNameArray [12] = "action";
-                float.TryParse(csvFile.mapData[i].data[13],out data.triggerTime);
-                columnNameArray [13] = "triggerTime";
-                float.TryParse(csvFile.mapData[i].data[14],out data.duration);
-                columnNameArray [14] = "duration";
-                data.skillSound = csvFile.mapData[i].data[15];
-                columnNameArray [15] = "skillSound";
-                int.TryParse(csvFile.mapData[i].data[16],out data.cameraTweenId);
-                columnNameArray [16] = "cameraTweenId";
-                float.TryParse(csvFile.mapData[i].data[17],out data.cameraTweenSL);
-                columnNameArray [17] = "cameraTweenSL";
-                float.TryParse(csvFile.mapData[i].data[18],out data.cameraTweenST);
-                columnNameArray [18] = "cameraTweenST";
-                int.TryParse(csvFile.mapData[i].data[19],out data.hitFxID);
-                columnNameArray [19] = "hitFxID";
-                int.TryParse(csvFile.mapData[i].data[20],out data.hitAction);
-                columnNameArray [20] = "hitAction";
+                int.TryParse(csvFile.mapData[i].data[9],out data.action);
+                columnNameArray [9] = "action";
+                float.TryParse(csvFile.mapData[i].data[10],out data.triggerTime);
+                columnNameArray [10] = "triggerTime";
+                float.TryParse(csvFile.mapData[i].data[11],out data.duration);
+                columnNameArray [11] = "duration";
+                int.TryParse(csvFile.mapData[i].data[12],out data.cameraTweenId);
+                columnNameArray [12] = "cameraTweenId";
+                float.TryParse(csvFile.mapData[i].data[13],out data.cameraTweenSL);
+                columnNameArray [13] = "cameraTweenSL";
+                float.TryParse(csvFile.mapData[i].data[14],out data.cameraTweenST);
+                columnNameArray [14] = "cameraTweenST";
+                int.TryParse(csvFile.mapData[i].data[15],out data.hitFxID);
+                columnNameArray [15] = "hitFxID";
+                int.TryParse(csvFile.mapData[i].data[16],out data.hitAction);
+                columnNameArray [16] = "hitAction";
                 data.sfx= new Dictionary<int, float>();
-                strs = csvFile.mapData[i].data[21].Split(new char[1]{','});
+                strs = csvFile.mapData[i].data[17].Split(new char[1]{','});
                 for(int j=0;j<strs.Length;j++){
                     strsTwo = strs[j].Split(new char[1]{':'});
                     if (strsTwo.Length == 2)
                         data.sfx.Add(int.Parse(strsTwo[0]),float.Parse(strsTwo[1]));
                 }
-                columnNameArray [21] = "sfx";
+                columnNameArray [17] = "sfx";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }
@@ -101,13 +94,9 @@ namespace BattleFramework.Data{
         public string shootPrefabs;//弹道资源
         public int minAttackValue;//最小攻击力
         public int maxAttackValue;//最大攻击力
-        public float speed;//弹道速度
-        public float angle;//弹道角度
-        public float cd;//技能CD
         public int action;//动作值
         public float triggerTime;//动画触发帧数
         public float duration;//技能持续时间
-        public string skillSound;//技能声音
         public int cameraTweenId;//相机特效数据ID
         public float cameraTweenSL;//相机特效延时
         public float cameraTweenST;//相机特效持续

@@ -65,10 +65,10 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
     {
         if(!(this is ActorMyself))
         {
-            GetEntity().propertyManager.ChangeProperty(PropertyType.HP, -value);
+            //GetEntity().propertyManager.ChangeProperty(PropertyType.HP, -value);
             if (GetEntity().propertyManager.GetPropertyValue(PropertyType.HP)>0)
             {
-                GetEntity().SetAction(ActionConstants.HIT);
+                GetEntity().SetAction(ActionConstants.HIT_AIR);
                 AddCallbackInFrames<int>(GetEntity().SetAction, 0);
             }
             

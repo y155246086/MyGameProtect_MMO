@@ -6,7 +6,7 @@ using System;
 using Mogo.Util;
 public class SkillMapping
 {
-    public int normalAttack = 0;
+    public int normalAttack = 3;
     public int spellOne = 0;
     public int spellTwo = 0;
     public int spellThree = 0;
@@ -16,7 +16,7 @@ public class SkillMapping
 
     public void clean()
     {
-        normalAttack = 0;
+        normalAttack = 3;
         spellOne = 0;
         spellTwo = 0;
         spellThree = 0;

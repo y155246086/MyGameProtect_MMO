@@ -18,12 +18,14 @@ public abstract class EntityParent {
     private SfxManager sfxManager;
     public SfxHandler sfxHandler;
     public SkillManager skillManager;
+    public BattleManager battleManager;
     public SpriteType spriteType;
     /// <summary>
     /// 职业
     /// </summary>
     private Vocation m_vocation;
     public Animator weaponAnimator;
+    public int currSpellID;////小于等于0为当前空闲
 
     /// <summary>
     /// 职业
@@ -37,6 +39,7 @@ public abstract class EntityParent {
         }
     }
     public ActorParent Actor { get; set; }
+    public MotorParent Motor { get; set; }
     /// <summary>
     /// 状态机初始化
     /// </summary>
@@ -233,5 +236,41 @@ public abstract class EntityParent {
         duplication.transform.position = transform.position;
         duplication.transform.rotation = transform.rotation;
         TimerHeap.AddTimer<GameObject>(1000, 0, (copy) => { UnityEngine.Object.Destroy(copy); }, duplication);
+    }
+
+    virtual public void CastSkill(int nSkillID)
+    {
+
+        currSpellID = nSkillID;
+        //hitActionIdx = 1;
+        SkillData s = SkillData.GetByID(currSpellID);
+        if (s == null)
+        {//没有技能配置
+            return;
+        }
+
+        if (ID == GameWorld.player.ID)
+        {
+            //TODO 给服务器发送消息
+        }
+
+        battleManager.CastSkill(currSpellID);
+    }
+    virtual public void ClearSkill()
+    {
+        currSpellID = -1;
+    }
+    public string CurrActStateName()
+    {
+        if (animator == null)
+        {
+            return "";
+        }
+        AnimatorClipInfo[] st = animator.GetCurrentAnimatorClipInfo(0);
+        if (st.Length == 0)
+        {
+            return "";
+        }
+        return st[0].clip.name;
     }
 }

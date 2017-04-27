@@ -44,7 +44,7 @@ public class AttackBase : FSMState
         }
         if (owner.skillManager != null)
         {
-            owner.skillManager.Attack();
+            //owner.skillManager.Attack();
         }
         return false;
     }

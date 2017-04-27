@@ -211,7 +211,8 @@ namespace BattleFramework.Data
 				file.WriteLine ("                columnNameArray [" + i + "] = \"" + fieldName + "\";");
 			}
 			file.WriteLine ("                dataList.Add(data);");
-            file.WriteLine("                dataMap.Add(data.id,data);");
+            file.WriteLine("                if (!dataMap.ContainsKey(data.id))");
+            file.WriteLine("                    dataMap.Add(data.id,data);");
 			file.WriteLine ("            }");
 			file.WriteLine ("            return dataList;");
 			file.WriteLine ("        }");

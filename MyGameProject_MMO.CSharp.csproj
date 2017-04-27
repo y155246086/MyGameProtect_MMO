@@ -531,6 +531,7 @@
     <Compile Include="Assets\Scripts\Manager\DownloadManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Manager\MogoMainCamera.cs" />
+    <Compile Include="Assets\Scripts\Manager\PlayerBattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerSkillManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PropertyManager.cs" />
     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
@@ -548,6 +549,8 @@
     <Compile Include="Assets\Scripts\Sprite\Entity\EntityParent.cs" />
     <Compile Include="Assets\Scripts\Sprite\Entity\EntityPlayer.cs" />
     <Compile Include="Assets\Scripts\Sprite\Entity\EntityServerInfo.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Motor\MotorMyself.cs" />
+    <Compile Include="Assets\Scripts\Sprite\Motor\MotorParent.cs" />
     <Compile Include="Assets\Scripts\Sprite\SpriteBase.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Common\BigEndianTransfer.cs" />
     <Compile Include="Assets\Scripts\clienthelp\Common\ILogger.cs" />

@@ -31,7 +31,8 @@ namespace BattleFramework.Data{
                 data.assetName = csvFile.mapData[i].data[4];
                 columnNameArray [4] = "assetName";
                 dataList.Add(data);
-                dataMap.Add(data.id,data);
+                if (!dataMap.ContainsKey(data.id))
+                    dataMap.Add(data.id,data);
             }
             return dataList;
         }
