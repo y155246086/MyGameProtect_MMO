@@ -31,12 +31,4 @@ public class DeadBase : FSMState
     {
         
     }
-    protected override bool OnUpdateState(Transform target)
-    {
-        return false;
-    }
-    protected override void OnUpdateAction(Transform target)
-    {
-        
-    }
 }

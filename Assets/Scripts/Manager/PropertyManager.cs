@@ -21,8 +21,8 @@ public class PropertyManager {
         AddProperty(PropertyType.MAX_HP, 1000);
         AddProperty(PropertyType.Attack_Dis, 5);
         AddProperty(PropertyType.Chase_Dis, 10);
-        AddProperty(PropertyType.Arrive_Dis, 2);
-        AddProperty(PropertyType.Patrol_Radius, 5);
+        AddProperty(PropertyType.Arrive_Dis, 1);
+        AddProperty(PropertyType.Patrol_Radius, 8);
     }
     /// <summary>
     /// 获取属性值

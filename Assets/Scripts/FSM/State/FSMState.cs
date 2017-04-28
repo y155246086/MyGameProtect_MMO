@@ -36,29 +36,6 @@ public abstract class FSMState {
     /// 更新状态
     /// </summary>
     public abstract void OnUpdate(Transform target);
-    /// <summary>
-    /// 固定更新
-    /// </summary>
-    public void OnFiexedUpdate(Transform target)
-    {
-        bool b = OnUpdateState(target);
-        if(b== false)
-        {
-            OnUpdateAction(target);
-        }
-    }
-
-    /// <summary>
-    /// 状态更新
-    /// </summary>
-    /// <param name="target"></param>
-    /// <returns>是否有状态变换</returns>
-    protected abstract bool OnUpdateState(Transform target);
-    /// <summary>
-    /// 行为更新
-    /// </summary>
-    /// <param name="target"></param>
-    protected abstract void OnUpdateAction(Transform target);
     public float GetDistanceXZ(Vector3 source, Vector3 target)
     {
         return Vector2.Distance(new Vector2(source.x, source.z), new Vector2(target.x, target.z));
@@ -84,7 +61,8 @@ public abstract class FSMState {
             //AIPathTarget.position = destPos;
             aiPath.target = AIPathTarget;
             aiPath.speed = curSpeed;
-            aiPath.enabled = true;
+            aiPath.canSearch = true;
+            aiPath.canMove = true;
             animator.SetFloat("Speed", 1f);
         }
     }
@@ -96,7 +74,8 @@ public abstract class FSMState {
         if (aiPath != null)
         {
             aiPath.target = null;
-            aiPath.enabled = false;
+            aiPath.canSearch = false;
+            aiPath.canMove = false;
             animator.SetFloat("Speed", 0f);
         }
     }

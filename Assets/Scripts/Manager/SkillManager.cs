@@ -10,7 +10,7 @@ public class SkillManager
     private List<SkillData> skillList = new List<SkillData>();
     private EntityParent owner;
     private Dictionary<int, float> cdDict = new Dictionary<int, float>();
-    private SkillData curSkillData = null;
+    private SkillAction curSkillData = null;
     private bool isCanSkill = true;
     private bool isSkillPlaying = false;
     private uint delayAttackTimerID = 0;
@@ -33,7 +33,7 @@ public class SkillManager
         if(data != null)
         {
             skillList.Add(data);
-            cdDict[data.id] = Time.time - data.cd[0];
+            cdDict[data.id] = Time.time*1000 - data.cd[0];
         }
         skillList.Sort(SortList);
     }
@@ -78,9 +78,9 @@ public class SkillManager
             SkillData data = skillList[i];
             if(cdDict.ContainsKey(data.id))
             {
-                if (Time.time - cdDict[data.id] >= data.cd[0] && isCanSkill == true)//cd时间到
+                if (Time.time * 1000 - cdDict[data.id] >= data.cd[0] && isCanSkill == true)//cd时间到
                 {
-                    UseSkill(data);
+                    UseSkill(data.id);
                     break;
                 }
                 else
@@ -90,7 +90,7 @@ public class SkillManager
             }
             else
             {
-                UseSkill(data);
+                UseSkill(data.id);
                 break;
             }
         }
@@ -104,7 +104,7 @@ public class SkillManager
         SkillData data = SkillData.GetByID(skillID);
         if (data!= null && cdDict.ContainsKey(data.id))
         {
-            if (Time.time - cdDict[data.id] >= data.cd[0])//cd时间到
+            if (Time.time * 1000 - cdDict[data.id] >= data.cd[0])//cd时间到
             {
                 return false;
             }
@@ -124,29 +124,129 @@ public class SkillManager
             return isSkillPlaying;
         }
     }
-    public void UseSkill(int skillid)
+    public void Process(EntityParent theOwner, int skillDataId)
     {
-        //if (isSkillPlaying == true) return;
-        //if (IsCding(skillid)) return;
-        UseSkill(SkillData.GetByID(skillid));
+        int spellID = skillDataId;
+        SkillData s = SkillData.dataMap[spellID];
+        //theOwner.motor.speed = 0;
+        //theOwner.motor.targetSpeed = 0;
+        int baseTime = 0;
+        for (int i = 0; i < s.skillAction.Count; i++)
+        {
+            SkillAction action = SkillAction.dataMap[s.skillAction[i]];
+            List<object> args1 = new List<object>();
+            args1.Add(s.skillAction[0]);
+            args1.Add(theOwner.transform.localToWorldMatrix);
+            args1.Add(theOwner.transform.rotation);
+            args1.Add(theOwner.transform.forward);
+            args1.Add(theOwner.transform.position);
+            if (i == 0)
+            {
+                ProcessHit(theOwner, spellID, args1);
+                //if (theOwner is EntityMyself)
+                //{
+                //    theOwner.Motor.enableStick = action.enableStick > 0;
+                //}
+            }
+            if (i + 1 == s.skillAction.Count)
+            {
+                break;
+            }
+            uint tid = 0;
+            List<object> args2 = new List<object>();
+            args2.Add(s.skillAction[i + 1]);
+            args2.Add(theOwner.transform.localToWorldMatrix);
+            args2.Add(theOwner.transform.rotation);
+            args2.Add(theOwner.transform.forward);
+            args2.Add(theOwner.transform.position);
+            if (action.actionTime > 0)
+            {
+                tid = TimerHeap.AddTimer((uint)((baseTime + action.actionTime) / theOwner.aiRate), 0, ProcessHit, theOwner, spellID, args2);
+                baseTime += action.actionTime;
+            }
+            if (action.nextHitTime > 0)
+            {
+                tid = TimerHeap.AddTimer((uint)((baseTime + action.nextHitTime) / theOwner.aiRate), 0, ProcessHit, theOwner, spellID, args2);
+                baseTime += action.nextHitTime;
+            }
+            theOwner.hitTimer.Add(tid);
+        }
+    }
+
+    private void ProcessHit(EntityParent theOwner, int spellID, List<object> args)
+    {
+        int actionID = (int)args[0];
+        UnityEngine.Matrix4x4 ltwm = (UnityEngine.Matrix4x4)args[1];
+        UnityEngine.Quaternion rotation = (UnityEngine.Quaternion)args[2];
+        UnityEngine.Vector3 forward = (UnityEngine.Vector3)args[3];
+        UnityEngine.Vector3 position = (UnityEngine.Vector3)args[4];
+
+        SkillAction action = SkillAction.dataMap[actionID];
+        SkillData s = SkillData.dataMap[spellID];
+
+        // 回调，基于计时器。 在duration 后切换回 idle 状态
+        int duration = action.duration;
+        if (duration <= 0 && s.skillAction.Count > 1)// && theOwner.hitActionIdx >= (s.skillAction.Count - 1))
+        {
+            if (SkillAction.dataMap[s.skillAction[0]].duration <= 0)
+            {
+                theOwner.Actor.AddCallbackInFrames<int, EntityParent>(
+                    (_actionID, _theOwner) =>
+                    {
+                        //_theOwner.TriggerUniqEvent<int>(Events.FSMMotionEvent.OnAttackingEnd, _actionID);
+                    },
+                    actionID,
+                    theOwner);
+            }
+        }
+        else if (duration > 0 && action.action > 0)
+        {
+            TimerHeap.AddTimer<int, EntityParent>(
+                (uint)duration,
+                0,
+                (_actionID, _theOwner) =>
+                {
+                    //_theOwner.TriggerUniqEvent<int>(Events.FSMMotionEvent.OnAttackingEnd, _actionID);
+                    //_theOwner.ChangeMotionState(MotionState.IDLE);
+                },
+                actionID,
+                theOwner);
+        }
+        // 回调，基于计时器。 在removeSfxTime 后关闭持久的sfx
+        if (action.duration > 0)
+        {
+            TimerHeap.AddTimer<int, EntityParent>(
+                (uint)action.duration,
+                0,
+                (_actionID, _theOwner) =>
+                {
+                    _theOwner.RemoveSfx(_actionID);
+                },
+                actionID,
+                theOwner);
+        }
+        UseSkill(SkillAction.GetByID(actionID));
+    }
+    public void UseSkill(int skillDataID)
+    {
+        Process(owner, skillDataID);
+        //UseSkill(SkillData.GetByID(skillid));
     }
     /// <summary>
     /// 使用技能
     /// </summary>
     /// <param name="data"></param>
-    private void UseSkill(SkillData data)
+    private void UseSkill(SkillAction data)
     {
-        //先判断当前状态可不可以使用技能，如：沉默，晕眩等限制状态
-
         if (owner is EntityMyself)
         {
             Mogo.Util.EventDispatcher.TriggerEvent(GUIEvent.STOP_JOYSTICK_TURN);
         }
         curSkillData = data;
         //设置cd
-        cdDict[data.id] = Time.time;
+        cdDict[data.id] = Time.time * 1000;
         //播放动作
-        SkillAction skillAction = SkillAction.GetByID(data.skillAction[0]);
+        SkillAction skillAction = data;
         owner.SetAction(skillAction.action);
         owner.Actor.AddCallbackInFrames<int>(owner.SetAction,0);
         //面向敌人
@@ -158,9 +258,9 @@ public class SkillManager
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(skillAction);
-        delayAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.triggerTime * 1000f), 0, DelayAttack,skillAction);
+        delayAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.triggerTime), 0, DelayAttack,skillAction);
         TimerHeap.DelTimer(EndAttackTimerID);
-        EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration * 1000f), 0, EndAttackAction, skillAction);
+        EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration), 0, EndAttackAction, skillAction);
         //GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
     }
     
@@ -253,7 +353,7 @@ public class SkillManager
         if(skillData.cameraTweenId>0)
         {
             ////有震屏,调用震屏接口
-            TimerHeap.AddTimer<int, float>((uint)(skillData.cameraTweenSL * 1000), 0, MogoMainCamera.Instance.Shake, skillData.cameraTweenId, skillData.cameraTweenST);
+            TimerHeap.AddTimer<int, float>((uint)(skillData.cameraTweenSL), 0, MogoMainCamera.Instance.Shake, skillData.cameraTweenId, (float)skillData.cameraTweenST/1000f);
         }
     }
 }

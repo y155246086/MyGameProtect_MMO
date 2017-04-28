@@ -41,10 +41,6 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
     {
         OnUpdate();
     }
-    void FixedUpdate()
-    {
-        OnFixedUpdate();
-    }
     protected virtual void OnAwake()
     {
 
@@ -56,10 +52,6 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
     protected virtual void OnUpdate()
     {
         this.GetEntity().OnUpdate();
-    }
-    protected virtual void OnFixedUpdate()
-    {
-        this.GetEntity().OnFixedUpdate();
     }
     public void SetHurt(int value)
     {

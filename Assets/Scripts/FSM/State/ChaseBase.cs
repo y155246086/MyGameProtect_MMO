@@ -27,26 +27,22 @@ public class ChaseBase : FSMState {
     }
     public override void OnUpdate(Transform target)
     {
-        
-    }
-    protected override bool OnUpdateState(Transform target)
-    {
         destPos = target.position;
         if (GetDistanceXZ(owner.transform.position, destPos) <= owner.propertyManager.GetPropertyValue(PropertyType.Attack_Dis))
         {
             Debuger.Log("转换为攻击状态");
             owner.ChangeState(FSMStateType.Attacking);
-            return true;
+            return;
         }
         else if (GetDistanceXZ(owner.transform.position, destPos) >= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
             Debuger.Log("转变到巡逻状态");
             owner.ChangeState(FSMStateType.Patroling);
-            return true;
+            return;
         }
-        return false;
+        OnUpdateAction(target);
     }
-    protected override void OnUpdateAction(Transform target)
+    protected void OnUpdateAction(Transform target)
     {
         //到达目标点就停止移动
 

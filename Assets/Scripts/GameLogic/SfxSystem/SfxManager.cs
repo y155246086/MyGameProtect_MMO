@@ -30,15 +30,6 @@ public class SfxManager{
         //key  特效id value 延时启动时间
         Dictionary<int, float> sfx = skillData.sfx;
 
-        //List<EffectData> effectList = EffectData.dataList;
-        //for (int i = 0; i < effectList.Count; i++)
-        //{
-        //    if(effectList[i].skillId == skillID)
-        //    {
-        //        sfx.Add(effectList[i].id, effectList[i].delay);
-        //    }
-        //}
-
         SfxHandler cueHandler = theOwner.sfxHandler;
 
         if (sfx != null && sfx.Count > 0)
@@ -48,21 +39,38 @@ public class SfxManager{
             foreach (var pair in sfx)
             {
                 sfxTimerIDDic[skillID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, TriggerCues, cueHandler, pair.Key));
-                //if (pair.Key < 1000)
-                //{
-                //    sfxTimerIDDic[skillID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, PlayUIFx, pair.Key));
-                //}
-                //else
-                //{
-                //    sfxTimerIDDic[skillID].Add(FrameTimerHeap.AddTimer((uint)(1000 * pair.Value), 0, TriggerCues, cueHandler, pair.Key));
-                //}
             }
         }
         return;
     }
-    public void RemoveSfx()
+    public void RemoveSfx(int actionID)
     {
-
+        List<uint> sfxs = null;
+        sfxTimerIDDic.TryGetValue(actionID, out sfxs);
+        if (sfxs == null)
+        {
+            return;
+        }
+        foreach (var item in sfxs)
+        {
+            FrameTimerHeap.DelTimer(item);
+        }
+        Dictionary<int, float> sfx = SkillAction.dataMap[actionID].sfx;
+        if (sfx == null)
+        {
+            return;
+        }
+        SfxHandler cueHandler = theOwner.sfxHandler;
+        foreach (var item in sfx)
+        {
+            if (cueHandler)
+                cueHandler.RemoveFXs(item.Key);
+        }
+        sfxs.Clear();
+    }
+    public void StopUIFx(int id)
+    {
+        
     }
     public void PlayUIFx(int id)
     {

@@ -2,6 +2,7 @@
 using System.Collections;
 using BattleFramework.Data;
 using Mogo.Util;
+using System.Collections.Generic;
 
 public abstract class EntityParent {
 
@@ -26,6 +27,8 @@ public abstract class EntityParent {
     private Vocation m_vocation;
     public Animator weaponAnimator;
     public int currSpellID;////小于等于0为当前空闲
+    public float aiRate = 1;
+    public List<uint> hitTimer = new List<uint>(); //技能hit的timer id
 
     /// <summary>
     /// 职业
@@ -52,20 +55,20 @@ public abstract class EntityParent {
     }
     public void OnUpdate()
     {
-        fsm.FSMUpdate();
-    }
-    public void OnFixedUpdate()
-    {
         if (propertyManager.GetPropertyValue(PropertyType.HP) <= 0)
         {
             fsm.ChangeState(FSMStateType.Dead);
             return;
         }
-        fsm.FSMFixedUpdate();
+        fsm.FSMUpdate();
     }
     public void ChangeState(FSMStateType fSMStateType)
     {
         fsm.ChangeState(fSMStateType);
+    }
+    public bool HasState(FSMStateType fSMStateType)
+    {
+        return fsm.HasState(fSMStateType);
     }
     public void CreateModel()
     {
@@ -168,6 +171,14 @@ public abstract class EntityParent {
             return;
         }
         sfxManager.PlaySfx(id);
+    }
+    public void RemoveSfx(int nSpellID)
+    {
+        if (sfxManager == null)
+        {
+            return;
+        }
+        sfxManager.RemoveSfx(nSpellID);
     }
     internal bool IsDead()
     {

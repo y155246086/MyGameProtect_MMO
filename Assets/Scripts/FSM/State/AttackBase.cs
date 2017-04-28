@@ -22,42 +22,35 @@ public class AttackBase : FSMState
     }
     public override void OnUpdate(Transform target)
     {
-        
-    }
-    protected override bool OnUpdateState(Transform target)
-    {
         if (owner.skillManager!= null && owner.skillManager.IsSkillPlaying == true)
         {
-            return false;
+            return;
         }
         float dist = GetDistanceXZ(owner.transform.position, target.position);
 
         if (dist >= owner.propertyManager.GetPropertyValue(PropertyType.Attack_Dis) && dist < owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
             owner.ChangeState(FSMStateType.Chasing);
-            return true;
+            return;
         }
         else if (dist >= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
             owner.ChangeState(FSMStateType.Patroling);
-            return true;
+            return;
         }
         if (owner.skillManager != null)
         {
-            //owner.skillManager.Attack();
+            owner.skillManager.Attack();
         }
-        return false;
-    }
-    protected override void OnUpdateAction(Transform target)
-    {
         destPos = target.position;
 
         Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
         //确定我当前角色的方向
-        if(dir != Vector3.zero)
+        if (dir != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(dir);
             owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, targetRotation, Time.deltaTime + curRotSpeed);
         }
+        return;
     }
 }

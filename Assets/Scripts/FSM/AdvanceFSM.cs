@@ -101,10 +101,13 @@ public class AdvanceFSM : FSMBase {
         if (CurrentState != null)
             CurrentState.OnUpdate(GameWorld.player.transform);
     }
-    public override void FSMFixedUpdate()
+    /// <summary>
+    /// 状态组里是否有这个状态
+    /// </summary>
+    /// <param name="fSMStateType"></param>
+    /// <returns></returns>
+    public bool HasState(FSMStateType fSMStateType)
     {
-        base.FSMFixedUpdate();
-        if (CurrentState!=null)
-            CurrentState.OnFiexedUpdate(GameWorld.player.transform);
+        return map.ContainsKey(fSMStateType);
     }
 }
