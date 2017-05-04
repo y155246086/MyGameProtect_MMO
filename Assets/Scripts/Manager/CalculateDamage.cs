@@ -22,11 +22,11 @@ public class CalculateDamage
         EntityParent attacker = null;//攻击者
         EntityParent defender = null;//被攻击者
         double levelCorrect = 1.00f;
-        if (attackerID == GameWorld.player.ID && GameWorld.SpriteList.ContainsKey(victimID))
+        if (attackerID == GameWorld.thePlayer.ID && GameWorld.Entities.ContainsKey(victimID))
         {
             //玩家打dummy
-            attacker = GameWorld.player;
-            defender = GameWorld.SpriteList[victimID] as EntityMonster;
+            attacker = GameWorld.thePlayer;
+            defender = GameWorld.Entities[victimID] as EntityMonster;
             double levelGap = defender.level - attacker.level;
             if (levelGap >= 20)
             {
@@ -37,11 +37,11 @@ public class CalculateDamage
                 levelCorrect = 1 - levelGap * 0.05f;
             }
         }
-        else if (victimID == GameWorld.player.ID && GameWorld.SpriteList.ContainsKey(attackerID))
+        else if (victimID == GameWorld.thePlayer.ID && GameWorld.Entities.ContainsKey(attackerID))
         {
             //dummy打玩家
-            attacker = GameWorld.SpriteList[attackerID] as EntityMonster;
-            defender = GameWorld.player;
+            attacker = GameWorld.Entities[attackerID] as EntityMonster;
+            defender = GameWorld.thePlayer;
         }
         else
         {

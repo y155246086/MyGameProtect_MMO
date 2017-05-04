@@ -54,7 +54,9 @@ public class BattleManager{
             cfgShow)
         {//如果没填就不做受击表现
             //TODO切换被击状态
-            //theOwner.ChangeMotionState(MotionState.HIT, _actionID, _attackerID);
+            theOwner.SetAction(_act);
+            theOwner.Actor.AddCallbackInFrames<int>(theOwner.SetAction, 0);
+            theOwner.ChangeState(FSMStateType.Hit, _actionID, _attackerID);
         }
         if (GameWorld.showHitEM && !(theOwner is EntityMonster) && action.hitExtraSpeed != 0)
         {

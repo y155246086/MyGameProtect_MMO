@@ -496,7 +496,7 @@ public class GameCommonUtils
             y2 = s;
         }
         //x1,y1为左上角,x2,y2为右下角
-        foreach (var item in GameWorld.SpriteList)
+        foreach (var item in GameWorld.Entities)
         {
             if (item.Value.transform == null)
             {
@@ -549,7 +549,7 @@ public class GameCommonUtils
         List<uint> list = new List<uint>();
 
         //遍历entities
-        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.Entities)
         {
             EntityParent entity = pair.Value;
             if (!entity.transform)
@@ -588,7 +588,7 @@ public class GameCommonUtils
         List<uint> list = new List<uint>();
 
 
-        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.Entities)
         {
             if (pair.Value.transform == null)
             {
@@ -682,7 +682,7 @@ public class GameCommonUtils
         m = m * m1;
         Vector3 posi = new Vector3(m.m03, m.m13, m.m23);
         //遍历entities
-        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.Entities)
         {
             EntityParent entity = pair.Value;
             if (!entity.transform)
@@ -723,7 +723,7 @@ public class GameCommonUtils
         m = m * m1;
         Vector3 posi = new Vector3(m.m03, m.m13, m.m23);
         //遍历entities
-        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
+        foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.Entities)
         {
             EntityParent entity = pair.Value;
 
@@ -1106,8 +1106,8 @@ public class GameCommonUtils
     {
         gos.Sort(delegate(uint a, uint b)
         {
-            Vector3 aPos = GameWorld.SpriteList[a].transform.position;
-            Vector3 bPos = GameWorld.SpriteList[b].transform.position;
+            Vector3 aPos = GameWorld.Entities[a].transform.position;
+            Vector3 bPos = GameWorld.Entities[b].transform.position;
             if (Vector3.Distance(t.position, aPos) >= Vector3.Distance(t.position, bPos)) return 1;
             else return -1;
         });

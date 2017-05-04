@@ -120,9 +120,9 @@ public class MogoMainCamera : MonoBehaviour
     }
     Transform GetTarget()
     {
-        if (target == null && GameWorld.player != null)
+        if (target == null && GameWorld.thePlayer != null)
         {
-            target = GameWorld.player.transform;
+            target = GameWorld.thePlayer.transform;
         }
         return target;
     }

@@ -27,14 +27,113 @@ public abstract class EntityParent {
     /// </summary>
     private Vocation m_vocation;
     public Animator weaponAnimator;
-    public int currSpellID;////小于等于0为当前空闲
+    public int currSpellID =  -1;////小于等于0为当前空闲
+    public int currHitAction = -1; //当前hitAction ID
+    public string skillActName = ""; //当前技能动作名
     public float aiRate = 1;
     public List<uint> hitTimer = new List<uint>(); //技能hit的timer id
     public bool immuneShift = false;//是否免疫受击位移等不受控制状态(眩晕，定身，魅惑)
     public int ShowHitAct;
     public int level;
     public ulong stateFlag;
+    public bool stiff = false;
+    public bool knockDown = false;
+    public bool hitAir = false;
+    public bool hitGround = false;
+    public Quaternion preQuaternion;
+    public bool charging = false;
+    private Dictionary<string, object> objectAttrs = new Dictionary<string, object>();
+    private Dictionary<string, int> intAttrs = new Dictionary<string, int>();
+    private Dictionary<string, double> doubleAttrs = new Dictionary<string, double>();
+    private Dictionary<string, string> stringAttrs = new Dictionary<string, string>();
 
+    public Dictionary<string, object> ObjectAttrs
+    {
+        get { return objectAttrs; }
+        set { objectAttrs = value; }
+    }
+
+    public Dictionary<string, int> IntAttrs
+    {
+        get { return intAttrs; }
+        set { intAttrs = value; }
+    }
+
+    public Dictionary<string, double> DoubleAttrs
+    {
+        get { return doubleAttrs; }
+        set { doubleAttrs = value; }
+    }
+
+    public Dictionary<string, string> StringAttrs
+    {
+        get { return stringAttrs; }
+        set { stringAttrs = value; }
+    }
+    public int GetIntAttr(string attrName)
+    {
+        int value;
+        intAttrs.TryGetValue(attrName, out value);
+        return value;
+    }
+
+    public void SetIntAttr(string attrName, int value)
+    {
+        if (intAttrs.ContainsKey(attrName))
+        {
+            intAttrs[attrName] = value;
+        }
+        else
+        {
+            intAttrs.Add(attrName, value);
+        }
+        
+    }
+
+    public void SetDoubleAttr(string attrName, double value)
+    {
+        if (doubleAttrs.ContainsKey(attrName))
+        {
+            doubleAttrs[attrName] = value;
+        }
+        else
+        {
+            doubleAttrs.Add(attrName, value);
+        }
+    }
+
+    public double GetDoubleAttr(string attrName)
+    {
+        double value;
+        doubleAttrs.TryGetValue(attrName, out value);
+        return value;
+    }
+
+    public string GetStringAttr(string attrName)
+    {
+        string value;
+        stringAttrs.TryGetValue(attrName, out value);
+        return value;
+    }
+
+    public object GetObjectAttr(string attrName)
+    {
+        object value;
+        objectAttrs.TryGetValue(attrName, out value);
+        return value;
+    }
+
+    public void SetObjectAttr(string attrName, object value)
+    {
+        if (objectAttrs.ContainsKey(attrName))
+        {
+            objectAttrs[attrName] = value;
+        }
+        else
+        {
+            objectAttrs.Add(attrName, value);
+        }
+    }
     /// <summary>
     /// 职业
     /// </summary>
@@ -53,10 +152,21 @@ public abstract class EntityParent {
     /// </summary>
     private void ConstructFSM()
     {
-        fsm.AddFSMState(FSMStateType.Patroling, new PatrolBase(this));
-        fsm.AddFSMState(FSMStateType.Chasing, new ChaseBase(this));
-        fsm.AddFSMState(FSMStateType.Attacking, new AttackBase(this));
-        fsm.AddFSMState(FSMStateType.Dead, new DeadBase(this));
+        if(this is EntityMonster)
+        {
+            fsm.AddFSMState(FSMStateType.Patroling, new PatrolBase(this));
+            fsm.AddFSMState(FSMStateType.Chasing, new ChaseBase(this));
+            fsm.AddFSMState(FSMStateType.Attacking, new AttackBase(this));
+            fsm.AddFSMState(FSMStateType.Dead, new DeadBase(this));
+            fsm.AddFSMState(FSMStateType.Hit, new StateHit(this));
+        }
+        else if(this is EntityMyself)
+        {
+            fsm.AddFSMState(FSMStateType.Idle, new StateIdle(this));
+            fsm.AddFSMState(FSMStateType.Hit, new StateHit(this));
+            fsm.AddFSMState(FSMStateType.Dead, new DeadBase(this));
+        }
+       
     }
     public void OnUpdate()
     {
@@ -67,9 +177,9 @@ public abstract class EntityParent {
         }
         fsm.FSMUpdate();
     }
-    public void ChangeState(FSMStateType fSMStateType)
+    public void ChangeState(FSMStateType fSMStateType, params System.Object[] args)
     {
-        fsm.ChangeState(fSMStateType);
+        fsm.ChangeState(fSMStateType, args);
     }
     public bool HasState(FSMStateType fSMStateType)
     {
@@ -94,8 +204,7 @@ public abstract class EntityParent {
         }
         
         fsm = new AdvanceFSM(this);
-        if (this is EntityMonster)
-            ConstructFSM();
+        ConstructFSM();
         OnEnterWorld();
     }
     public void LeaveWorld()
@@ -216,23 +325,26 @@ public abstract class EntityParent {
         }
         if (act == ActionConstants.HIT_AIR)
         {
-
+            stiff = true;
+            hitAir = true;
         }
         else if (act == ActionConstants.KNOCK_DOWN)
         {
-
+            stiff = true;
+            knockDown = true;
         }
         else if (act == ActionConstants.HIT)
         {
-
+            stiff = true;
         }
         else if (act == ActionConstants.PUSH)
         {
-
+            stiff = true;
         }
         else if (act == ActionConstants.HIT_GROUND)
         {
-
+            stiff = true;
+            hitGround = true;
         }
     }
     /// <summary>
@@ -279,7 +391,7 @@ public abstract class EntityParent {
             return;
         }
 
-        if (ID == GameWorld.player.ID)
+        if (ID == GameWorld.thePlayer.ID)
         {
             //TODO 给服务器发送消息
         }
@@ -303,7 +415,14 @@ public abstract class EntityParent {
         }
         return st[0].clip.name;
     }
-
+    virtual public void SetSpeed(float speed)
+    {
+        if (animator == null)
+        {
+            return;
+        }
+        animator.SetFloat("Speed", speed);
+    }
     public int curHp
     {
         get
@@ -318,5 +437,19 @@ public abstract class EntityParent {
 
     public void OnDeath(int hitActionID)
     {
+    }
+    public void ClearHitAct()
+    {
+        if (this is EntityMyself)
+        {
+            //Transform.localRotation = preQuaternion;
+            currSpellID = -1; //���ڹ������ܻ���Ϻ���ٴ��ݴ�
+        }
+        ChangeState(FSMStateType.Idle);
+        hitAir = false;
+        knockDown = false;
+        hitGround = false;
+        stiff = false;
+        //TimerHeap.AddTimer(500, 0, DelayCheck);//��ʱ�ٴ��ݴ��ж�
     }
 }

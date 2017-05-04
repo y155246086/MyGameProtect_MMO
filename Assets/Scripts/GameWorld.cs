@@ -9,14 +9,14 @@ public class GameWorld {
     /// 根据entity id索引的实体
     /// </summary>
     static private Dictionary<uint, EntityParent> spriteList = new Dictionary<uint, EntityParent>();
-    public static EntityMyself player;
+    public static EntityMyself thePlayer;
     public static GameSceneData sceneData;
     public static bool inCity = false;
     public static bool showHitShader = true;
     public static bool showFloatBlood = true;
     public static bool showHitAction = true;
     public static bool showHitEM = true;
-    static public Dictionary<uint, EntityParent> SpriteList
+    static public Dictionary<uint, EntityParent> Entities
     {
         get { return spriteList; }
     }
@@ -82,7 +82,7 @@ public class GameWorld {
 
                 break;
             case SpriteType.Myself:
-                if(player == null)
+                if(thePlayer == null)
                 {
                     entity = new EntityMyself();
                     info.id = 1000;
@@ -96,8 +96,8 @@ public class GameWorld {
                     info.position = Vector3.zero;
                     info.x = 100;
                     info.y = 100;
-                    player.SetEntityServerInfo(info);
-                    player.UpdatePosition();
+                    thePlayer.SetEntityServerInfo(info);
+                    thePlayer.UpdatePosition();
                     return;
                 }
                 

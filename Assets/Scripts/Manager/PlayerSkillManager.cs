@@ -106,7 +106,7 @@ public class PlayerSkillManager : SkillManager {
 
         if (attackInterval < CommonCD)
         {
-            Debuger.Log("common cool down time");
+            //Debuger.Log("common cool down time");
             return true;
         }
         return false;
@@ -128,7 +128,7 @@ public class PlayerSkillManager : SkillManager {
         }
         if (skillInterval < this.skillCoolTime[skillID])
         {
-            Debuger.Log("skill cool down time");
+            //Debuger.Log("skill cool down time");
             return true;
         }
         return false;

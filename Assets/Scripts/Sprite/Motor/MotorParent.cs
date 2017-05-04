@@ -8,11 +8,15 @@ public class MotorParent : MonoBehaviour {
     public float extraSpeed = 0;//附加速度
     public float verticalSpeed = 0.0f;
     protected CollisionFlags collisionFlags;
+    public float speed = 0.0f;
 	// Use this for initialization
 	void Start () {
         charcater = this.GetComponent<CharacterController>();
 	}
-	
+    public virtual void SetSpeed(float _speed)
+    {
+        this.speed = _speed;
+    }
     public void SetExrtaSpeed(float _extraSpeed)
     {
         extraSpeed = _extraSpeed;
@@ -43,5 +47,29 @@ public class MotorParent : MonoBehaviour {
     virtual public void TeleportTo(Vector3 destination)
     {
         transform.position = destination;
+    }
+    public bool isNeedRotation = true;
+    protected Transform targetToLookAtTransform;
+    protected bool isLookingAtTarget = false;
+    protected Vector3 targetToLookAt;
+    public bool enableStick = false;
+    public void SetTargetToLookAt(Transform t)
+    {
+        isNeedRotation = true;
+        targetToLookAtTransform = t;
+        isLookingAtTarget = true;
+    }
+    
+    public void SetTargetToLookAt(Vector3 _targetToLookAt)
+    {
+        targetToLookAt = _targetToLookAt;
+        targetToLookAtTransform = null;
+        isLookingAtTarget = true;
+        
+    }
+
+    public void CancleLookAtTarget()
+    {
+        isLookingAtTarget = false;
     }
 }

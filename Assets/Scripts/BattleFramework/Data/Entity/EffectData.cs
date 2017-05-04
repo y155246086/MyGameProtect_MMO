@@ -86,5 +86,6 @@ namespace BattleFramework.Data{
         public int effectType;//特效类型
         public string anim;//动画名称
         public float soundDelay;//声音延迟
+        public int group;
     }
 }

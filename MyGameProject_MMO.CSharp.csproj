@@ -504,6 +504,8 @@
     <Compile Include="Assets\Scripts\FSM\State\DeadBase.cs" />
     <Compile Include="Assets\Scripts\FSM\State\FSMState.cs" />
     <Compile Include="Assets\Scripts\FSM\State\PatrolBase.cs" />
+    <Compile Include="Assets\Scripts\FSM\State\StateHit.cs" />
+    <Compile Include="Assets\Scripts\FSM\State\StateIdle.cs" />
     <Compile Include="Assets\Scripts\Follow3DObject.cs" />
     <Compile Include="Assets\Scripts\GUI\Billboard\BillboardLogicManager.cs" />
     <Compile Include="Assets\Scripts\GUI\Billboard\SplitBattleBillboard.cs" />
@@ -515,6 +517,8 @@
     <Compile Include="Assets\Scripts\GUI\LoginPanel\LoginPanel.cs" />
     <Compile Include="Assets\Scripts\GUI\ResCheckPanel\ResCheckPanel.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\EffectType.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\SfxSystem\Interpolate.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\SfxSystem\MeleeWeaponTrail.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\MogoCameraLighting.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\SfxHandler.cs" />
     <Compile Include="Assets\Scripts\GameLogic\SfxSystem\SfxManager.cs" />

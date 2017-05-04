@@ -8,7 +8,7 @@ public abstract class FSMState {
     protected float curSpeed;//移动速度
 
 
-    protected EntityParent owner;
+    protected EntityParent theOwner;
     protected Animator animator;
     protected AIPath aiPath;
     private Transform pathTarget;
@@ -18,7 +18,7 @@ public abstract class FSMState {
         {
             if(pathTarget == null)
             {
-                GameObject o = new GameObject(owner + "_AIPathTarget");
+                GameObject o = new GameObject(theOwner + "_AIPathTarget");
                 pathTarget = o.transform;
             }
             return pathTarget;
@@ -27,7 +27,7 @@ public abstract class FSMState {
     /// <summary>
     /// 进入状态
     /// </summary>
-    public abstract void Enter(params Object[] args);
+    public abstract void Enter(params System.Object[] args);
     /// <summary>
     /// 离开状态
     /// </summary>
@@ -35,7 +35,7 @@ public abstract class FSMState {
     /// <summary>
     /// 更新状态
     /// </summary>
-    public abstract void OnUpdate(Transform target);
+    public abstract void OnUpdate();
     public float GetDistanceXZ(Vector3 source, Vector3 target)
     {
         return Vector2.Distance(new Vector2(source.x, source.z), new Vector2(target.x, target.z));

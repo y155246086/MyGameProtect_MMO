@@ -7,24 +7,78 @@ using Mogo.Util;
 
 public class SfxHandler : MonoBehaviour {
 
+    //private static Dictionary<int, GameObject> m_resourceDic = new Dictionary<int, GameObject>();
     private Dictionary<string, Transform> m_locationDic = new Dictionary<string, Transform>();
     private Dictionary<int, Dictionary<string, GameObject>> m_fxDic = new Dictionary<int, Dictionary<string, GameObject>>();
     private Dictionary<int, List<int>> m_groupFXList = new Dictionary<int, List<int>>();
-
+    //private MeleeWeaponTrail[] m_weaponTrails;
+    private Dictionary<string, MeleeWeaponTrail> m_weaponTrailsDic = new Dictionary<string, MeleeWeaponTrail>();
+    private static Dictionary<string, Material> m_weaponTrailMaterial = new Dictionary<string, Material>();
     private static Dictionary<string, AnimationClip> m_animationClip = new Dictionary<string, AnimationClip>();
     private Renderer[] m_randerer;
     private Material[] m_mat;
 
     private static HashSet<string> m_loadedFX = new HashSet<string>();
+
+    // 记录SlotCueHandler
     SlotCueHandler slotCueHandler;
     void Awake()
     {
         slotCueHandler = gameObject.GetComponent<SlotCueHandler>();
+        GetMaterials();
+        EventDispatcher.AddEventListener<GameObject>(Events.OtherEvent.OnChangeWeapon, OnChangeWeapon);
+        EventDispatcher.AddEventListener(ActorParent.ON_EQUIP_DONE, OnEquitDone);
     }
 
     void OnDestroy()
     {
+        EventDispatcher.RemoveEventListener<GameObject>(Events.OtherEvent.OnChangeWeapon, OnChangeWeapon);
+        EventDispatcher.RemoveEventListener(ActorParent.ON_EQUIP_DONE, OnEquitDone);
         Clear();
+    }
+    private void OnChangeWeapon(GameObject go)
+    {
+        if (this && go)
+        {
+            var wt = go.GetComponent<MeleeWeaponTrail>();
+            if (wt)
+            {
+                m_weaponTrailsDic[wt.transform.parent.name] = wt;
+            }
+            else
+            {
+                
+            }
+        }
+    }
+
+    private void OnEquitDone()
+    {
+        if (this)
+            GetMaterials();
+    }
+
+    private void GetMaterials()
+    {
+        var randers = new List<Renderer>();
+        var smr = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        var mr = GetComponentsInChildren<MeshRenderer>(true);
+        randers.AddRange(smr);
+        randers.AddRange(mr);
+        if (randers.Count != 0)
+        {
+            m_randerer = randers.ToArray();
+            m_mat = new Material[m_randerer.Length];
+            for (int i = 0; i < m_randerer.Length; i++)
+            {
+                m_mat[i] = m_randerer[i].material;
+            }
+        }
+        else
+        {
+            m_randerer = null;
+            m_mat = null;
+        }
     }
     public static void AddloadedFX(String fxResourceName)
     {
@@ -33,13 +87,14 @@ public class SfxHandler : MonoBehaviour {
 
     public static void UnloadAllFXs()
     {
-       
+        m_loadedFX.Clear();
     }
     public void Clear()
     {
         RemoveAllFX();
         m_mat = null;
         m_randerer = null;
+        m_weaponTrailsDic.Clear();
         m_locationDic.Clear();
     }
     public void RemoveAllFX()
@@ -59,7 +114,30 @@ public class SfxHandler : MonoBehaviour {
     {
         if (id == 0)
             return;
-        Debuger.LogError("RemoveFxs");
+        var fx = EffectData.GetByID(id);
+        RemoveFXs(id, fx.group);
+    }
+    public void RemoveFXs(int id, int group)
+    {
+        if (m_fxDic.ContainsKey(id))
+        {
+            List<KeyValuePair<int, string>> list = new List<KeyValuePair<int, string>>();
+            foreach (var item in m_fxDic[id])
+            {
+                list.Add(new KeyValuePair<int, string>(id, item.Key));
+            }
+            foreach (var item in list)
+            {
+                RemoveFX(item.Key, item.Value, group);
+            }
+            m_fxDic.Remove(id);
+        }
+    }
+    private void RemoveFX(int id, string guid, int group)
+    {
+        RemoveFX(id, guid);
+        if (m_groupFXList.ContainsKey(group))
+            m_groupFXList[group].Remove(id);
     }
     /// <summary>
     /// 发射弓箭或火球等
@@ -115,16 +193,12 @@ public class SfxHandler : MonoBehaviour {
         HandleFade(fx);
 
 
-        //AssetCacheMgr.GetResourceAutoRelease(fx.resourcePath, (obj) =>
-        //AssetCacheMgr.GetNoCacheInstance(fx.resourcePath, (prefab, guid, obj) =>
+        
         string path = GameCommonUtils.GetResourceData(fx.resourceName).resourcePath;
-        Debuger.Log(path);
         GameObject obj = Res.ResourceManager.Instance.Instantiate<GameObject>(path);
         string guid = path;
         m_loadedFX.Add(path);
-        //Debug.LogError("m_loadedFX.Add: " + fx.resourcePath + " " + m_loadedFX.Count);
-        //var go = GameObject.Instantiate(obj) as GameObject;
-        //var guid = go.GetInstanceID();
+
         var go = obj as GameObject;
 
         if (!m_fxDic.ContainsKey(id))
@@ -295,5 +369,55 @@ public class SfxHandler : MonoBehaviour {
     public void RemoveSlotCue(int id, string index)
     {
         RemoveFX(id, index);
+    }
+    private int currentShaderIndex = 0;
+    private int nextShaderIndex = 1;
+    private int curFrame = 0;
+    private bool updatingShader = false;
+    private int currentShaderFx = 0;
+    private Shader orgShader;
+    
+    private void SetMatShader(Shader shader)
+    {
+        if (m_mat != null && shader)
+            foreach (var item in m_mat)
+            {
+                //LoggerHelper.Error("SetMatShader item: " + item.name);
+                item.shader = shader;
+            }
+    }
+
+    private Color GetMatColor(string prop)
+    {
+        if (m_mat != null && m_mat.Length != 0)
+            return m_mat[0].GetColor(prop);
+        else
+            return Color.clear;
+    }
+
+    private void SetMatColor(string prop, Color color)
+    {
+        if (m_mat != null)
+            foreach (var item in m_mat)
+            {
+                item.SetColor(prop, color);
+            }
+    }
+
+    private void SetMatFloat(string prop, float value)
+    {
+        if (m_mat != null)
+            foreach (var item in m_mat)
+            {
+                item.SetFloat(prop, value);
+            }
+    }
+
+    private void SetMatTexture(string prop, Texture texture)
+    {
+        foreach (var item in m_mat)
+        {
+            item.SetTexture(prop, texture);
+        }
     }
 }

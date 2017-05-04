@@ -58,7 +58,7 @@ public class EntityMyself : EntityPlayer
     }
     protected override void OnEnterWorld()
     {
-        GameWorld.player = this;
+        GameWorld.thePlayer = this;
         battleManager = new PlayerBattleManager(this,skillManager);
         skillManager.AddSkill(3);
         skillManager.AddSkill(4);

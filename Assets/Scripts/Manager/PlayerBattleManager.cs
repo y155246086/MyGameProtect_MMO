@@ -21,6 +21,11 @@ public class PlayerBattleManager : BattleManager {
     // 普攻，先进入Entity的GoingToCastSpell
     public void NormalAttack()
     {
+        if (CanUseSkill() == false)
+        {
+            return;
+        }
+        
 
         if ((skillManager as PlayerSkillManager).IsCommonCooldown())
         {
@@ -57,6 +62,10 @@ public class PlayerBattleManager : BattleManager {
     /// <returns></returns>
     private bool CanUseSkill()
     {
+        if (theOwner.stiff)
+        {
+            return false;
+        }
         return true;
     }
     public void SpellOneAttack()

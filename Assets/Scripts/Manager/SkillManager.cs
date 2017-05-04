@@ -253,16 +253,21 @@ public class SkillManager
         
         //播放动作
         SkillAction skillAction = data;
-        owner.SetAction(skillAction.action);
-        owner.Actor.AddCallbackInFrames<int>(owner.SetAction,0);
-        //面向敌人
-        Transform target = GetHitSprite(curSkillData.id);
-        if (target != null)
+        if (skillAction.action>0)
         {
-            owner.transform.LookAt(new Vector3(target.position.x, owner.transform.position.y, target.position.z));
+            owner.SetAction(skillAction.action);
+            owner.Actor.AddCallbackInFrames<int>(owner.SetAction, 0);
+            //面向敌人
+            Transform target = GetHitSprite(curSkillData.id);
+            if (target != null)
+            {
+                owner.transform.LookAt(new Vector3(target.position.x, owner.transform.position.y, target.position.z));
+            }
+            TimerHeap.DelTimer(EndAttackTimerID);
+            EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration), 0, EndAttackAction, skillAction);
+            isSkillPlaying = true;
+            isCanSkill = false;
         }
-        isCanSkill = false;
-        isSkillPlaying = true;
         AttackingFx(skillAction);
         AttackingMove(skillAction);
         List<object> args = new List<object>();
@@ -271,9 +276,6 @@ public class SkillManager
         args.Add(forward);
         args.Add(position);
         delayAttackTimerID = TimerHeap.AddTimer<int, List<object>>((uint)(skillAction.actionBeginDuration), 0, DelayAttack, skillAction.id, args);
-        TimerHeap.DelTimer(EndAttackTimerID);
-        EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration), 0, EndAttackAction, skillAction);
-        //GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
     }
     
     public void Clear()
@@ -319,11 +321,11 @@ public class SkillManager
         List<uint> playerList = new List<uint>();
         for (int i = 0; i < list.Count; i++)
         {
-            if(GameWorld.SpriteList[list[i]] is EntityMonster)
+            if(GameWorld.Entities[list[i]] is EntityMonster)
             {
                 monsterList.Add(list[i]);
             }
-            if (GameWorld.SpriteList[list[i]] is EntityMyself)
+            if (GameWorld.Entities[list[i]] is EntityMyself)
             {
                 playerList.Add(list[i]);
             }
@@ -344,11 +346,11 @@ public class SkillManager
         for (int i = 0; i < dummys.Count; i++)
         {
             List<int> harm = new List<int>();
-            if (!GameWorld.SpriteList.ContainsKey(dummys[i]))
+            if (!GameWorld.Entities.ContainsKey(dummys[i]))
             {
                 continue;
             }
-            EntityParent e = GameWorld.SpriteList[dummys[i]];
+            EntityParent e = GameWorld.Entities[dummys[i]];
             //if (Utils.BitTest(e.stateFlag, StateCfg.NO_HIT_STATE) == 1 || Utils.BitTest(e.stateFlag, StateCfg.DEATH_STATE) == 1)
             //{//不可击中状态
             //    continue;
@@ -363,11 +365,11 @@ public class SkillManager
         TriggerDamage(hitActionID, wounded);
         for (int i = 0; i < dummys.Count; i++)
         {
-            if (!GameWorld.SpriteList.ContainsKey(dummys[i]))
+            if (!GameWorld.Entities.ContainsKey(dummys[i]))
             {
                 continue;
             }
-            EntityParent e = GameWorld.SpriteList[dummys[i]];
+            EntityParent e = GameWorld.Entities[dummys[i]];
             //AttackEnemyGenAnger(e);//计算怒气
             if (e.curHp <= 0)
             {//前端怪死亡
@@ -509,7 +511,7 @@ public class SkillManager
         }
         else
         {
-            return GameWorld.player.transform;
+            return GameWorld.thePlayer.transform;
         }
         switch ((TargetRangeType)skill.targetRangeType)
         {
@@ -520,7 +522,7 @@ public class SkillManager
                 }
                 else
                 {
-                    return GameWorld.player.transform;
+                    return GameWorld.thePlayer.transform;
                 }
                 
                 break;

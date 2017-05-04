@@ -5,6 +5,11 @@ public class ActorMyself : ActorPlayer<EntityMyself>
 {
     [System.NonSerialized]
     public bool enableStick = true;
+    protected override void OnUpdate()
+    {
+        base.OnUpdate();
+        ActChange();
+    }
     void LateUpdate()
     {
         float speed = 0;

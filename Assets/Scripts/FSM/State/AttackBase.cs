@@ -9,10 +9,10 @@ public class AttackBase : FSMState
     {
         curRotSpeed = 6;
         curSpeed = 80;
-        this.owner = owner;
+        this.theOwner = owner;
         animator = owner.animator;
     }
-    public override void Enter(params Object[] args)
+    public override void Enter(params System.Object[] args)
     {
         Debuger.Log("进入攻击状态");
     }
@@ -20,36 +20,36 @@ public class AttackBase : FSMState
     {
         Debuger.Log("退出攻击状态");
     }
-    public override void OnUpdate(Transform target)
+    public override void OnUpdate()
     {
-        if (owner.skillManager!= null && owner.skillManager.IsSkillPlaying == true)
+        if (theOwner.skillManager!= null && theOwner.skillManager.IsSkillPlaying == true)
         {
             return;
         }
-        float dist = GetDistanceXZ(owner.transform.position, target.position);
+        float dist = GetDistanceXZ(theOwner.transform.position, GameWorld.thePlayer.transform.position);
 
-        if (dist >= owner.propertyManager.GetPropertyValue(PropertyType.Attack_Dis) && dist < owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
+        if (dist >= theOwner.propertyManager.GetPropertyValue(PropertyType.Attack_Dis) && dist < theOwner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
-            owner.ChangeState(FSMStateType.Chasing);
+            theOwner.ChangeState(FSMStateType.Chasing);
             return;
         }
-        else if (dist >= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
+        else if (dist >= theOwner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
-            owner.ChangeState(FSMStateType.Patroling);
+            theOwner.ChangeState(FSMStateType.Patroling);
             return;
         }
-        if (owner.skillManager != null)
+        if (theOwner.skillManager != null && theOwner.stiff == false)
         {
-            owner.skillManager.Attack();
+            theOwner.skillManager.Attack();
         }
-        destPos = target.position;
+        destPos = GameWorld.thePlayer.transform.position;
 
-        Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(owner.transform.position.x, 0, owner.transform.position.z);
+        Vector3 dir = new Vector3(destPos.x, 0, destPos.z) - new Vector3(theOwner.transform.position.x, 0, theOwner.transform.position.z);
         //确定我当前角色的方向
         if (dir != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(dir);
-            owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, targetRotation, Time.deltaTime + curRotSpeed);
+            theOwner.transform.rotation = Quaternion.Slerp(theOwner.transform.rotation, targetRotation, Time.deltaTime + curRotSpeed);
         }
         return;
     }

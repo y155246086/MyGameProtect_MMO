@@ -9,7 +9,9 @@ public enum FSMStateType
     Patroling,//巡逻
     Chasing,//追逐
     Attacking,//攻击
-    Dead//死亡
+    Dead,//死亡
+    Hit,//受击
+    Idle,//休闲
 }
 public class AdvanceFSM : FSMBase {
     private Dictionary<FSMStateType, FSMState> map;
@@ -68,7 +70,7 @@ public class AdvanceFSM : FSMBase {
     /// 改变状态
     /// </summary>
     /// <param name="type"></param>
-    public void ChangeState(FSMStateType type)
+    public void ChangeState(FSMStateType type, params System.Object[] args)
     {
         if(!map.ContainsKey(type))
         {
@@ -93,13 +95,13 @@ public class AdvanceFSM : FSMBase {
         }
         currentState = state;
         currentType = type;
-        currentState.Enter();
+        currentState.Enter(args);
     }
     public override void FSMUpdate()
     {
         base.FSMUpdate();
         if (CurrentState != null)
-            CurrentState.OnUpdate(GameWorld.player.transform);
+            CurrentState.OnUpdate();
     }
     /// <summary>
     /// 状态组里是否有这个状态

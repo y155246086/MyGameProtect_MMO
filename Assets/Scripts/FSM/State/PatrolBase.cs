@@ -12,12 +12,12 @@ public class PatrolBase : FSMState {
     {
         curRotSpeed = 6;
         curSpeed = 1;
-        this.owner = owner;
+        this.theOwner = owner;
         destPos = owner.transform.position;
         animator = owner.animator;
         aiPath = owner.gameObject.GetComponent<AIPath>();
     }
-    public override void Enter(params Object[] args)
+    public override void Enter(params System.Object[] args)
     {
         Debuger.Log("进入巡逻状态");
         animator.applyRootMotion = false;
@@ -28,12 +28,12 @@ public class PatrolBase : FSMState {
         Debuger.Log("退出巡逻状态");
         StopMove();
     }
-    public override void OnUpdate(Transform target)
+    public override void OnUpdate()
     {
-        if (target != null && Vector3.Distance(owner.transform.position, target.position) <= owner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
+        if (GameWorld.thePlayer.transform != null && Vector3.Distance(theOwner.transform.position, GameWorld.thePlayer.transform.position) <= theOwner.propertyManager.GetPropertyValue(PropertyType.Chase_Dis))
         {
             Debuger.Log("转换为追逐状态");
-            owner.ChangeState(FSMStateType.Chasing);
+            theOwner.ChangeState(FSMStateType.Chasing);
             return;
         }
         if (isPatroling == false && Time.time - lastPatrolTime > patrolCD)
@@ -41,7 +41,7 @@ public class PatrolBase : FSMState {
             StartPatrol();
         }
         //到达目标点就停止移动
-        if (isPatroling == true && GetDistanceXZ(owner.transform.position, destPos) <= owner.propertyManager.GetPropertyValue(PropertyType.Arrive_Dis))
+        if (isPatroling == true && GetDistanceXZ(theOwner.transform.position, destPos) <= theOwner.propertyManager.GetPropertyValue(PropertyType.Arrive_Dis))
         {
             StopMove();
             lastPatrolTime = Time.time;
@@ -51,8 +51,8 @@ public class PatrolBase : FSMState {
     }
     private Vector3 GetNextPatrolPoint()
     {
-        float patrolRadius = owner.propertyManager.GetPropertyValue(PropertyType.Patrol_Radius);
-        return new Vector3(owner.bornPosition.x + UnityEngine.Random.RandomRange(-patrolRadius, patrolRadius), owner.bornPosition.y, owner.bornPosition.z + UnityEngine.Random.RandomRange(-patrolRadius, patrolRadius));
+        float patrolRadius = theOwner.propertyManager.GetPropertyValue(PropertyType.Patrol_Radius);
+        return new Vector3(theOwner.bornPosition.x + UnityEngine.Random.RandomRange(-patrolRadius, patrolRadius), theOwner.bornPosition.y, theOwner.bornPosition.z + UnityEngine.Random.RandomRange(-patrolRadius, patrolRadius));
     }
     private void StartPatrol()
     {

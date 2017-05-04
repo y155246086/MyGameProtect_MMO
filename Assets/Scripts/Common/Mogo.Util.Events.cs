@@ -246,7 +246,7 @@ namespace Mogo.Util
 
         public static class LogicSoundEvent
         {
-            public static readonly string OnHitYelling;
+            public static readonly string OnHitYelling = "OnHitYelling";
         }
 
         public static class MFUIManagerEvent
@@ -346,7 +346,7 @@ namespace Mogo.Util
             public static readonly string DiamondMine;
             public static readonly string MainCameraComplete;
             public static readonly string MapIdChanged;
-            public static readonly string OnChangeWeapon;
+            public static readonly string OnChangeWeapon = "OnChangeWeapon";
             public static readonly string OnEvent1;
             public static readonly string OnEvent2;
             public static readonly string OnEvent3;

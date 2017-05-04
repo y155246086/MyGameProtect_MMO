@@ -30,8 +30,38 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
     {
         return null;
     }
+    protected Animator m_animator;
+    protected string preActName = "";
+    public Action<string, string> ActChangeHandle;
+
+    private Action<String, Boolean> m_animatorStateChanged;
+    public Action<String, Boolean> AnimatorStateChanged
+    {
+        get
+        {
+            return m_animatorStateChanged;
+        }
+        set
+        {
+            m_animatorStateChanged = value;
+        }
+    }
+
+    private Action<String, Boolean> m_hitStateChanged;
+    public Action<String, Boolean> HitStateChanged
+    {
+        get
+        {
+            return m_hitStateChanged;
+        }
+        set
+        {
+            m_hitStateChanged = value;
+        }
+    }
     void Awake()
     {
+        m_animator = GetComponent<Animator>();
         OnAwake();
     }
     void Start()
@@ -192,7 +222,86 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
         if (GameCommonUtils.GetChild(transform, "slot_billboard"))
             BillboardLogicManager.Instance.AddSplitBattleBillboard(GameCommonUtils.GetChild(transform, "slot_billboard").position, hp, type);
     }
-    
+    private int idleCnt = 0;
+    virtual public void ActChange()
+    {
+        if (m_animator == null)
+        {
+            return;
+        }
+        if (m_animator.IsInTransition(0))
+        {//融合期间
+            return;
+        }
+        AnimatorClipInfo[] state = m_animator.GetCurrentAnimatorClipInfo(0);
+        if (state.Length == 0)
+        {
+            return;
+        }
+        string currName = state[0].clip.name;
+        if (currName != preActName)
+        {//动作变换
+            if (ActChangeHandle != null)
+            {
+                ActChangeHandle(preActName, currName);
+            }
+            if (!currName.EndsWith("ready") && !currName.EndsWith("run") &&
+                !currName.EndsWith("idle") && !currName.EndsWith("powercharge") &&
+                !currName.EndsWith("powercharge_loop") && !currName.EndsWith("powercharge_left") &&
+                !currName.EndsWith("roll"))
+            {
+                SkillAction a = null;
+                if (GetEntity().currSpellID != -1 &&
+                    SkillAction.dataMap.TryGetValue(SkillData.dataMap[GetEntity().currSpellID].skillAction[0], out a))
+                {//只为当前版本所用，新版本中动作不一样了要去掉
+                    if (a.duration <= 0)
+                    {
+                        m_animator.SetInteger("Action", 0);
+                    }
+                    else
+                    {//旋风斩之类技能使用
+                        m_animator.SetInteger("Action", -3);
+                    }
+                }
+                else
+                {
+                    m_animator.SetInteger("Action", 0);
+                }
+            }
+            preActName = currName;
+        }
+        if ((currName.EndsWith("hit") && preActName.EndsWith("hit")) ||
+            (currName.EndsWith("push") && preActName.EndsWith("push")) ||
+            (currName.EndsWith("hitair") && preActName.EndsWith("hitair")) ||
+            (currName.EndsWith("knockdown") && preActName.EndsWith("knockdown")))
+        {
+            int act = m_animator.GetInteger("Action");
+            if (act != 0 && act != -1)
+            {
+                m_animator.SetInteger("Action", 0);
+            }
+        }
+        if (GetEntity() != null &&
+            currName != null &&
+            GetEntity().stiff &&
+            (currName.EndsWith("ready") ||
+            currName.EndsWith("run") ||
+            currName.EndsWith("run_left") ||
+            currName.EndsWith("run_right") ||
+            currName.EndsWith("run_back")))
+        {
+            idleCnt++;
+            if (idleCnt > 5)
+            {
+                GetEntity().ClearHitAct();
+                idleCnt = 0;
+            }
+        }
+        else
+        {
+            idleCnt = 0;
+        }
+    }
     #region 换装
     private static object m_equipWeaponLock = new object();
 
@@ -606,6 +715,7 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
 
     EquipData currentEquip;
     const string EQUIP_TAP = "equip";
+    public static string ON_EQUIP_DONE = "ON_EQUIP_DONE";
 
     /// <summary>
     /// 装备挂载在某个gameObject下
