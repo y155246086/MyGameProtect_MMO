@@ -41,6 +41,13 @@ public enum SpriteType
     Player = 3,//玩家
     Monster =  4,//怪
 }
+public enum TargetSelectType
+{
+    Enemy = 0,          // 敌人
+    Myself = 1,         // 自己
+    TeamMember = 2,     // 队友
+    Ally = 3            // 友方
+}
 /// <summary>
 /// 目标类型
 /// </summary>
@@ -188,5 +195,9 @@ public class StateCfg
     public readonly static int SLOW_DOWN_STATE = 12;            //无法被击中状态 
     public readonly static int BATI_STATE = 13;            //霸体状态 
 }
-
+public enum HitColorType
+{
+    HCT_WHITE,
+    HCT_RED
+}
 

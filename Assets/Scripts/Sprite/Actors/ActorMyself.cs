@@ -31,7 +31,7 @@ public class ActorMyself : ActorPlayer<EntityMyself>
         }
         if (ETCInput.GetButtonDown("ButtonAttack1"))
         {
-            NormalAttack(4);
+            (GetEntity().battleManager as PlayerBattleManager).SpellOneAttack();
         }
         if (ETCInput.GetButtonDown("ButtonAttack2"))
         {

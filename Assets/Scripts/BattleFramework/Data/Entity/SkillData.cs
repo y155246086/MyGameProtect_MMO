@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class SkillData {
         public static string csvFilePath = "Configs/SkillData";
-        public static string[] columnNameArray = new string[7];
+        public static string[] columnNameArray = new string[8];
         public static List<SkillData> dataList;
         public static Dictionary<int, SkillData> dataMap;
         public static List<SkillData> LoadDatas(){
@@ -17,7 +17,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[7];
+            columnNameArray = new string[8];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 SkillData data = new SkillData();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -42,6 +42,8 @@ namespace BattleFramework.Data{
                     data.skillAction.Add(int.Parse(strs[j]));
                 }
                 columnNameArray [6] = "skillAction";
+                int.TryParse(csvFile.mapData[i].data[7],out data.castRange);
+                columnNameArray [7] = "castRange";
                 dataList.Add(data);
                 if (!dataMap.ContainsKey(data.id))
                     dataMap.Add(data.id,data);
@@ -72,5 +74,6 @@ namespace BattleFramework.Data{
         public List<int> cd;//cd
         public int dependSkill;//关联skillDataID
         public List<int> skillAction;//skillActionIDList
+        public int castRange;//施法范围
     }
 }

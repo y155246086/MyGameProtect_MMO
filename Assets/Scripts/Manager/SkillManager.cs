@@ -3,6 +3,7 @@ using System.Collections;
 using BattleFramework.Data;
 using System.Collections.Generic;
 using Mogo.Util;
+using System;
 
 
 public class SkillManager
@@ -33,7 +34,7 @@ public class SkillManager
         if(data != null)
         {
             skillList.Add(data);
-            cdDict[data.id] = Time.time*1000 - data.cd[0];
+            cdDict[data.id] = 0;
         }
         skillList.Sort(SortList);
     }
@@ -80,6 +81,8 @@ public class SkillManager
             {
                 if (Time.time * 1000 - cdDict[data.id] >= data.cd[0] && isCanSkill == true)//cd时间到
                 {
+                    //设置cd
+                    cdDict[data.id] = Time.time * 1000;
                     UseSkill(data.id);
                     break;
                 }
@@ -225,26 +228,29 @@ public class SkillManager
                 actionID,
                 theOwner);
         }
-        UseSkill(SkillAction.GetByID(actionID));
+        OnAttacking(actionID, ltwm, rotation, forward, position);
     }
     public void UseSkill(int skillDataID)
     {
         Process(owner, skillDataID);
         //UseSkill(SkillData.GetByID(skillid));
     }
+    public void OnAttacking(int hitActionID, Matrix4x4 ltwm, Quaternion rotation, Vector3 forward, Vector3 position)
+    {
+        UseSkill(SkillAction.GetByID(hitActionID), ltwm, rotation, forward, position);
+    }
     /// <summary>
     /// 使用技能
     /// </summary>
     /// <param name="data"></param>
-    private void UseSkill(SkillAction data)
+    private void UseSkill(SkillAction data,Matrix4x4 ltwm, Quaternion rotation, Vector3 forward, Vector3 position)
     {
         if (owner is EntityMyself)
         {
             Mogo.Util.EventDispatcher.TriggerEvent(GUIEvent.STOP_JOYSTICK_TURN);
         }
         curSkillData = data;
-        //设置cd
-        cdDict[data.id] = Time.time * 1000;
+        
         //播放动作
         SkillAction skillAction = data;
         owner.SetAction(skillAction.action);
@@ -258,7 +264,13 @@ public class SkillManager
         isCanSkill = false;
         isSkillPlaying = true;
         AttackingFx(skillAction);
-        delayAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.triggerTime), 0, DelayAttack,skillAction);
+        AttackingMove(skillAction);
+        List<object> args = new List<object>();
+        args.Add(ltwm);
+        args.Add(rotation);
+        args.Add(forward);
+        args.Add(position);
+        delayAttackTimerID = TimerHeap.AddTimer<int, List<object>>((uint)(skillAction.actionBeginDuration), 0, DelayAttack, skillAction.id, args);
         TimerHeap.DelTimer(EndAttackTimerID);
         EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration), 0, EndAttackAction, skillAction);
         //GameObjectUtils.Instance.CheckAttaceTrigger("Base Layer." + data.stateName, data.triggerTime, owner.GetComponent<Animator>(), AttackTrigger, EndAttackAction);
@@ -280,34 +292,206 @@ public class SkillManager
             Mogo.Util.EventDispatcher.TriggerEvent(GUIEvent.START_JOYSTICK_TURN);
         }
     }
-    protected void DelayAttack(SkillAction skillAction)
+    protected void DelayAttack(int actionID, List<object> args)
     {
-        List<EntityParent> list = GetHitEntities(curSkillData.id);
+        Matrix4x4 ltwm = (Matrix4x4)args[0];
+        Quaternion rotation = (Quaternion)args[1];
+        Vector3 forward = (Vector3)args[2];
+        Vector3 position = (Vector3)args[3];
+        AttackEffect(actionID, ltwm, rotation, forward, position);
+        return;
+        //List<EntityParent> list = GetHitEntities(curSkillData.id);
+        //for (int i = 0; i < list.Count; i++)
+        //{
+        //    ICanAttacked att = list[i].Actor.GetComponent<ICanAttacked>();
+        //    if (att != null)
+        //    {
+        //        att.SetHurt(Random.Range(skillAction.minAttackValue, skillAction.maxAttackValue) * 100);
+        //    }
+        //}
+    }
+    public void AttackEffect(int hitActionID, Matrix4x4 ltwm, Quaternion rotation, Vector3 forward, Vector3 position)
+    {
+       SkillAction s = SkillAction.dataMap[hitActionID];
+
+        List<uint> list = GetHitEntities(hitActionID, ltwm, rotation, forward, position);
+        List<uint> monsterList = new List<uint>();
+        List<uint> playerList = new List<uint>();
         for (int i = 0; i < list.Count; i++)
         {
-            ICanAttacked att = list[i].Actor.GetComponent<ICanAttacked>();
-            if (att != null)
+            if(GameWorld.SpriteList[list[i]] is EntityMonster)
             {
-                att.SetHurt(Random.Range(skillAction.minAttackValue, skillAction.maxAttackValue) * 100);
+                monsterList.Add(list[i]);
+            }
+            if (GameWorld.SpriteList[list[i]] is EntityMyself)
+            {
+                playerList.Add(list[i]);
             }
         }
-    }
-    protected List<EntityParent> GetHitEntities(int skillid)
-    {
-        List<EntityParent> list = new List<EntityParent>();
-        if (owner is EntityMyself)
+        if (owner is EntityMyself && monsterList.Count > 0)
         {
-            foreach (var item in GameWorld.SpriteList)
-            {
-                if(item.Value != owner)
-                {
-                    list.Add(item.Value);
-                }
-            }
-
+            AttackMonster(hitActionID, monsterList);
         }
-        return list;
+        if (owner is EntityMonster && playerList.Count > 0)
+        {
+            //TODU怪攻击玩家
+            AttackMonster(hitActionID, playerList);
+        }
     }
+    private void AttackMonster(int hitActionID, List<uint> dummys)
+    {
+        Dictionary<uint, List<int>> wounded = new Dictionary<uint, List<int>>();
+        for (int i = 0; i < dummys.Count; i++)
+        {
+            List<int> harm = new List<int>();
+            if (!GameWorld.SpriteList.ContainsKey(dummys[i]))
+            {
+                continue;
+            }
+            EntityParent e = GameWorld.SpriteList[dummys[i]];
+            //if (Utils.BitTest(e.stateFlag, StateCfg.NO_HIT_STATE) == 1 || Utils.BitTest(e.stateFlag, StateCfg.DEATH_STATE) == 1)
+            //{//不可击中状态
+            //    continue;
+            //}
+            harm = CalculateDamage.CacuDamage(hitActionID, owner.ID, dummys[i]);
+           
+            wounded.Add(dummys[i], harm);
+            uint h = 0;
+            h = e.curHp < harm[1] ? (uint)e.curHp : (uint)harm[1];
+            e.curHp -= (int)h;
+        }
+        TriggerDamage(hitActionID, wounded);
+        for (int i = 0; i < dummys.Count; i++)
+        {
+            if (!GameWorld.SpriteList.ContainsKey(dummys[i]))
+            {
+                continue;
+            }
+            EntityParent e = GameWorld.SpriteList[dummys[i]];
+            //AttackEnemyGenAnger(e);//计算怒气
+            if (e.curHp <= 0)
+            {//前端怪死亡
+                //TODO发送消息
+                e.OnDeath(hitActionID);
+                (e as EntityParent).stateFlag = Mogo.Util.Utils.BitSet((e as EntityParent).stateFlag, StateCfg.DEATH_STATE);
+            }
+        }
+        //TriggerCombo(dummys.Count);a
+    }
+    protected void TriggerDamage(int hitActionID, Dictionary<uint, List<int>> wounded)
+    {
+        foreach (var i in wounded)
+        {
+            EventDispatcher.TriggerEvent<int, uint, uint, List<int>>(Events.FSMMotionEvent.OnHit, hitActionID, owner.ID, i.Key, i.Value);
+        }
+    }
+    private List<uint> GetHitEntities(int hitActionID, Matrix4x4 ltwm, Quaternion rotation, Vector3 forward, Vector3 position)
+    {
+        var spellData = SkillAction.dataMap[hitActionID];
+
+        // 目标类型 0 敌人， 1 自己  2 队友  3  友方
+        int targetType = spellData.targetType;
+        // 攻击范围类型。  0  扇形范围 1  圆形范围， 2， 单体。 3  直线范围 4 前方范围
+        int targetRangeType = spellData.targetRangeType;
+        // 攻击范围参数。 针对不同类型，有不同意义。 浮点数列表
+        List<float> targetRangeParam = spellData.targetRangeParam;
+        float offsetX = spellData.hitXoffset;
+        float offsetY = spellData.hitYoffset;
+        float angleOffset = 180;
+        // 最大攻击人数
+        //int maxTargetCount = spellData.maxTargetCount;
+        // 触发伤害特效帧数
+        //int damageTriggerFrame = spellData.damageTriggerFrame;
+        
+        List<uint> entities = new List<uint>();
+
+        if (targetType == (int)TargetSelectType.Myself)
+        {
+            entities.Add(owner.ID);
+            return entities;
+        }
+        if (owner.transform == null)
+        {
+            return entities;
+        }
+        Matrix4x4 entityltwm = owner.transform.localToWorldMatrix;
+        Quaternion entityrotation = owner.transform.rotation;
+        Vector3 entityforward = owner.transform.forward;
+        Vector3 entityposition = owner.transform.position;
+        if (spellData.castPosType == 0)
+        {
+            entityltwm = ltwm;
+            entityrotation = rotation;
+            entityforward = forward;
+            entityposition = position;
+        }
+        TargetRangeType rangeType = (TargetRangeType)targetRangeType;
+        switch (rangeType)
+        {
+            case TargetRangeType.CircleRange:
+                if (targetRangeParam.Count >= 1)
+                {
+                    float radius = targetRangeParam[0] * 0.01f;
+                    
+                    entities = GameCommonUtils.GetEntitiesInRange(entityltwm, entityrotation, entityforward, entityposition, radius, offsetX, offsetY, angleOffset);
+                }
+                break;
+            case TargetRangeType.SectorRange:
+                if (targetRangeParam.Count >= 2)
+                {
+                    float radius = targetRangeParam[0] * 0.01f;
+                    float angle = targetRangeParam[1];
+                    entities = GameCommonUtils.GetEntitiesInSector(entityltwm, entityrotation, entityforward, entityposition, radius, angle, offsetX, offsetY, angleOffset);
+                    //entities = Utils.GetEntities(theOwner.Transform, radius, angle);
+                }
+                break;
+            case TargetRangeType.SingeTarget:
+                if (targetRangeParam.Count >= 1)
+                {
+                    float radius = targetRangeParam[0] * 0.01f;
+                    float angle = 150;
+                    entities = GameCommonUtils.GetEntitiesInSector(entityltwm, entityrotation, entityforward, entityposition, radius, angle, offsetX, offsetY, angleOffset);
+                    GameCommonUtils.SortByDistance(owner.transform, entities);
+                    if (entities.Count > 1)
+                    {
+                        for (int i = 1; i < entities.Count; i++)
+                        {
+                            entities.RemoveAt(i);
+                        }
+                    }
+                }
+                break;
+            case TargetRangeType.WorldRange:
+                if (targetRangeParam.Count >= 4)
+                {
+                    float x1 = targetRangeParam[0] * 0.01f;
+                    float y1 = targetRangeParam[1] * 0.01f;
+                    float x2 = targetRangeParam[2] * 0.01f;
+                    float y2 = targetRangeParam[3] * 0.01f;
+                    float minX = Math.Min(x1, x2);
+                    float maxX = Math.Max(x1, x2);
+                    float minY = Math.Min(y1, y2);
+                    float maxY = Math.Max(y1, y2);
+                    float radiusX = minX + (maxX - minX) * 0.5f;
+                    float radiusY = minY + (maxY - minY) * 0.5f;
+                    float radius = Vector2.Distance(new Vector2(x1, y1), new Vector2(x2, y2)) * 0.5f;
+                    entities = GameCommonUtils.GetEntitiesInRange(new Vector3(radiusX, 0, radiusY), radius);
+                }
+                break;
+            case TargetRangeType.LineRange:
+            default:
+                if (targetRangeParam.Count >= 2)
+                {
+                    float length = targetRangeParam[0] * 0.01f;
+                    float width = targetRangeParam[1] * 0.01f;
+                    entities = GameCommonUtils.GetEntitiesFrontLineNew(entityltwm, entityrotation, entityforward, entityposition, length, entityforward, width, offsetX, offsetY, angleOffset);
+                }
+                break;
+        }
+        return entities;
+
+    }
+
     protected Transform GetHitSprite(int skillid)
     {
         SkillAction skill = SkillAction.GetByID(skillid);
@@ -355,5 +539,53 @@ public class SkillManager
             ////有震屏,调用震屏接口
             TimerHeap.AddTimer<int, float>((uint)(skillData.cameraTweenSL), 0, MogoMainCamera.Instance.Shake, skillData.cameraTweenId, (float)skillData.cameraTweenST/1000f);
         }
+    }
+    private void AttackingMove(SkillAction action)
+    {
+        MotorParent theMotor = owner.Motor;
+        if (theMotor == null)
+        {
+            return;
+        }
+        float extraSpeed = action.extraSpeed;
+        if (extraSpeed != 0)
+        {
+            if (action.extraSt <= 0)
+            {
+                theMotor.SetExrtaSpeed(extraSpeed);
+                theMotor.SetMoveDirection(owner.transform.forward);
+                TimerHeap.AddTimer<MotorParent>((uint)action.extraSl, 0, (m) => { m.SetExrtaSpeed(0); }, theMotor);
+            }
+            else
+            {
+                TimerHeap.AddTimer<int>((uint)action.extraSt, 0, DelayExtraMove, action.id);
+            }
+        }
+        else
+        {
+            theMotor.SetExrtaSpeed(0);
+        }
+
+        // 是否允许，在技能过程中使用 摇杆改变方向
+        //if (theOwner is EntityMyself)
+        //{
+        //    theMotor.enableStick = action.enableStick > 0;
+        //}
+
+        if (action.teleportDistance > 0 && extraSpeed <= 0)
+        {
+            Vector3 dst = Vector3.zero;
+            dst = owner.transform.position +owner.transform.forward * action.teleportDistance;
+            theMotor.TeleportTo(dst);
+        }
+    }
+    private void DelayExtraMove(int hitActionID)
+    {
+        SkillAction action = SkillAction.dataMap[hitActionID];
+        MotorParent theMotor = owner.Motor;
+        float extraSpeed = action.extraSpeed;
+        theMotor.SetExrtaSpeed(extraSpeed);
+        theMotor.SetMoveDirection(owner.transform.forward);
+        TimerHeap.AddTimer<MotorParent>((uint)action.extraSl, 0, (m) => { m.SetExrtaSpeed(0); }, theMotor);
     }
 }

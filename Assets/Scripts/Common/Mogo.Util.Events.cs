@@ -140,11 +140,11 @@ namespace Mogo.Util
 
         public static class FSMMotionEvent
         {
-            public static readonly string OnAttackingEnd;
-            public static readonly string OnHit;
-            public static readonly string OnHitAnimEnd;
-            public static readonly string OnPrepareEnd;
-            public static readonly string OnRollEnd;
+            public static readonly string OnAttackingEnd = "OnAttackingEnd";
+            public static readonly string OnHit = "OnHit";
+            public static readonly string OnHitAnimEnd = "OnHitAnimEnd";
+            public static readonly string OnPrepareEnd = "OnPrepareEnd";
+            public static readonly string OnRollEnd = "OnRollEnd";
         }
 
         public static class GearEvent

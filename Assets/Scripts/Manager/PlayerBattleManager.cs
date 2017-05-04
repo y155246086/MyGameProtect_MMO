@@ -2,6 +2,7 @@
 using System.Collections;
 using Mogo.Util;
 using System.Collections.Generic;
+using BattleFramework.Data;
 
 public class PlayerBattleManager : BattleManager {
 
@@ -50,6 +51,43 @@ public class PlayerBattleManager : BattleManager {
         theOwner.CastSkill(nextskill);
         TimerHeap.AddTimer((uint)((skillManager as PlayerSkillManager).GetCommonCD(nextskill)), 0, NextCmd);
     }
+    /// <summary>
+    /// 是否能使用技能，比如死亡等条件判断
+    /// </summary>
+    /// <returns></returns>
+    private bool CanUseSkill()
+    {
+        return true;
+    }
+    public void SpellOneAttack()
+    {
+        CleanPreSkill();
+  
+        if(CanUseSkill() == false)
+        {
+            return;
+        }
+
+        if ((skillManager as PlayerSkillManager).IsCommonCooldown())
+        {
+            return;
+        }
+        int skillid = (skillManager as PlayerSkillManager).GetSpellOneID();
+        if ((skillManager as PlayerSkillManager).IsSkillCooldown(skillid))
+        {
+            return;
+        }
+        
+        (theOwner as EntityMyself).ClearSkill();
+        (skillManager as PlayerSkillManager).ClearComboSkill();
+        (skillManager as PlayerSkillManager).ResetCoolTime(skillid);
+        theOwner.Motor.TurnToControlStickDir();
+        EntityMyself.preSkillTime = Time.realtimeSinceStartup;
+        theOwner.CastSkill(skillid);
+        SkillData s = SkillData.dataMap[skillid];
+        //设置UI CD
+    }
+
     public void NextCmd()
     {
         if (preCmds.Count == 0)
@@ -62,5 +100,25 @@ public class PlayerBattleManager : BattleManager {
     public void CleanPreSkill()
     {
         preCmds.Clear();
+    }
+    // 当受击时的出来
+    override public void OnHit(int _spellID, uint _attackerID, uint woundId, List<int> harm)
+    {
+        if (woundId != theOwner.ID)
+        {
+            return;
+        }
+
+        int hitType = harm[0];
+        int hitNum = harm[1];
+        if (GameWorld.showFloatBlood && SkillAction.dataMap[_spellID].damageFlag == 1)
+        {
+            FloatBlood(hitType, hitNum);
+        }
+        if (theOwner.curHp > 0)
+        {
+            base.OnHit(_spellID, _attackerID, woundId, harm);
+        }
+
     }
 }

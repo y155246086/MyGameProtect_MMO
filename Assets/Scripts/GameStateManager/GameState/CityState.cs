@@ -29,7 +29,7 @@ public class CityState : GameState
         {
             EntityServerInfo info = new EntityServerInfo();
             info.id = (uint)(i+1);
-            info.dataId = 1;
+            info.dataId = 2;
             info.position = arr[i].transform.position;
             info.x = (short)info.position.x;
             info.y = (short)info.position.z;

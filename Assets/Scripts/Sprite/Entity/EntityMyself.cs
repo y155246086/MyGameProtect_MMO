@@ -22,14 +22,14 @@ public class EntityMyself : EntityPlayer
             Debuger.LogError("数据Error null" + serverInfo.dataId);
             return;
         }
-        gameObject = Res.ResourceManager.Instance.Instantiate<GameObject>(data.prefabName);
+        gameObject = Res.ResourceManager.Instance.Instantiate<GameObject>(GameCommonUtils.GetResourceData(data.prefabName).resourcePath);
 
         transform = gameObject.transform;
         transform.tag = "Player";
         transform.gameObject.layer = 11;
 
         ActorMyself ap = gameObject.AddComponent<ActorMyself>();
-        this.Motor = gameObject.AddComponent<MotorParent>();
+        this.Motor = gameObject.AddComponent<MotorMyself>();
         this.Motor.theEntity = this;
         ap.theEntity = this;
         animator = gameObject.GetComponent<Animator>();

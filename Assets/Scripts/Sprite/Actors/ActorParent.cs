@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using BattleFramework.Data;
 using UnityEngine.Rendering;
+using Mogo.Util;
 
 public class ActorParent<T> : ActorParent where T : EntityParent
 {
@@ -63,8 +64,6 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
                 GetEntity().SetAction(ActionConstants.HIT_AIR);
                 AddCallbackInFrames<int>(GetEntity().SetAction, 0);
             }
-            
-            FloatBlood(value);
         }
     }
     public void Play(string parameterName, bool value)
@@ -193,38 +192,6 @@ public class ActorParent : MonoBehaviour,ICanAttacked {
         if (GameCommonUtils.GetChild(transform, "slot_billboard"))
             BillboardLogicManager.Instance.AddSplitBattleBillboard(GameCommonUtils.GetChild(transform, "slot_billboard").position, hp, type);
     }
-    virtual protected void FloatBlood(int type, int num)
-    {
-        switch (type)
-        {
-            case 1:
-                {//闪避
-                    FloatBlood(num, SplitBattleBillboardType.Miss);
-                    break;
-                }
-            case 2:
-                {//怪物普通受击
-                    FloatBlood(num, SplitBattleBillboardType.NormalMonster);
-                    break;
-                }
-            case 3:
-                {//破击
-                    FloatBlood(num, SplitBattleBillboardType.BrokenAttack);
-                    break;
-                }
-            case 4:
-                {//暴击
-                    FloatBlood(num, SplitBattleBillboardType.CriticalMonster);
-                    break;
-                }
-            case 5:
-                {//破击加暴击
-                    FloatBlood(num, SplitBattleBillboardType.BrokenAttack);
-                    break;
-                }
-        }
-    }
-
     
     #region 换装
     private static object m_equipWeaponLock = new object();

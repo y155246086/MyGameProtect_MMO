@@ -12,6 +12,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using BattleFramework.Data;
 using UnityEngine.UI;
+using Mogo.Util;
 public class GameCommonUtils
 {
 	public GameCommonUtils ()
@@ -265,7 +266,7 @@ public class GameCommonUtils
 
     public int GetLayer(string layerName)
     {
-        return (1 << LayerMask.NameToLayer(layerName));
+        return (1 << UnityEngine.LayerMask.NameToLayer(layerName));
     }
     /// <summary>
     /// var cube = new GameObject();
@@ -506,7 +507,7 @@ public class GameCommonUtils
             {
                 continue;
             }
-            if (item.Value is EntityMonster)
+            if (item.Value is EntityParent)
             {
                 listMonster.Add(item.Key);
             }
@@ -514,7 +515,7 @@ public class GameCommonUtils
         return list;
     }
 
-    static public List<List<uint>> GetEntitiesFrontLineNew(Transform t, float length, Vector3 direction, float width, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesFrontLineNew(Transform t, float length, Vector3 direction, float width, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
         return GetEntitiesFrontLineNew(t.localToWorldMatrix, t.rotation, t.forward, t.position, length, direction, width, offsetX, offsetY, angleOffset);
     }
@@ -526,7 +527,7 @@ public class GameCommonUtils
     /// <param name="distance"></param>
     /// <param name="layerMask"></param>
     /// <returns></returns>
-    static public List<List<uint>> GetEntitiesFrontLine(Transform t, float distance, Vector3 direction, float radius = 0.5f, float offset = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesFrontLine(Transform t, float distance, Vector3 direction, float radius = 0.5f, float offset = 0, float angleOffset = 0)
     {
         return GetEntitiesFrontLine(t.localToWorldMatrix, t.rotation, t.forward, t.position, distance, direction, radius, offset, angleOffset);
     }
@@ -538,18 +539,15 @@ public class GameCommonUtils
     /// <param name="radius"></param>
     /// <param name="layerMask"></param>
     /// <returns></returns>
-    static public List<List<uint>> GetEntitiesInRange(Transform t, float radius, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesInRange(Transform t, float radius, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
         return GetEntitiesInRange(t.localToWorldMatrix, t.rotation, t.forward, t.position, radius, offsetX, offsetY, angleOffset);
     }
 
-    static public List<List<uint>> GetEntitiesInRange(Vector3 position, float radius, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesInRange(Vector3 position, float radius, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
-        List<List<uint>> list = new List<List<uint>>();
-        List<uint> listDummy = new List<uint>();
-        List<uint> listMonster = new List<uint>();
-        List<uint> listPlayer = new List<uint>();
-        List<uint> listMercenary = new List<uint>();
+        List<uint> list = new List<uint>();
+
         //遍历entities
         foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
         {
@@ -562,16 +560,12 @@ public class GameCommonUtils
             float entityRadius = 1f;
             if ((position - entity.transform.position).magnitude > radius + entityRadius) continue;
 
-            if (pair.Value is EntityMonster)
+            if (pair.Value is EntityParent)
             {
-                listMonster.Add(pair.Key);
+                list.Add(pair.Key);
             }
 
         }
-        list.Add(listDummy);
-        list.Add(listMonster);
-        list.Add(listPlayer);
-        list.Add(listMercenary);
 
         return list;
     }
@@ -584,22 +578,15 @@ public class GameCommonUtils
     /// <param name="angle"></param>
     /// <param name="layerMask"></param>
     /// <returns></returns>
-    static public List<List<uint>> GetEntitiesInSector(Transform t, float radius, float angle = 180f, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesInSector(Transform t, float radius, float angle = 180f, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
         return GetEntitiesInSector(t.localToWorldMatrix, t.rotation, t.forward, t.position, radius, angle, offsetX, offsetY, angleOffset);
     }
 
-    static public List<List<uint>> GetEntitiesFrontLineNew(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float length, Vector3 direction, float width, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesFrontLineNew(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float length, Vector3 direction, float width, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
-        List<List<uint>> list = new List<List<uint>>();
-        List<uint> listDummy = new List<uint>();
-        List<uint> listMonster = new List<uint>();
-        List<uint> listPlayer = new List<uint>();
-        List<uint> listMercenary = new List<uint>();
-        list.Add(listDummy);
-        list.Add(listMonster);
-        list.Add(listPlayer);
-        list.Add(listMercenary);
+        List<uint> list = new List<uint>();
+
 
         foreach (KeyValuePair<uint, EntityParent> pair in GameWorld.SpriteList)
         {
@@ -637,9 +624,9 @@ public class GameCommonUtils
             {
                 continue;
             }
-            if (pair.Value is EntityMonster)
+            if (pair.Value is EntityParent)
             {
-                listMonster.Add(pair.Key);
+                list.Add(pair.Key);
             }
         }
         return list;
@@ -652,30 +639,29 @@ public class GameCommonUtils
     /// <param name="distance"></param>
     /// <param name="layerMask"></param>
     /// <returns></returns>
-    static public List<List<uint>> GetEntitiesFrontLine(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float distance, Vector3 direction, float radius = 0.5f, float offset = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesFrontLine(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float distance, Vector3 direction, float radius = 0.5f, float offset = 0, float angleOffset = 0)
     {
-        List<List<uint>> list = new List<List<uint>>();
-        List<uint> listDummy = new List<uint>();
-        List<uint> listMonster = new List<uint>();
-        List<uint> listPlayer = new List<uint>();
+        List<uint> list = new List<uint>();
 
         RaycastHit[] hits = Physics.SphereCastAll(position, radius, direction, distance);
 
         foreach (RaycastHit hit in hits)
         {
-            SpriteBase entity = hit.transform.GetComponent<SpriteBase>();
-            if (entity is EntityMonster)
-            {
-                listMonster.Add(1);
-            }
+            ActorParent entity = hit.transform.GetComponent<ActorParent>();
+            list.Add(entity.GetEntity().ID);
         }
-        list.Add(listDummy);
-        list.Add(listMonster);
-        list.Add(listPlayer);
 
         return list;
     }
-
+    /// <summary>
+    /// 创建一个产生不重复随机数的随机数生成器。
+    /// </summary>
+    /// <returns>随机数生成器</returns>
+    public static System.Random CreateRandom()
+    {
+        long tick = DateTime.Now.Ticks;
+        return new System.Random((int)(tick & 0xffffffffL) | (int)(tick >> 32));
+    }
     /// <summary>
     /// 返回角色周围指定半径范围内的所有对象。
     /// </summary>
@@ -683,14 +669,10 @@ public class GameCommonUtils
     /// <param name="radius"></param>
     /// <param name="layerMask"></param>
     /// <returns></returns>
-    static public List<List<uint>> GetEntitiesInRange(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float radius, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesInRange(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float radius, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
-        List<List<uint>> list = new List<List<uint>>();
-        List<uint> listDummy = new List<uint>();
-        List<uint> listMonster = new List<uint>();
-        List<uint> listPlayer = new List<uint>();
-        //float sin = (float)Math.Sin(angleOffset * Math.PI / 180);
-        //float cos = (float)Math.Cos(angleOffset * Math.PI / 180);
+        List<uint> list = new List<uint>();
+
         Matrix4x4 m = ltwM;
         Matrix4x4 m1 = new Matrix4x4();
         m1.SetRow(0, new Vector4(0, 0, offsetY, 0)); //1
@@ -709,19 +691,14 @@ public class GameCommonUtils
             }
 
             float entityRadius = 1f;
-            //if ((t.position - entity.Transform.position).magnitude > radius + entityRadius) continue;
             if ((posi - entity.transform.position).magnitude > radius + entityRadius) continue;
 
             if (pair.Value is EntityParent)
             {
-                listMonster.Add(pair.Key);
+                list.Add(pair.Key);
             }
 
         }
-        list.Add(listDummy);
-        list.Add(listMonster);
-        list.Add(listPlayer);
-
         return list;
     }
 
@@ -733,13 +710,9 @@ public class GameCommonUtils
     /// <param name="angle"></param>
     /// <param name="layerMask"></param>
     /// <returns></returns>
-    static public List<List<uint>> GetEntitiesInSector(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float radius, float angle = 180f, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
+    static public List<uint> GetEntitiesInSector(Matrix4x4 ltwM, Quaternion rotation, Vector3 forward, Vector3 position, float radius, float angle = 180f, float offsetX = 0, float offsetY = 0, float angleOffset = 0)
     {
-        List<List<uint>> list = new List<List<uint>>();
-        List<uint> listDummy = new List<uint>();
-        List<uint> listMonster = new List<uint>();
-        List<uint> listPlayer = new List<uint>();
-        List<uint> listMercenary = new List<uint>();
+        List<uint> list = new List<uint>();
 
         Matrix4x4 m = ltwM;
         Matrix4x4 m1 = new Matrix4x4();
@@ -759,11 +732,9 @@ public class GameCommonUtils
             if ((posi - entity.transform.position).magnitude > radius + entityRadius) continue;
 
             //得到切线与（目标物体到人物线）的夹角a
-            //float a = Mathf.Atan(entityRadius / (entity.Transform.position - t.position).magnitude);
             float a = Mathf.Asin(entityRadius / (entity.transform.position - posi).magnitude);
 
             //得到目标点与人物正前方的夹角b
-            //float b = Vector3.Angle((entity.Transform.position - t.position), t.forward);
             float b = Vector3.Angle((entity.transform.position - posi), forward);
 
             //判断b - a 是否在 angle/2内
@@ -771,15 +742,9 @@ public class GameCommonUtils
 
            if (pair.Value is EntityParent)
             {
-                listMonster.Add(pair.Key);
+                list.Add(pair.Key);
             }
-            
-
         }
-        list.Add(listDummy);
-        list.Add(listMonster);
-        list.Add(listPlayer);
-        list.Add(listMercenary);
 
         return list;
     }
@@ -894,40 +859,6 @@ public class GameCommonUtils
         return list;
     }
 
-   
-
-    
-
-    /// <summary>
-    /// 由近到远排序
-    /// </summary>
-    /// <param name="t"></param>
-    /// <param name="gos"></param>
-    /// <param name="count">返回数量</param>
-    /// <returns></returns>
-    static public void SortByDistance(Transform t, List<GameObject> gos)
-    {
-        gos.Sort(delegate(GameObject a, GameObject b)
-        {
-            Vector3 aPos = a.transform.position;
-            Vector3 bPos = b.transform.position;
-            if (Vector3.Distance(t.position, aPos) >= Vector3.Distance(t.position, bPos)) return 1;
-            else return -1;
-        });
-
-    }
-
-    static public void SortByDistance(Transform t, List<Transform> gos)
-    {
-        gos.Sort(delegate(Transform a, Transform b)
-        {
-            Vector3 aPos = a.position;
-            Vector3 bPos = b.position;
-            if (Vector3.Distance(t.position, aPos) >= Vector3.Distance(t.position, bPos)) return 1;
-            else return -1;
-        });
-
-    }
 
     /// <summary>
     /// 支持深层孩子
@@ -1083,7 +1014,7 @@ public class GameCommonUtils
     static public bool GetPointInTerrain(float x, float z, out Vector3 point)
     {
         RaycastHit hit;
-        var flag = Physics.Linecast(new Vector3(x, 1000, z), new Vector3(x, -1000, z), out hit, (int)LayerMask.GetMask("Terrain"));
+        var flag = Physics.Linecast(new Vector3(x, 1000, z), new Vector3(x, -1000, z), out hit, (int)UnityEngine.LayerMask.GetMask("Terrain"));
         if (flag)
         {
             point = new Vector3(hit.point.x, hit.point.y + 0.2f, hit.point.z);
@@ -1095,6 +1026,91 @@ public class GameCommonUtils
             Debuger.LogWarning("hit noting:" + x + "," + z);
             return false;
         }
+
+    }
+    public static ResourceData GetResourceData(string sourceName)
+    {
+        for (int i = 0; i < ResourceData.dataList.Count; i++)
+        {
+            if (ResourceData.dataList[i].resourceName.Equals(sourceName))
+            {
+                return ResourceData.dataList[i];
+            }
+        }
+        Debuger.LogError("资源有问题：" + sourceName);
+        return null;
+    }
+    public void GetHit(GameObject goTarget, float lastTime = 0.2f, HitColorType hct = HitColorType.HCT_WHITE)
+    {
+        SkinnedMeshRenderer[] smrList = goTarget.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+
+        if (smrList == null)
+            return;
+
+
+        for (int i = 0; i < smrList.Length; ++i)
+        {
+            smrList[i].material.SetFloat("_FinalPower", 3);
+        }
+
+        TimerHeap.AddTimer<GameObject>((uint)(0.1 * 1000), 0, (obj) => { ReleaseHit(obj); }, goTarget);
+
+    }
+    public void ReleaseHit(GameObject goTarget)
+    {
+        if (goTarget == null)
+            return;
+        SkinnedMeshRenderer[] smrList = goTarget.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+
+        if (smrList == null)
+            return;
+
+        for (int i = 0; i < smrList.Length; ++i)
+        {
+            smrList[i].material.SetFloat("_FinalPower", 1);
+        }
+    }
+
+    /// <summary>
+    /// 由近到远排序
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="gos"></param>
+    /// <param name="count">返回数量</param>
+    /// <returns></returns>
+    static public void SortByDistance(Transform t, List<GameObject> gos)
+    {
+        gos.Sort(delegate(GameObject a, GameObject b)
+        {
+            Vector3 aPos = a.transform.position;
+            Vector3 bPos = b.transform.position;
+            if (Vector3.Distance(t.position, aPos) >= Vector3.Distance(t.position, bPos)) return 1;
+            else return -1;
+        });
+
+    }
+
+    static public void SortByDistance(Transform t, List<Transform> gos)
+    {
+        gos.Sort(delegate(Transform a, Transform b)
+        {
+            Vector3 aPos = a.position;
+            Vector3 bPos = b.position;
+            if (Vector3.Distance(t.position, aPos) >= Vector3.Distance(t.position, bPos)) return 1;
+            else return -1;
+        });
+
+    }
+
+    static public void SortByDistance(Transform t, List<uint> gos)
+    {
+        gos.Sort(delegate(uint a, uint b)
+        {
+            Vector3 aPos = GameWorld.SpriteList[a].transform.position;
+            Vector3 bPos = GameWorld.SpriteList[b].transform.position;
+            if (Vector3.Distance(t.position, aPos) >= Vector3.Distance(t.position, bPos)) return 1;
+            else return -1;
+        });
 
     }
 }

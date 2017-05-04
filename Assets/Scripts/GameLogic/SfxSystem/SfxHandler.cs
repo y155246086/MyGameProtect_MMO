@@ -117,9 +117,11 @@ public class SfxHandler : MonoBehaviour {
 
         //AssetCacheMgr.GetResourceAutoRelease(fx.resourcePath, (obj) =>
         //AssetCacheMgr.GetNoCacheInstance(fx.resourcePath, (prefab, guid, obj) =>
-        GameObject obj = Res.ResourceManager.Instance.Instantiate<GameObject>(fx.resourcePath);
-        string guid = fx.resourcePath;
-        m_loadedFX.Add(fx.resourcePath);
+        string path = GameCommonUtils.GetResourceData(fx.resourceName).resourcePath;
+        Debuger.Log(path);
+        GameObject obj = Res.ResourceManager.Instance.Instantiate<GameObject>(path);
+        string guid = path;
+        m_loadedFX.Add(path);
         //Debug.LogError("m_loadedFX.Add: " + fx.resourcePath + " " + m_loadedFX.Count);
         //var go = GameObject.Instantiate(obj) as GameObject;
         //var guid = go.GetInstanceID();

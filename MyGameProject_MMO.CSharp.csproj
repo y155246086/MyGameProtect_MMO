@@ -491,6 +491,7 @@
     <Compile Include="Assets\Scripts\Common\Network\NetManagerLog.cs" />
     <Compile Include="Assets\Scripts\Common\Network\NetworkManagerProxy.cs" />
     <Compile Include="Assets\Scripts\Common\PanelNameConst.cs" />
+    <Compile Include="Assets\Scripts\Common\RandomHelper.cs" />
     <Compile Include="Assets\Scripts\Common\SettingEvent.cs" />
     <Compile Include="Assets\Scripts\Debuger.cs" />
     <Compile Include="Assets\Scripts\DontDestroyMe.cs" />
@@ -528,9 +529,11 @@
     <Compile Include="Assets\Scripts\GameWorld.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Manager\BattleManager.cs" />
+    <Compile Include="Assets\Scripts\Manager\CalculateDamage.cs" />
     <Compile Include="Assets\Scripts\Manager\DownloadManager.cs" />
     <Compile Include="Assets\Scripts\Manager\GUIManager.cs" />
     <Compile Include="Assets\Scripts\Manager\MogoMainCamera.cs" />
+    <Compile Include="Assets\Scripts\Manager\MonsterBattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerBattleManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PlayerSkillManager.cs" />
     <Compile Include="Assets\Scripts\Manager\PropertyManager.cs" />

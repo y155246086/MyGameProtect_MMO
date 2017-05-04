@@ -2,6 +2,7 @@
 using System.Collections;
 using BattleFramework.Data;
 using Mogo.Util;
+using System.Collections.Generic;
 
 public class EntityMonster :  EntityParent {
 
@@ -18,7 +19,8 @@ public class EntityMonster :  EntityParent {
             Debuger.LogError("怪物数据Error null" + serverInfo.dataId);
             return;
         }
-        gameObject = Res.ResourceManager.Instance.Instantiate<GameObject>(data.PrefabsPath);
+        AvatarModelData modelData = AvatarModelData.GetByID(data.modelId);
+        gameObject = Res.ResourceManager.Instance.Instantiate<GameObject>(GameCommonUtils.GetResourceData(modelData.prefabName).resourcePath);
         
         transform = gameObject.transform;
         transform.tag = "Monster";
@@ -32,17 +34,30 @@ public class EntityMonster :  EntityParent {
         this.Motor = gameObject.AddComponent<MotorParent>();
         this.Motor.theEntity = this;
         UpdatePosition();
-        if (data.scale > 0)
-            gameObject.transform.localScale = new Vector3(data.scale, data.scale, data.scale);
+        if (modelData != null && modelData.scale > 0)
+        {
+            gameObject.transform.localScale = new Vector3(modelData.scale, modelData.scale, modelData.scale);
+            if (modelData.scaleRadius > 0 && ap.GetComponent<CharacterController>()!= null)
+                ap.GetComponent<CharacterController>().radius = modelData.scaleRadius;
+        }
+            
         animator.applyRootMotion = false;
     }
     
     protected override void OnEnterWorld()
     {
         SetOwenr(data);
+        battleManager = new MonsterBattleManager(this, skillManager);
         Mogo.Util.EventDispatcher.AddEventListener<uint>(ActorEvent.ACTOR_DEAD, OnDead);
     }
     private uint deadTimeID = 0;
+    public List<int> HitShader
+    {
+        get
+        {
+            return data.hitShader;
+        }
+    }
     private void OnDead(uint obj)
     {
         if(obj == ID)
@@ -57,12 +72,10 @@ public class EntityMonster :  EntityParent {
     }
     public void SetOwenr(MonsterData data)
     {
-        if (data.skillID1 > 0)
-            skillManager.AddSkill(data.skillID1);
-        if (data.skillID2 > 0)
-            skillManager.AddSkill(data.skillID2);
-        if (data.skillID3 > 0)
-            skillManager.AddSkill(data.skillID3);
+        for (int i = 0; i < data.skillIDs.Count; i++)
+        {
+            skillManager.AddSkill(data.skillIDs[i]);
+        }
     }
     protected override void OnLeaveWorld()
     {

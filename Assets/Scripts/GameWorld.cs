@@ -12,6 +12,10 @@ public class GameWorld {
     public static EntityMyself player;
     public static GameSceneData sceneData;
     public static bool inCity = false;
+    public static bool showHitShader = true;
+    public static bool showFloatBlood = true;
+    public static bool showHitAction = true;
+    public static bool showHitEM = true;
     static public Dictionary<uint, EntityParent> SpriteList
     {
         get { return spriteList; }

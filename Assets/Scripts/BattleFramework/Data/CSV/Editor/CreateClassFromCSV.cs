@@ -139,6 +139,11 @@ namespace BattleFramework.Data
                     type = "List<int>";
                     fieldName = columnName.Substring(0, columnName.LastIndexOf("_"));
                 }
+                else if (type.ToUpper() == "LIST<FLOAT>")
+                {
+                    type = "List<float>";
+                    fieldName = columnName.Substring(0, columnName.LastIndexOf("_"));
+                }
                 else if (type.ToUpper() == "LIST<STRING>")
                 {
                     type = "List<string>";
@@ -171,6 +176,14 @@ namespace BattleFramework.Data
                     file.WriteLine("                strs = " + "csvFile.mapData[i].data[" + i + "].Split(new char[1]{\',\'});");
                     file.WriteLine("                for(int j=0;j<strs.Length;j++){");
                     file.WriteLine("                    data." + fieldName + ".Add(int.Parse(strs[j]));");
+                    file.WriteLine("                }");
+                }
+                else if (type == "List<float>")
+                {
+                    file.WriteLine("                data." + fieldName + "= new List<float>();");
+                    file.WriteLine("                strs = " + "csvFile.mapData[i].data[" + i + "].Split(new char[1]{\',\'});");
+                    file.WriteLine("                for(int j=0;j<strs.Length;j++){");
+                    file.WriteLine("                    data." + fieldName + ".Add(float.Parse(strs[j]));");
                     file.WriteLine("                }");
                 }
                 else if (type == "List<string>")

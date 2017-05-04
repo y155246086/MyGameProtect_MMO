@@ -27,7 +27,7 @@ public class FieldState : GameState
         //    GameWorld.player.transform.position = bornPoint.transform.position;
         //}
         GameWorld.AddNewEntity(SpriteType.Myself);
-        GameWorld.AddNewEntity(SpriteType.Monster);
+        //GameWorld.AddNewEntity(SpriteType.Monster);
     }
 }
 

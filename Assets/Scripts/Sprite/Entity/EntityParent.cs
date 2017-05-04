@@ -3,6 +3,7 @@ using System.Collections;
 using BattleFramework.Data;
 using Mogo.Util;
 using System.Collections.Generic;
+using System;
 
 public abstract class EntityParent {
 
@@ -29,6 +30,10 @@ public abstract class EntityParent {
     public int currSpellID;////小于等于0为当前空闲
     public float aiRate = 1;
     public List<uint> hitTimer = new List<uint>(); //技能hit的timer id
+    public bool immuneShift = false;//是否免疫受击位移等不受控制状态(眩晕，定身，魅惑)
+    public int ShowHitAct;
+    public int level;
+    public ulong stateFlag;
 
     /// <summary>
     /// 职业
@@ -172,6 +177,7 @@ public abstract class EntityParent {
         }
         sfxManager.PlaySfx(id);
     }
+    
     public void RemoveSfx(int nSpellID)
     {
         if (sfxManager == null)
@@ -179,6 +185,19 @@ public abstract class EntityParent {
             return;
         }
         sfxManager.RemoveSfx(nSpellID);
+    }
+    public void PlayFX(int fxID, Transform target = null, Action<GameObject, string> action = null)
+    {
+        if (sfxHandler == null)
+        {
+            return;
+        }
+        sfxHandler.HandleFx(fxID, target, action,"");
+    }
+    public void RemoveFx(int fxID)
+    {
+        if (sfxHandler)
+            sfxHandler.RemoveFXs(fxID);
     }
     internal bool IsDead()
     {
@@ -267,7 +286,7 @@ public abstract class EntityParent {
 
         battleManager.CastSkill(currSpellID);
     }
-    virtual public void ClearSkill()
+    virtual public void ClearSkill(bool isRemove = false)
     {
         currSpellID = -1;
     }
@@ -283,5 +302,21 @@ public abstract class EntityParent {
             return "";
         }
         return st[0].clip.name;
+    }
+
+    public int curHp
+    {
+        get
+        {
+            return propertyManager.GetPropertyValue(PropertyType.HP);
+        }
+        set
+        {
+            propertyManager.ChangeProperty(PropertyType.HP, value);
+        }
+    }
+
+    public void OnDeath(int hitActionID)
+    {
     }
 }
