@@ -14,8 +14,8 @@ public class GameWorld {
     public static bool inCity = false;
     public static bool showHitShader = true;
     public static bool showFloatBlood = true;
-    public static bool showHitAction = true;
-    public static bool showHitEM = true;
+    public static bool showHitAction = true;//是否可以被击动作
+    public static bool showHitEM = true;//是否可以被击位移
     static public Dictionary<uint, EntityParent> Entities
     {
         get { return spriteList; }
@@ -93,6 +93,7 @@ public class GameWorld {
                 }
                 else
                 {
+                    info.id = 1000;
                     info.position = Vector3.zero;
                     info.x = 100;
                     info.y = 100;

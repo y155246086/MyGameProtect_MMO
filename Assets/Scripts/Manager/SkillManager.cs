@@ -83,7 +83,7 @@ public class SkillManager
                 {
                     //设置cd
                     cdDict[data.id] = Time.time * 1000;
-                    UseSkill(data.id);
+                    owner.CastSkill(data.id);
                     break;
                 }
                 else
@@ -93,7 +93,7 @@ public class SkillManager
             }
             else
             {
-                UseSkill(data.id);
+                owner.CastSkill(data.id);
                 break;
             }
         }
@@ -255,14 +255,17 @@ public class SkillManager
         SkillAction skillAction = data;
         if (skillAction.action>0)
         {
+            if (PlayerActionNames.names.ContainsKey(skillAction.action))
+            {
+                owner.skillActName = PlayerActionNames.names[skillAction.action];
+            }
+            else
+            {
+                owner.skillActName = "";
+            }
             owner.SetAction(skillAction.action);
             owner.Actor.AddCallbackInFrames<int>(owner.SetAction, 0);
-            //面向敌人
-            Transform target = GetHitSprite(curSkillData.id);
-            if (target != null)
-            {
-                owner.transform.LookAt(new Vector3(target.position.x, owner.transform.position.y, target.position.z));
-            }
+
             TimerHeap.DelTimer(EndAttackTimerID);
             EndAttackTimerID = TimerHeap.AddTimer<SkillAction>((uint)(skillAction.duration), 0, EndAttackAction, skillAction);
             isSkillPlaying = true;
@@ -275,12 +278,13 @@ public class SkillManager
         args.Add(rotation);
         args.Add(forward);
         args.Add(position);
-        delayAttackTimerID = TimerHeap.AddTimer<int, List<object>>((uint)(skillAction.actionBeginDuration), 0, DelayAttack, skillAction.id, args);
+        owner.delayAttackTimerID = TimerHeap.AddTimer<int, List<object>>((uint)(skillAction.actionBeginDuration), 0, DelayAttack, skillAction.id, args);
+        //TODO 给服务器发送消息
     }
     
     public void Clear()
     {
-        TimerHeap.DelTimer(delayAttackTimerID);
+        //TimerHeap.DelTimer(delayAttackTimerID);
         TimerHeap.DelTimer(EndAttackTimerID);
     }
     protected void EndAttackAction(SkillAction skillAction)
@@ -358,9 +362,9 @@ public class SkillManager
             harm = CalculateDamage.CacuDamage(hitActionID, owner.ID, dummys[i]);
            
             wounded.Add(dummys[i], harm);
-            uint h = 0;
-            h = e.curHp < harm[1] ? (uint)e.curHp : (uint)harm[1];
-            e.curHp -= (int)h;
+            int h = 0;
+            h = (int)(e.curHp < harm[1] ? (uint)e.curHp : (uint)harm[1]);
+            e.propertyManager.ChangeProperty(PropertyType.HP, -h);
         }
         TriggerDamage(hitActionID, wounded);
         for (int i = 0; i < dummys.Count; i++)

@@ -45,7 +45,7 @@ public class CalculateDamage
         }
         else
         {
-            LoggerHelper.Error("CacuDamage Error. eid not exist.");
+            Debuger.LogError("CacuDamage Error. eid not exist.");
             result.Add(-1);
             result.Add(0);
             return result;

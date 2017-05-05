@@ -17,8 +17,8 @@ public class PropertyManager {
     public PropertyManager()
     {
         map = new Dictionary<PropertyType, int>();
-        AddProperty(PropertyType.HP, 100);
-        AddProperty(PropertyType.MAX_HP, 1000);
+        AddProperty(PropertyType.HP, 10000);
+        AddProperty(PropertyType.MAX_HP, 10000);
         AddProperty(PropertyType.Attack_Dis, 5);
         AddProperty(PropertyType.Chase_Dis, 10);
         AddProperty(PropertyType.Arrive_Dis, 1);
@@ -61,5 +61,10 @@ public class PropertyManager {
         {
             map[propertyType] += value;
         }
+    }
+
+    public void Clear()
+    {
+
     }
 }

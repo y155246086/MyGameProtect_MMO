@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Mogo.Util;
 
 public class StateIdle : FSMState
 {
-
+    private uint tempTime = 0;
     public StateIdle(EntityParent owner)
     {
         this.theOwner = owner;
@@ -20,6 +21,21 @@ public class StateIdle : FSMState
         else
         {
             theOwner.SetAction(ActionConstants.COPY_IDLE);
+        }
+        if(theOwner is EntityMonster)
+        {
+            if (tempTime>0)
+            {
+                TimerHeap.DelTimer(tempTime);
+            }
+            tempTime = TimerHeap.AddTimer<EntityParent>((uint)1500, 0, (e) =>
+            {
+                if (e == null || e.Motor == null)
+                {
+                    return;
+                }
+                e.ChangeState(FSMStateType.Attacking);
+            }, theOwner);
         }
     }
     public override void Exit()

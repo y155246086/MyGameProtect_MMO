@@ -6,7 +6,7 @@ namespace BattleFramework.Data{
     [System.Serializable]
     public class SkillAction {
         public static string csvFilePath = "Configs/SkillAction";
-        public static string[] columnNameArray = new string[31];
+        public static string[] columnNameArray = new string[32];
         public static List<SkillAction> dataList;
         public static Dictionary<int, SkillAction> dataMap;
         public static List<SkillAction> LoadDatas(){
@@ -17,7 +17,7 @@ namespace BattleFramework.Data{
             string[] strs;
             string[] strsTwo;
             List<int> listChild;
-            columnNameArray = new string[31];
+            columnNameArray = new string[32];
             for(int i = 0;i < csvFile.mapData.Count;i ++){
                 SkillAction data = new SkillAction();
                 int.TryParse(csvFile.mapData[i].data[0],out data.id);
@@ -100,6 +100,8 @@ namespace BattleFramework.Data{
                 columnNameArray [29] = "hitExtraSpeed";
                 int.TryParse(csvFile.mapData[i].data[30],out data.hitExtraSl);
                 columnNameArray [30] = "hitExtraSl";
+                int.TryParse(csvFile.mapData[i].data[31],out data.damageFlag);
+                columnNameArray [31] = "damageFlag";
                 dataList.Add(data);
                 if (!dataMap.ContainsKey(data.id))
                     dataMap.Add(data.id,data);
@@ -154,6 +156,6 @@ namespace BattleFramework.Data{
         public float teleportDistance;//传送距离
         public float hitExtraSpeed;//受击后位移速度
         public int hitExtraSl;//受击位移时间
-        public int damageFlag = 1;
+        public int damageFlag;//是否产生伤害标志
     }
 }

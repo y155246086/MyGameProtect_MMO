@@ -72,6 +72,11 @@ public class AdvanceFSM : FSMBase {
     /// <param name="type"></param>
     public void ChangeState(FSMStateType type, params System.Object[] args)
     {
+        if (CurrentType == FSMStateType.Dead)
+        {
+            return;
+        }
+
         if(!map.ContainsKey(type))
         {
             Debuger.LogError("不包含此状态" + type);
@@ -111,5 +116,14 @@ public class AdvanceFSM : FSMBase {
     public bool HasState(FSMStateType fSMStateType)
     {
         return map.ContainsKey(fSMStateType);
+    }
+
+    public void Clear()
+    {
+        if(CurrentState != null)
+        {
+            CurrentState.Exit();
+            currentState = null;
+        }
     }
 }

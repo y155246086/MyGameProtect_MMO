@@ -421,7 +421,7 @@ public class MogoMainCamera : MonoBehaviour
 
     public void OnCGAnimStop()
     {
-        Mogo.Util.LoggerHelper.Debug("OnCGAnimStop");
+        Debuger.LogError("OnCGAnimStop");
         CurrentState = NONE;
     }
 
@@ -635,7 +635,7 @@ public class MogoMainCamera : MonoBehaviour
         float _originalPx, float _targetPx,
         float _length, Vector3 _targetPos, Transform _target = null, Action _onDone = null)
     {
-        Mogo.Util.LoggerHelper.Debug("PlayCGAnim");
+        Debuger.LogError("PlayCGAnim");
         m_currentAnim = new CGAnim()
         {
             originalDis = _originalDis,

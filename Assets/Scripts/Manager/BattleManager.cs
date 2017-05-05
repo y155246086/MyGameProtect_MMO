@@ -54,15 +54,15 @@ public class BattleManager{
             cfgShow)
         {//如果没填就不做受击表现
             //TODO切换被击状态
-            theOwner.SetAction(_act);
-            theOwner.Actor.AddCallbackInFrames<int>(theOwner.SetAction, 0);
+            //theOwner.SetAction(_act);
+            //theOwner.Actor.AddCallbackInFrames<int>(theOwner.SetAction, 0);
             theOwner.ChangeState(FSMStateType.Hit, _actionID, _attackerID);
         }
         if (GameWorld.showHitEM && !(theOwner is EntityMonster) && action.hitExtraSpeed != 0)
         {
             theOwner.Motor.SetExrtaSpeed(-action.hitExtraSpeed);
             theOwner.Motor.SetMoveDirection(theOwner.transform.forward);
-            TimerHeap.AddTimer<EntityParent>((uint)(action.hitExtraSl * 1000), 0, (e) =>
+            TimerHeap.AddTimer<EntityParent>((uint)(action.hitExtraSl), 0, (e) =>
             {
                 if (e == null || e.Motor == null)
                 {
@@ -107,7 +107,7 @@ public class BattleManager{
 
     public virtual void Clean()
     {
-
+        EventDispatcher.RemoveEventListener<int, uint, uint, List<int>>(Events.FSMMotionEvent.OnHit, OnHit);
     }
 
     // 主动释放技能。直接进入PREPARING放技能

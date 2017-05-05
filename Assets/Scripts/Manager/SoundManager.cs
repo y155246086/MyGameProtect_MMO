@@ -74,12 +74,12 @@ namespace Mogo
 
         static SoundManager()
         {
-            LoggerHelper.Debug("ConstructSoundManager");
+            Debuger.LogError("ConstructSoundManager");
         }
 
         public static void Init()
         {
-            LoggerHelper.Debug("InitSoundManager");
+            Debuger.LogError("InitSoundManager");
             GameObject.DontDestroyOnLoad(GameObject.Find("Driver"));
             defaultSoundSource = GameObject.Find("Driver").transform.FindChild(defaultSoundSourceName).gameObject.GetComponent<AudioSource>();
             defaultMusicSource = GameObject.Find("Driver").transform.FindChild(defaultMusicSourceName).gameObject.GetComponent<AudioSource>();
@@ -182,7 +182,7 @@ namespace Mogo
 
         private static void SaveVolume()
         {
-            LoggerHelper.Debug("SaveVolume: " + soundVolume + " " + musicVolume);
+            Debuger.LogError("SaveVolume: " + soundVolume + " " + musicVolume);
         }
 
         #endregion
@@ -304,7 +304,7 @@ namespace Mogo
         {
             if (clipObject == null)
             {
-                LoggerHelper.Error("animation clip Object is null!");
+                Debuger.LogError("animation clip Object is null!");
                 return;
             }
 
@@ -325,12 +325,12 @@ namespace Mogo
 
         public static void PlayBackgroundMusic(int missionID, PlayMusicMode mode = PlayMusicMode.Repeat)
         {
-            LoggerHelper.Debug("PlayBackgroundMusic Check");
+            Debuger.LogError("PlayBackgroundMusic Check");
         }
 
         public static void PlayBackgroundMusic(int missionID, int index, PlayMusicMode mode = PlayMusicMode.Repeat)
         {
-            LoggerHelper.Debug("PlayBackgroundMusic");
+            Debuger.LogError("PlayBackgroundMusic");
         }
         public static void PlayMusic(AudioClip clip, PlayMusicMode mode = PlayMusicMode.Repeat)
         {
@@ -348,7 +348,7 @@ namespace Mogo
 
         public static void PlayMusicByObject(UnityEngine.Object clipObject, PlayMusicMode mode = PlayMusicMode.Repeat)
         {
-            LoggerHelper.Debug("PlayMusicByObject: " + clipObject + " " + MusicVolume);
+            Debuger.LogError("PlayMusicByObject: " + clipObject + " " + MusicVolume);
             if (defaultMusicSource == null)
             {
                 defaultMusicSource = GameObject.Find("Driver").transform.FindChild(defaultMusicSourceName).gameObject.GetComponent<AudioSource>();
@@ -381,7 +381,7 @@ namespace Mogo
 
         protected static void SetNextPlay(UnityEngine.Object clipObject)
         {
-            LoggerHelper.Debug("SetNextPlay");
+            Debuger.LogError("SetNextPlay");
 
             switch (musicMode)
             {
@@ -417,11 +417,11 @@ namespace Mogo
 
         public static void StopBackgroundMusic()
         {
-            LoggerHelper.Debug("StopBackgroundMusic");
+            Debuger.LogError("StopBackgroundMusic");
 
             if (defaultMusicSource != null)
             {
-                Mogo.Util.LoggerHelper.Debug("defaultSource" + defaultMusicSource.gameObject.name);
+                Debuger.LogError("defaultSource" + defaultMusicSource.gameObject.name);
                 defaultMusicSource.Stop();
             }
 

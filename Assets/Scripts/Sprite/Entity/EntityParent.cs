@@ -46,6 +46,8 @@ public abstract class EntityParent {
     private Dictionary<string, int> intAttrs = new Dictionary<string, int>();
     private Dictionary<string, double> doubleAttrs = new Dictionary<string, double>();
     private Dictionary<string, string> stringAttrs = new Dictionary<string, string>();
+    public uint delayAttackTimerID;
+    public uint hitTimerID = 0;
 
     public Dictionary<string, object> ObjectAttrs
     {
@@ -159,6 +161,7 @@ public abstract class EntityParent {
             fsm.AddFSMState(FSMStateType.Attacking, new AttackBase(this));
             fsm.AddFSMState(FSMStateType.Dead, new DeadBase(this));
             fsm.AddFSMState(FSMStateType.Hit, new StateHit(this));
+            fsm.AddFSMState(FSMStateType.Idle, new StateIdle(this));
         }
         else if(this is EntityMyself)
         {
@@ -170,7 +173,7 @@ public abstract class EntityParent {
     }
     public void OnUpdate()
     {
-        if (propertyManager.GetPropertyValue(PropertyType.HP) <= 0)
+        if (fsm.CurrentType != FSMStateType.Dead && propertyManager.GetPropertyValue(PropertyType.HP) <= 0)
         {
             fsm.ChangeState(FSMStateType.Dead);
             return;
@@ -209,6 +212,26 @@ public abstract class EntityParent {
     }
     public void LeaveWorld()
     {
+        if (skillManager != null)
+        {
+            skillManager.Clear();
+        }
+        if(battleManager != null)
+        {
+            battleManager.Clean();
+        }
+        if(propertyManager != null)
+        {
+            propertyManager.Clear();
+        }
+        if (sfxManager != null)
+        {
+            sfxManager.Clear();
+        }
+        if (fsm != null)
+        {
+            fsm.Clear();
+        }
         OnLeaveWorld();
     }
     /// <summary>
@@ -400,6 +423,31 @@ public abstract class EntityParent {
     }
     virtual public void ClearSkill(bool isRemove = false)
     {
+        TimerHeap.DelTimer(delayAttackTimerID);
+        TimerHeap.DelTimer(hitTimerID);
+
+        if (currSpellID != -1)
+        {
+            if (SkillAction.dataMap.ContainsKey(currHitAction) && isRemove)
+            {
+                RemoveSfx(currHitAction);
+            }
+            SkillData s;
+            if (SkillData.dataMap.TryGetValue(currSpellID, out s) && isRemove)
+            {
+                foreach (var i in s.skillAction)
+                {
+                    RemoveSfx(i);
+                }
+            }
+            currHitAction = -1;
+        }
+        for (int i = 0; i < hitTimer.Count; i++)
+        {
+            TimerHeap.DelTimer(hitTimer[i]);
+        }
+        ChangeState(FSMStateType.Idle);
+        hitTimer.Clear();
         currSpellID = -1;
     }
     public string CurrActStateName()

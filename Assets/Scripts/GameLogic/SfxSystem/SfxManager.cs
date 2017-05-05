@@ -21,7 +21,7 @@ public class SfxManager{
         SkillAction skillData = SkillAction.GetByID(skillID);
         if (skillData == null)
         {
-            LoggerHelper.Error("not exist spell data:" + skillID);
+            Debuger.LogError("not exist spell data:" + skillID);
             return;
         }
 
@@ -79,5 +79,9 @@ public class SfxManager{
     {
         if (cueHandler)
             cueHandler.HandleFx(cuesID);
+    }
+    public void Clear()
+    {
+
     }
 }
