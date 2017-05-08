@@ -8,7 +8,7 @@ public class SkillMapping
 {
     public int normalAttack = 5001;
     public int spellOne = 6101;
-    public int spellTwo = 0;
+    public int spellTwo = 7901;
     public int spellThree = 0;
     public int powerupAttack = 0;
     public int maxPowerupAttack = 0;
@@ -133,6 +133,36 @@ public class PlayerSkillManager : SkillManager {
         }
         return false;
 
+    }
+    /// <summary>
+    /// 获取此技能剩下的CD
+    /// </summary>
+    /// <param name="skillID"></param>
+    /// <returns></returns>
+    public int GetCurrentCoolTime(int skillID)
+    {
+        if (!SkillData.dataMap.ContainsKey(skillID))
+        {
+            return 0;
+        }
+        if (!this.skilllastCastTime.ContainsKey(skillID))
+        {
+            skilllastCastTime[skillID] = 0;
+        }
+        int skillInterval = (int)((Time.realtimeSinceStartup - this.skilllastCastTime[skillID]) * 1000);
+        if (!this.skillCoolTime.ContainsKey(skillID))
+        {
+            skillCoolTime[skillID] = 0;
+        }
+        return Mathf.Max(0, this.skillCoolTime[skillID] - skillInterval);
+    }
+    public int GetSkillCD(int skillID)
+    {
+        if (this.skillCoolTime == null || this.skillCoolTime.ContainsKey(skillID) == false)
+        {
+            return -1;
+        }
+        return this.skillCoolTime[skillID];
     }
     public void ResetCoolTime(int skillID)
     {

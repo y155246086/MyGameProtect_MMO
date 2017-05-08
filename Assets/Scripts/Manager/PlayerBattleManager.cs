@@ -96,7 +96,34 @@ public class PlayerBattleManager : BattleManager {
         SkillData s = SkillData.dataMap[skillid];
         //设置UI CD
     }
+    public void SpellTwoAttack()
+    {
+        CleanPreSkill();
 
+        if (CanUseSkill() == false)
+        {
+            return;
+        }
+
+        if ((skillManager as PlayerSkillManager).IsCommonCooldown())
+        {
+            return;
+        }
+        int skillid = (skillManager as PlayerSkillManager).GetSpellTwoID();
+        if ((skillManager as PlayerSkillManager).IsSkillCooldown(skillid))
+        {
+            return;
+        }
+
+        (theOwner as EntityMyself).ClearSkill();
+        (skillManager as PlayerSkillManager).ClearComboSkill();
+        (skillManager as PlayerSkillManager).ResetCoolTime(skillid);
+        theOwner.Motor.TurnToControlStickDir();
+        EntityMyself.preSkillTime = Time.realtimeSinceStartup;
+        theOwner.CastSkill(skillid);
+        SkillData s = SkillData.dataMap[skillid];
+        //设置UI CD
+    }
     public void NextCmd()
     {
         if (preCmds.Count == 0)

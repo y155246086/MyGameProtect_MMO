@@ -21,8 +21,7 @@ public class CityState : GameState
     protected override void OnLoadComplete(params object[] args)
     {
         Debuger.Log("CityState-->OnLoadComplete");
-        GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
-        GUIManager.ShowView(PanelNameConst.FunctionButtonPanel);
+        
         GameWorld.AddNewEntity(SpriteType.Myself);
         GameObject[] arr = GameObject.FindGameObjectsWithTag("MonsterPoint");
         for (int i = 0; i < arr.Length; i++)
@@ -36,6 +35,7 @@ public class CityState : GameState
             arr[i].SetActive(false);
             GameWorld.AddNewEntity(SpriteType.Monster, info);
         }
-
+        GUIManager.ShowView(PanelNameConst.EasyTouchControlsPanel);
+        GUIManager.ShowView(PanelNameConst.FunctionButtonPanel);
     }
 }

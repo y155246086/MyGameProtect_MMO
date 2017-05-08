@@ -284,7 +284,6 @@ public class SkillManager
     
     public void Clear()
     {
-        //TimerHeap.DelTimer(delayAttackTimerID);
         TimerHeap.DelTimer(EndAttackTimerID);
     }
     protected void EndAttackAction(SkillAction skillAction)
@@ -305,16 +304,6 @@ public class SkillManager
         Vector3 forward = (Vector3)args[2];
         Vector3 position = (Vector3)args[3];
         AttackEffect(actionID, ltwm, rotation, forward, position);
-        return;
-        //List<EntityParent> list = GetHitEntities(curSkillData.id);
-        //for (int i = 0; i < list.Count; i++)
-        //{
-        //    ICanAttacked att = list[i].Actor.GetComponent<ICanAttacked>();
-        //    if (att != null)
-        //    {
-        //        att.SetHurt(Random.Range(skillAction.minAttackValue, skillAction.maxAttackValue) * 100);
-        //    }
-        //}
     }
     public void AttackEffect(int hitActionID, Matrix4x4 ltwm, Quaternion rotation, Vector3 forward, Vector3 position)
     {
@@ -325,6 +314,10 @@ public class SkillManager
         List<uint> playerList = new List<uint>();
         for (int i = 0; i < list.Count; i++)
         {
+            if (GameWorld.Entities[list[i]].IsDead())
+            {
+                continue;
+            }
             if(GameWorld.Entities[list[i]] is EntityMonster)
             {
                 monsterList.Add(list[i]);

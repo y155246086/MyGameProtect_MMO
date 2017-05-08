@@ -40,7 +40,7 @@ public class ActorMyself : ActorPlayer<EntityMyself>
         }
         if (ETCInput.GetButtonDown("ButtonAttack2"))
         {
-            NormalAttack(5);
+            (GetEntity().battleManager as PlayerBattleManager).SpellTwoAttack();
         }
     }
     public void NormalAttack(int id)

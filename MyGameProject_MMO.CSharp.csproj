@@ -510,6 +510,7 @@
     <Compile Include="Assets\Scripts\GUI\Billboard\BillboardLogicManager.cs" />
     <Compile Include="Assets\Scripts\GUI\Billboard\SplitBattleBillboard.cs" />
     <Compile Include="Assets\Scripts\GUI\ChooseServerPanel\ChooseServerPanel.cs" />
+    <Compile Include="Assets\Scripts\GUI\EasyTouchControlsPanel\CDController.cs" />
     <Compile Include="Assets\Scripts\GUI\EasyTouchControlsPanel\EasyTouchControlsPanel.cs" />
     <Compile Include="Assets\Scripts\GUI\FunctionButtonPanel\FunctionButtonPanel.cs" />
     <Compile Include="Assets\Scripts\GUI\IViewBase.cs" />
